@@ -18,6 +18,7 @@
             <div class="card-container">
             {% for symbol, data in stocks_data.items() %}
             <div class="card" data-symbol="{{ symbol }}">
+                <a href="/{{symbol}}" class="card-link">
                 <div class="header">
                     {{ symbol }}
                 </div>

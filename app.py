@@ -87,6 +87,12 @@ def dashboard():
 def stock_data(symbol):
     return jsonify(get_stock_data(symbol))
 
+@app.route('/<symbol>')
+def stock(symbol):
+    stockdata=get_stock_data(symbol)
+    return render_template('stockdata.html', symbol=symbol,data=stockdata)
+
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)

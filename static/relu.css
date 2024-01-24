@@ -53,6 +53,11 @@ input{
 .spaced {
     margin-left: 10px;
 }
+.card-link {
+    color: inherit; /* This will make the link text the same color as the rest of the text */
+    text-decoration: none; /* This will remove the underline from the link text */
+    display: block; /* This will make the entire card clickable, not just the text */
+}
 
 .stock-info {
     display: flex;
