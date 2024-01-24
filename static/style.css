@@ -1,5 +1,5 @@
 /* style.css */
-/* body {
+body {
     font-family: 'Arial', sans-serif;
     background-color: #f2f2f2;
     display: flex;
@@ -7,7 +7,7 @@
     align-items: center;
     height: 100vh;
     margin: 0;
-} */
+}
 
 .login-container {
     background-color: white;
@@ -41,20 +41,6 @@ button {
     background-color: #007bff;
 
     }
-.year_buttons
-{
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: white;
-    display: flex;
-    width : 15%;
-    justify-content: space-between;
-    color: gray;
-    align-items: center;
-    margin-top: 20px;
-    padding-left: 8%;
-}/* Add this to your existing style.css */
 
 .welcome-container {
     text-align: center;
@@ -81,5 +67,25 @@ button {
 
 .logout-button:hover {
     background-color: #c82333;
+}
+
+
+h2 {
+    text-align: center;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
