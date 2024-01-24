@@ -1,6 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from bokeh.plotting import figure
+from bokeh.embed import components
+from bokeh.models import HoverTool
+from bokeh.resources import CDN
+from jugaad_data.nse import index_df
+import sys
+from datetime import date, timedelta
+from jugaad_data.nse import stock_df
+import time
+import os
+import matplotlib.pyplot as plt
+from dateutil.relativedelta import relativedelta
+import get_stock_data as gsd
+from bokeh.models import Button, CustomJS
+from bokeh.layouts import layout
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your actual secret key
@@ -57,9 +72,29 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:
+        return redirect(url_for('graph'))
         return render_template('welcome.html', username=session['username'])
     else:
         return redirect(url_for('index'))
+
+@app.route('/graph')
+def graph():
+    period = request.args.get('period', default="1Y", type=str)
+    if period == "1Y":
+        days = 365
+    elif period == "6M":
+        days = 182
+    elif period == "1M":
+        days = 30
+    elif period == "5D":
+        days = 5
+    elif period == "5Y":
+        days = 5*365
+    else:
+        days = 365  # default to 1 year if period is not recognized
+    p = gsd.get_index_data("NIFTY 50", days)
+    script, div = components(p)
+    return render_template('graph.html', script=script, div=div, cdn_js=CDN.js_files[0])
 
 @app.route('/logout')
 def logout():
