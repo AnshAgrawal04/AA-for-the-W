@@ -1,23 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.models import HoverTool
-from bokeh.resources import CDN
 from jugaad_data.nse import index_df
 import sys
 from datetime import date, timedelta
 from jugaad_data.nse import stock_df
 import time
 import os
+import pandas as pd
 import matplotlib.pyplot as plt
 from dateutil.relativedelta import relativedelta
 import get_stock_data as gsd
-from bokeh.models import Button, CustomJS
-from bokeh.layouts import layout
 import plotly.graph_objects as go
 from plotly.offline import plot
+
+nifty_50=list(pd.read_csv('ind_nifty50list.csv')['Symbol'])
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your actual secret key
@@ -93,12 +91,13 @@ def plot_compare():
         symbol_name_1 = request.form.get('stock1')
         symbol_name_2 = request.form.get('stock2')
         symbol_name_3 = request.form.get('stock3')
+        if symbol_name_1 not in nifty_50 or symbol_name_2 not in nifty_50:
+            return render_template('plot_compare.html', error="Please enter valid stock symbols")
         num_years=2
         days= 365*num_years
         fig = gsd.get_plot(gsd.get_symbol_data(symbol_name_1, days), symbol_name_1, "DATE", "CLOSE")
-        if len(symbol_name_2) > 0:
-            fig = gsd.add_trace(fig, gsd.get_symbol_data(symbol_name_2, days), symbol_name_2, "DATE", "CLOSE")
-        if len(symbol_name_3) > 0:
+        fig = gsd.add_trace(fig, gsd.get_symbol_data(symbol_name_2, days), symbol_name_2, "DATE", "CLOSE")
+        if symbol_name_3 in nifty_50:
             fig =  gsd.add_trace(fig, gsd.get_symbol_data(symbol_name_3, days), symbol_name_3, "DATE", "CLOSE")
         plot_div = plot(fig, output_type='div', include_plotlyjs=False, config={'displayModeBar': False})
         return render_template('plot_compare_graph.html', plot_div=plot_div, stock1=symbol_name_1, stock2=symbol_name_2, stock3=symbol_name_3)
