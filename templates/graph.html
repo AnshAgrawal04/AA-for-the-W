@@ -1,0 +1,46 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Nifty 50 Graph</title>
+    <script src="{{ cdn_js }}"></script>
+    <link rel="stylesheet" href="{{ cdn_css }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    {{ script|safe }}
+    {{ div|safe }}
+    <div class="year_buttons">
+        <a href="/graph?period=1D"><button>1D</button></a>
+        <a href="/graph?period=5D"><button>5D</button></a>
+        <a href="/graph?period=1M"><button>1M</button></a>
+        <a href="/graph?period=6M"><button>6M</button></a>
+        <a href="/graph?period=1Y"><button>1Y</button></a>
+    </div>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Graph</title>
+    <script src="{{ cdn_js }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="graph">
+        {{ script|safe }}
+        {{ div|safe }}
+    </div>
+    <div class="year_buttons">
+        <a href="/graph?period=5Y"><button>5Y</button></a>
+        <a href="/graph?period=1Y"><button>1Y</button></a>
+        <a href="/graph?period=6M"><button>6M</button></a>
+        <a href="/graph?period=1M"><button>1M</button></a>
+        <a href="/graph?period=5D"><button>5D</button></a>
+    </div>
+
+</body>
+</html>
