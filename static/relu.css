@@ -1,0 +1,42 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.search-wrapper {
+    margin-bottom: 20px;
+}
+input{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.user-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-between;   
+
+}
+
+.stock-info div {
+    flex: 1 0 20%; /* This will make the p elements take up 20% of the width of the .stock-info div and wrap to the next line if there's not enough space */
+    margin: 5px;
+}
+

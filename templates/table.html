@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Information</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='relu.css') }}">
+</head>
+
+<body>
+    <div class="search-wrapper">
+        <label for="search">Stock Search</label>
+        <input type="search" id="search" data-search>
+    </div>
+    <div class="user-cards" data-user-cards-container></div>
+
+    {% for symbol, data in stocks_data.items() %}
+    <div class="card" data-symbol="{{ symbol }}">
+        <div class="header">
+            {{ symbol }}</div>
+        <div class="body">
+            <div class="stock-info">
+            <p class="stock-open"> {{ data.OPEN }}</p> 
+            <p class="stock-high"> {{ data.HIGH }}</p> 
+            </div>
+        </div>
+                                       
+    </div>
+    {% endfor %}
+
+    <script>
+        document.getElementById('search').addEventListener('input', function(e) {
+            var search = e.target.value.toLowerCase();
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function(card) {
+                var symbol = card.getAttribute('data-symbol').toLowerCase();
+                if (symbol.includes(search)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

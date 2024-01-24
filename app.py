@@ -1,9 +1,22 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash,jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from jugaad_data.nse import stock_df
+from datetime import date, timedelta
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your actual secret key
+
+
+def get_stock_data(symbol):
+    # This is a mockup. Replace this with your actual function to get stock data.
+    end_date = date.today()
+    start_date = end_date - timedelta(days=1) # get data for the last 30 days
+    df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
+    req=['DATE','OPEN','HIGH','LOW','CLOSE','VOLUME','SYMBOL']
+    df=df[req]
+    return df.to_dict(orient='records')[0]
 
 # Database Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
@@ -56,10 +69,19 @@ def login():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user_id' in session:
-        return render_template('welcome.html', username=session['username'])
+    if 'user_id' in session:        
+        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH']  # Add all your 50 stock symbols here
+        stockdata={}
+        for symbols in stock_symbols:
+            stockdata[symbols]=get_stock_data(symbols)
+        print(stockdata)
+        return render_template('table.html', username=session['username'],stocks_data=stockdata)
     else:
         return redirect(url_for('index'))
+    
+@app.route('/stock_data/<symbol>')
+def stock_data(symbol):
+    return jsonify(get_stock_data(symbol))
 
 @app.route('/logout')
 def logout():
@@ -69,3 +91,4 @@ def logout():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
