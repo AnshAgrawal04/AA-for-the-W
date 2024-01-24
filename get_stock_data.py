@@ -31,6 +31,7 @@ def get_symbol_data(symbol, days):
 
 def add_trace(fig, df, sym_name, xcolumn, ycolumn):
     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode='lines', name=sym_name))
+    fig.update_layout(title= "Closing Prices")
     return fig
 
 def get_plot(df, sym_name, xcolumn, ycolumn):
