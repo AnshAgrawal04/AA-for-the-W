@@ -79,13 +79,35 @@ def dashboard():
     else:
         return redirect(url_for('index'))
 
-@app.route('/graph')
-def graph():
-    days = 365*2  # 2 years
-    fig = gsd.get_index_data("NIFTY 50", days)
+@app.route('/index_graph')
+def index_graph():
+    num_years=2
+    days= 365*num_years
+    fig = gsd.get_plot(gsd.get_index_data("NIFTY 50", days), "NIFTY 50", "HistoricalDate", "CLOSE")
     plot_div = plot(fig, output_type='div', include_plotlyjs=False,config={'displayModeBar': False})
     return render_template('graph.html', plot_div=plot_div)
 
+@app.route('/plot_compare', methods=['GET', 'POST'])
+def plot_compare():
+    if request.method == 'POST':
+        symbol_name_1 = request.form.get('stock1')
+        symbol_name_2 = request.form.get('stock2')
+        symbol_name_3 = request.form.get('stock3')
+        num_years=2
+        days= 365*num_years
+        fig = gsd.get_plot(gsd.get_symbol_data(symbol_name_1, days), symbol_name_1, "DATE", "CLOSE")
+        if len(symbol_name_2) > 0:
+            fig = gsd.add_trace(fig, gsd.get_symbol_data(symbol_name_2, days), symbol_name_2, "DATE", "CLOSE")
+        if len(symbol_name_3) > 0:
+            fig =  gsd.add_trace(fig, gsd.get_symbol_data(symbol_name_3, days), symbol_name_3, "DATE", "CLOSE")
+        plot_div = plot(fig, output_type='div', include_plotlyjs=False, config={'displayModeBar': False})
+        return render_template('plot_compare_graph.html', plot_div=plot_div, stock1=symbol_name_1, stock2=symbol_name_2, stock3=symbol_name_3)
+    return render_template('plot_compare.html')
+
+@app.route('/reset', methods= ['POST'])
+def plot_compare_graph():
+    if request.method == 'POST':
+        return render_template('plot_compare.html')
 
 @app.route('/logout')
 def logout():
