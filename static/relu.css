@@ -4,13 +4,21 @@ body {
 
 .search-wrapper {
     margin-bottom: 20px;
+    width: 300px;
+}
+.tables-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+    align-items: left;
 }
 input{
-    width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+    border: 2px solid #4334e5;
+    width: 300px;
+    height: 50px;
 }
 
 .user-cards {
@@ -21,12 +29,29 @@ input{
 }
 
 .card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 20px;
     margin-bottom: 20px;
-    display: flex;
-    flex-direction: row;
+    padding: 20px;
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease; /* This will animate the color change */
+}
+
+.card:hover {
+    background-color: #ebebeb; /* This is a light green color */
+    border-color: #0b4426;
+}
+
+.card-container {
+    max-height: 550px; /* Adjust this value based on the height of your cards */
+    overflow-y: auto;
+}
+
+.spaced {
+    margin-left: 10px;
 }
 
 .stock-info {
@@ -34,9 +59,28 @@ input{
     justify-content: space-between;   
 
 }
-
+.header{
+    font-weight: bold;
+    font-size: 20px;
+    font-family:'Times New Roman', Times, serif;
+}
+.stock-open{
+    color: green;
+    margin-bottom: 3px;
+}
+.stock-high{
+    color: red;
+}
 .stock-info div {
     flex: 1 0 20%; /* This will make the p elements take up 20% of the width of the .stock-info div and wrap to the next line if there's not enough space */
     margin: 5px;
+}
+.ascending-data{
+    border: 1px solid #7c1d1d;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
 }
 

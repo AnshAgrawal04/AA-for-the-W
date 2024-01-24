@@ -8,40 +8,77 @@
 </head>
 
 <body>
-    <div class="search-wrapper">
-        <label for="search">Stock Search</label>
-        <input type="search" id="search" data-search>
-    </div>
-    <div class="user-cards" data-user-cards-container></div>
+    <div class="tables-container">
+        <section>
+            <div class="search-wrapper">
 
-    {% for symbol, data in stocks_data.items() %}
-    <div class="card" data-symbol="{{ symbol }}">
-        <div class="header">
-            {{ symbol }}</div>
-        <div class="body">
-            <div class="stock-info">
-            <p class="stock-open"> {{ data.OPEN }}</p> 
-            <p class="stock-high"> {{ data.HIGH }}</p> 
+                <input type="search" id="search" data-search placeholder="Enter stock value">
             </div>
+            <div class="user-cards" data-user-cards-container></div>
+            <div class="card-container">
+            {% for symbol, data in stocks_data.items() %}
+            <div class="card" data-symbol="{{ symbol }}">
+                <div class="header">
+                    {{ symbol }}
+                </div>
+                <div class="body">
+                    <div class="stock-info">
+                        <p class="stock-open spaced"> {{ data.OPEN }}</p>
+                        <p class="stock-high spaced"> {{ data.HIGH }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
-                                       
-    </div>
-    {% endfor %}
+            <script>
+                document.getElementById('search').addEventListener('input', function (e) {
+                    var search = e.target.value.toLowerCase();
+                    var cards = document.querySelectorAll('.card');
+                    cards.forEach(function (card) {
+                        var symbol = card.getAttribute('data-symbol').toLowerCase();
+                        if (symbol.includes(search)) {
+                            card.style.display = '';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            </script>
+        </section>
+        <section>
+            <div>
+                <label>
+            </div>
+            {% for value,symbol in asc %}
+            <div class="ascending-data" data-symbol="{{ symbol }}">
+                <div class="header">
+                    {{ symbol }}</div>
+                <div class="body">
+                    <div class="stock-info">
+                        <p class="stock-open"> {{ value}}</p>
+                    </div>
+                </div>
 
-    <script>
-        document.getElementById('search').addEventListener('input', function(e) {
-            var search = e.target.value.toLowerCase();
-            var cards = document.querySelectorAll('.card');
-            cards.forEach(function(card) {
-                var symbol = card.getAttribute('data-symbol').toLowerCase();
-                if (symbol.includes(search)) {
-                    card.style.display = '';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
+            </div>
+            {% endfor %}
+        </section>
+        <section>
+            {% for value,symbol in desc %}
+            <div class="ascending-data" data-symbol="{{ symbol }}">
+                <div class="header">
+                    {{ symbol }}</div>
+                <div class="body">
+                    <div class="stock-info">
+                        <p class="stock-open"> {{ value}}</p>
+                    </div>
+                </div>
+
+            </div>
+            {% endfor %}
+        </section>
+
+
+    </div>
 </body>
 
 </html>

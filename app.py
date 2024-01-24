@@ -70,12 +70,16 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' in session:        
-        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH']  # Add all your 50 stock symbols here
+        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK']  # Add all your 50 stock symbols here
         stockdata={}
+        ascending_data = []
         for symbols in stock_symbols:
             stockdata[symbols]=get_stock_data(symbols)
+            ascending_data.append([stockdata[symbols]['CLOSE']-stockdata[symbols]['OPEN'],symbols])
         print(stockdata)
-        return render_template('table.html', username=session['username'],stocks_data=stockdata)
+        ascending_data.sort()
+        descending_data = ascending_data[::-1]
+        return render_template('table.html', username=session['username'],stocks_data=stockdata,asc=ascending_data ,desc=descending_data)
     else:
         return redirect(url_for('index'))
     
