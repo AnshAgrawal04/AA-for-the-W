@@ -21,10 +21,23 @@ def get_index_data(index, days):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
     df = index_df(symbol=index, from_date=start_date, to_date=end_date)
-    fig = go.Figure()
-    fig.add_trace(go.Scatter(x=df['HistoricalDate'], y=df['CLOSE'], mode='lines', name=index))
+    return df
 
-    fig.update_layout(title=f"{index} closing prices", xaxis_title='Date', yaxis_title='Closing Price', autosize=False, width=700, height=400)
+def get_symbol_data(symbol, days):
+    end_date = date.today()
+    start_date = end_date - timedelta(days=days)
+    df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
+    return df
+
+def add_trace(fig, df, sym_name, xcolumn, ycolumn):
+    fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode='lines', name=sym_name))
+    return fig
+
+def get_plot(df, sym_name, xcolumn, ycolumn):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode='lines', name=sym_name))
+
+    fig.update_layout(title=f"{sym_name} closing prices", xaxis_title='Date', yaxis_title='Closing Price', autosize=False, width=700, height=400)
     fig.update_xaxes(
     rangeslider_visible=False,
     rangeselector=dict(
@@ -37,15 +50,4 @@ def get_index_data(index, days):
     ))
     fig.update_yaxes(autorange=True, scaleanchor="x", scaleratio=1)
     fig.update_yaxes(range=[min(df['CLOSE']), max(df['CLOSE'])]) 
-    
     return fig
-
-def get_data(symbol_name, num_years):
-    end_date = date.today()
-    start_date = end_date - timedelta(days=365)
-    # Fetch the data
-    df_nifty = index_df(symbol="NIFTY 50", from_date=start_date, to_date=end_date)
-    df_sensex = index_df(symbol="SENSEX", from_date=start_date, to_date=end_date)
-
-    print(df_nifty.head())
-    print(df_sensex.head())
