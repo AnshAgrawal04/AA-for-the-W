@@ -1,5 +1,5 @@
 /* style.css */
-body {
+/* body {
     font-family: 'Arial', sans-serif;
     background-color: #f2f2f2;
     display: flex;
@@ -7,7 +7,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-}
+} */
 
 .login-container {
     background-color: white;
@@ -40,8 +40,21 @@ button {
     border: none;
     background-color: #007bff;
 
-}
-    /* Add this to your existing style.css */
+    }
+.year_buttons
+{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: white;
+    display: flex;
+    width : 15%;
+    justify-content: space-between;
+    color: gray;
+    align-items: center;
+    margin-top: 20px;
+    padding-left: 8%;
+}/* Add this to your existing style.css */
 
 .welcome-container {
     text-align: center;
@@ -69,3 +82,4 @@ button {
 .logout-button:hover {
     background-color: #c82333;
 }
+
