@@ -16,6 +16,8 @@ from dateutil.relativedelta import relativedelta
 import get_stock_data as gsd
 from bokeh.models import Button, CustomJS
 from bokeh.layouts import layout
+import plotly.graph_objects as go
+from plotly.offline import plot
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with your actual secret key
@@ -79,22 +81,11 @@ def dashboard():
 
 @app.route('/graph')
 def graph():
-    period = request.args.get('period', default="1Y", type=str)
-    if period == "1Y":
-        days = 365
-    elif period == "6M":
-        days = 182
-    elif period == "1M":
-        days = 30
-    elif period == "5D":
-        days = 5
-    elif period == "5Y":
-        days = 5*365
-    else:
-        days = 365  # default to 1 year if period is not recognized
-    p = gsd.get_index_data("NIFTY 50", days)
-    script, div = components(p)
-    return render_template('graph.html', script=script, div=div, cdn_js=CDN.js_files[0])
+    days = 365*2  # 2 years
+    fig = gsd.get_index_data("NIFTY 50", days)
+    plot_div = plot(fig, output_type='div', include_plotlyjs=False,config={'displayModeBar': False})
+    return render_template('graph.html', plot_div=plot_div)
+
 
 @app.route('/logout')
 def logout():
