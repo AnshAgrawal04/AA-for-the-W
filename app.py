@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, flash,jsonify, session
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+
 from jugaad_data.nse import stock_df
 from datetime import date, timedelta
+
 
 import get_stock_data as gsd
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
-
 
 def get_stock_data(symbol):
     # This is a mockup. Replace this with your actual function to get stock data.
@@ -41,7 +42,6 @@ with app.app_context():
 def index():
     return render_template("login.html")
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -55,9 +55,6 @@ def register():
 
         flash("Registration successful! Please login.")
         return redirect(url_for("index"))
-
-    return render_template("register.html")
-
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -76,6 +73,7 @@ def login():
 
 @app.route("/dashboard")
 def dashboard():
+
     if 'user_id' in session:        
         stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK']  # Add all your 50 stock symbols here
         stockdata={}
@@ -103,6 +101,15 @@ def stock(symbol):
         return render_template("welcome.html", username=session["username"])
     else:
         return redirect(url_for("index"))
+
+
+
+    if "user_id" in session:
+        return redirect(url_for("graph"))
+        return render_template("welcome.html", username=session["username"])
+    else:
+        return redirect(url_for("index"))
+
 
 
 @app.route("/index_graph")

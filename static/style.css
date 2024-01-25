@@ -40,8 +40,7 @@ button {
     border: none;
     background-color: #007bff;
 
-}
-    /* Add this to your existing style.css */
+    }
 
 .welcome-container {
     text-align: center;
@@ -69,3 +68,24 @@ button {
 .logout-button:hover {
     background-color: #c82333;
 }
+
+
+h2 {
+    text-align: center;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.input-box {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
