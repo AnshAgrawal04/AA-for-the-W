@@ -4,12 +4,27 @@ import time
 import os
 from datetime import date, timedelta
 import plotly.graph_objects as go
+import pandas as pd
+from plotly.offline import plot
 
+parameter_to_df_column = {
+    "Closing Price": "CLOSE",
+    "Opening Price": "OPEN",
+    "High Price": "HIGH",
+    "Low Price": "LOW",
+    "Volume": "VOLUME",
+    "Average Price": "VWAP",
+    "Last Traded Price": "LTP",
+    "Value": "VALUE",
+    "Number of Trades": "NO OF TRADES",
+}
+nifty_50 = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 
 def get_index_data(index, days):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
     df = index_df(symbol=index, from_date=start_date, to_date=end_date)
+    df.drop_duplicates(subset=["HistoricalDate"], inplace=True)
     return df
 
 
@@ -20,7 +35,7 @@ def get_symbol_data(symbol, days):
     return df
 
 
-def add_trace(fig, df, sym_name, xcolumn, ycolumn,title):
+def add_trace(fig, df, sym_name, xcolumn, ycolumn, title):
     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode="lines", name=sym_name))
     fig.update_layout(title=title)
     return fig
@@ -52,5 +67,64 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title):
         ),
     )
     fig.update_yaxes(autorange=True, scaleanchor="x", scaleratio=1)
-    fig.update_yaxes(range=[min(df["CLOSE"]), max(df["CLOSE"])])
+    fig.update_yaxes(range=[min(df[ycolumn]), max(df[ycolumn])])
     return fig
+
+def get_stock_compare_parameters():
+    return [
+        "Closing Price",
+        "Opening Price",
+        "High Price",
+        "Low Price",
+        "Volume",
+        "Average Price",
+    ]
+
+
+def plot_index():
+    num_years = 2
+    days = 365 * num_years
+    fig = get_plot(
+        get_index_data("NIFTY 50", days), "NIFTY 50", "HistoricalDate", "CLOSE", 'Closing Prices'
+    )
+    plot_div = plot(
+        fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
+    )
+    return plot_div
+
+def plot_and_compare_symbols(symbol_name_1, symbol_name_2, symbol_name_3, parameter):
+    if symbol_name_1 not in nifty_50 or symbol_name_2 not in nifty_50:
+        return None
+    num_years = 2
+    days = 365 * num_years
+    ycol = parameter_to_df_column[parameter]
+    fig = get_plot(
+        get_symbol_data(symbol_name_1, days), symbol_name_1, "DATE", ycol, parameter
+    )
+    fig = add_trace(
+        fig,
+        get_symbol_data(symbol_name_2, days),
+        symbol_name_2,
+        "DATE",
+        ycol,
+        parameter,
+    )
+    if symbol_name_3 in nifty_50:
+        fig = add_trace(
+            fig,
+            get_symbol_data(symbol_name_3, days),
+            symbol_name_3,
+            "DATE",
+            ycol,
+            parameter,
+        )
+    plot_div = plot(
+        fig,
+        output_type="div",
+        include_plotlyjs=False,
+        config={"displayModeBar": False},
+    )
+    return plot_div
+
+# df=get_index_data("NIFTY 50", 365*2)
+# print(df.tail())
