@@ -72,15 +72,13 @@ def dashboard():
         ascending_data = []
         for symbol in stock_symbols:
             stockdata[symbol]=gsd.get_live_symbol_data(symbol)
-            ascending_data.append([stockdata[symbols]['lastPrice']-stockdata[symbols]['OPEN'],symbols])
-        # print(stockdata)
-        # top_5_gainers=gsd.get_top_gainers()
-        # top_5_losers=gsd.get_top_losers()
-        # ascending_data.sort()
-        # descending_data = ascending_data[::-1]
-        return render_template('table.html', username=session['username'],stocks_data=stockdata)
-    # else:
-    #     return redirect(url_for('index'))
+            ascending_data.append([(stockdata[symbol]['lastPrice']/stockdata[symbol]['open']-1)*100,-stockdata[symbol]['lastPrice'],symbol])
+
+        ascending_data.sort()
+        descending_data = ascending_data[::-1]
+        return render_template('table.html', username=session['username'],stocks_data=stockdata, gainers=descending_data[:5], losers=ascending_data[:5])
+    else:
+        return redirect(url_for('index'))
     
 # @app.route('/stock_data/<symbol>')
 # def stock_data(symbol):
