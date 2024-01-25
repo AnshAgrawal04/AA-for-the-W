@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plot and Compare Stocks</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+    <h1>Plot and Compare Stocks</h1>
+
+    <form action="/plot_compare" method="POST">
+        <div class="form-container">
+            <input type="text" class="input-box compulsory" name="stock1" placeholder="Stock 1" required>
+            <input type="text" class="input-box" name="stock2" placeholder="Stock 2" required>
+            <input type="text" class="input-box" name="stock3" placeholder="Stock 3 (optional)">
+
+            <!-- Dropdown menu for selecting options -->
+            <label for="stockParameter">Select Parameter to Compare:</label>
+            <select id="stockParameter" name="stock_parameter">
+                {% for option in parameter_options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Submit</button>
+        <div class="error" style="color: red;">{{ error }}</div>
+    </form>
+</body>
+
+</html>
