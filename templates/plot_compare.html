@@ -14,10 +14,18 @@
             <input type="text" class="input-box compulsory" name="stock1" placeholder="Stock 1" required>
             <input type="text" class="input-box" name="stock2" placeholder="Stock 2" required>
             <input type="text" class="input-box" name="stock3" placeholder="Stock 3 (optional)">
+
+            <!-- Dropdown menu for selecting options -->
+            <label for="stockParameter">Select Price Type:</label>
+            <select id="stockParameter" name="stock_parameter">
+                {% for option in parameter_options %}
+                    <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
         </div>
 
         <button type="submit">Submit</button>
-        <div class = "error" style="color: red;">{{ error}}</div>
+        <div class="error" style="color: red;">{{ error }}</div>
     </form>
 </body>
 
