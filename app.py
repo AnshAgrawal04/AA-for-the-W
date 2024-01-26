@@ -89,8 +89,8 @@ def stock(symbol):
     livedata=gsd.get_live_symbol_data(symbol)
     stockdata=gsd.get_symbol_data(symbol,5).iloc[0]
     stock_parameter=gsd.get_stock_display_parameters()
-    plot_div = gsd.plot_symbol(symbol, 'Closing Price',450,900)
-    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div)
+    plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,500)
+    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
 
 # @app.route("/index_graph")
 # def index_graph():
