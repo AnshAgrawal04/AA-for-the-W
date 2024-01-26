@@ -7,7 +7,9 @@ from datetime import date, timedelta
 import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
+from bsedata.bse import BSE
 
+b=BSE()
 n = NSELive()
 
 parameter_to_df_column = {
@@ -58,6 +60,11 @@ def get_live_symbol_data(symbol):
     query = n.stock_quote(symbol)
     return query["priceInfo"]
 
+def get_live_index_data(index):
+    if index=='SENSEX':
+        return b.getIndices(category="market_cap/broad")['indices'][0]
+    else:
+        return n.live_index('NIFTY 50')['marketStatus']
 
 def get_index_data(index, days):
     end_date = date.today()
@@ -178,5 +185,4 @@ def plot_and_compare_symbols(
     return plot_div
 
 
-# print(get_symbol_data("SBIN", 1).columns)
-
+print()
