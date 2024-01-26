@@ -11,14 +11,13 @@
     <div class="tables-container">
         <section>
             <div class="search-wrapper">
-
                 <input type="search" id="search" data-search placeholder="Enter stock value">
             </div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for symbol, data in stocks_data.items() %}
-                    <div class="card" data-symbol="{{ symbol }}">
-                        <a href="/{{symbol}}" class="card-link">
+                <div class="card" data-symbol="{{ symbol }}">
+                    <a href="/{{symbol}}" class="card-link">
                         <div class="header">
                             {{ symbol }}
                         </div>
@@ -28,7 +27,8 @@
                                 <p class="stock-high spaced">{{ data['pChange'] }}%</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
             <script>
@@ -71,7 +71,6 @@
                     <div class="stock-info">
                         <p class="stock-open"> {{ loser[0]}}</p>
                         <p class="stock-open"> {{ -loser[1]}}</p>
-
                     </div>
                 </div>
 
