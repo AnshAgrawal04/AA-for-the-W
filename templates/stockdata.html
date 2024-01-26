@@ -2,15 +2,20 @@
 <html>
 <head>
     <title>{{ symbol }} Details</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <h1>{{ symbol }} Details</h1>
-    <p>Open: {{ data.OPEN }}</p>
-    <p>High: {{ data.HIGH }}</p>
+    <h2>Current Price: {{livedata['lastPrice']}} Percent Change: {{livedata['pChange']}}    </h2>
+    <p>Open: {{ historicaldata['OPEN']}}</p>
+    <p>High: {{ historicaldata['HIGH'] }}</p>
+    <p>Low: {{ historicaldata['LOW']}}</p>
+    <p>52-wk high: {{historicaldata['52W H']}}</p>
+    <p>52-wk low: {{historicaldata['52W L']}}</p>
+
+    <div class = "graph">
+        {{ plot_div|safe }}
+    </div>
     <!-- Add more fields as needed -->
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> 0929ff0ff6848bf33a21557378d4099cac1d4271
