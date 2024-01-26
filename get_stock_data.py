@@ -80,7 +80,7 @@ def get_symbol_data(symbol, days):
 #     return fig
 
 
-def get_plot(df, sym_name, xcolumn, ycolumn, title, height, width):
+def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode="lines", name=sym_name))
 
@@ -89,8 +89,7 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height, width):
         xaxis_title="Date",
         yaxis_title=title,
         autosize=False,
-        width=600,
-        height=400,
+        
         width=width,
         height=height,
     )

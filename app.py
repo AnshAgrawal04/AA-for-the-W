@@ -78,7 +78,7 @@ def dashboard():
         ascending_data = sorted(ascending_data, key=lambda x: x['pchange'])
         descending_data = ascending_data[::-1]
 
-        plot_div=gsd.plot_index(width=900,height=400)
+        plot_div=gsd.plot_index(width=600,height=400)
         
         return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div)
 
@@ -100,7 +100,7 @@ def stock(symbol):
 
 @app.route("/index_graph")
 def index_graph():
-    plot_div=gsd.plot_index()
+    plot_div=gsd.plot_index(width=500,height=400)
     return render_template("graph.html", plot_div=plot_div)
 
 
