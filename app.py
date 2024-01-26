@@ -80,7 +80,7 @@ def dashboard():
 
         plot_div=gsd.plot_index(width=600,height=400)
         
-        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div)
+        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:4])
 
     else:
         return redirect(url_for('index'))

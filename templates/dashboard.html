@@ -89,7 +89,8 @@
             width: 45%;
             background-color: inherit;
         }
-        .container-2>div{
+
+        .container-2>div {
             margin: 2px;
             padding: 5px;
         }
@@ -101,13 +102,12 @@
             border-radius: 10px;
             border-color: rgb(11, 22, 22);
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
+            display: flex;
+            flex-direction: row;
         }
 
-        .graph {
-            height: 100px;
-            width: 100px;
-            justify-content: center;
-        }
+
+
 
         .container-2b {
             height: 40%;
@@ -117,10 +117,12 @@
             justify-content: space-between;
 
         }
-        .container-2b>div{
+
+        .container-2b>div {
             margin: 5px;
             padding: 7px;
         }
+
         .container-2b-a {
             width: 48%;
             background-color: rgb(255, 255, 255);
@@ -145,7 +147,7 @@
             justify-content: center;
 
         }
-        
+
 
         .container-2b-b {
             width: 48%;
@@ -158,14 +160,14 @@
 
         }
 
-        .container-2b-aa {
-            width: 90%;
-            background-color: rgb(255, 255, 255);
+        .container-2b-ba {
+            width: 100%;
+            background-color: rgb(78, 187, 61);
             justify-content: center;
 
         }
 
-        .container-2b-ab {
+        .container-2b-bb {
             width: 100%;
             background-color: rgb(255, 255, 255);
             justify-content: center;
@@ -176,8 +178,33 @@
 
         .container-3 {
             width: 30%;
-            background-color: rgb(21, 33, 65);
+            background-color:inherit;
             border-radius: 10px;
+            display:flex;
+            flex-direction: column;
+        }
+        .container-3>div {
+            margin: 3px;
+            padding: 10px;
+        }
+        .container-3a{
+            height: 20%;
+            
+            background: linear-gradient( rgb(130, 121, 206), rgb(54, 8, 220));
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+        }
+        .container-3b{
+            height: 80%;
+            background-color: rgb(255, 255, 255);
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
 
         table {
@@ -195,9 +222,11 @@
             border: 1px solid #ffffff;
             text-align: left;
             padding: 8px;
+            height: 22px;
         }
 
         th {
+            font-size: medium;
             border: 1px solid #ffffff;
             text-align: left;
             padding: 8px;
@@ -213,14 +242,14 @@
         }
 
         .loss {
-
+            font-size: 11px;
             font-weight: bold;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
         }
 
         .gain {
-
+            font-size: 11px;
             font-weight: bold;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
@@ -228,6 +257,30 @@
 
         .table1 {
             border-radius: 10px;
+        }
+
+        .article {
+
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .headline {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .content {
+            margin-top: 10px;
+        }
+
+        .source-link {
+            font-size: 10px;
+            color: #0066cc;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -237,7 +290,7 @@
     <ul>
         <li><a class="logo" href="/dashboard">Stonks</a></li>
         <li><a class="active" href="/register">Home</a></li>
-        <li><a href="/welcome">News</a></li>
+        <li><a href="/news">News</a></li>
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
     </ul>
@@ -286,23 +339,24 @@
         </div>
         <div class="container-2">
             <div class="container-2a" style="display:flex;flex-direction: row;">
-                <div style="color:aqua" style="width:2%"></div>
-                <div class="graph" style="width:96%">
+                <div style="background-color:rgb(1, 7, 7)" style="width:2%"></div>
+                <div class="graph" style="width:95%">
                     {{ plot_div|safe }}
 
                 </div>
                 <div style="width:2%"></div>
             </div>
             <div class="container-2b">
-                <div class="container-2b-a">
+                <div class="container-2b-a" style="padding:5px;">
 
-                    
-                    <div class="container-2b-ab" style="height:100%; justify-content: center;">
+                    <div style="height:4%;background-color: rgb(211, 78, 78);border-radius: 5px;"></div>
+                    <div class="container-2b-ab" style="height:98%; justify-content: center;">
                         <table class="table1">
                             <tr class="table-head">
-                                <th>Top Losers</th>
+                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                    Losers</th>
                                 <th>Value</th>
-                                <th>Loss</th>
+                                <th style="color:crimson">Loss</th>
                             </tr>
                             {% for data_item in asc %}
                             <tr>
@@ -330,39 +384,61 @@
                     </div>
                 </div>
                 <div class="container-2b-b">
-                    <table>
-                        <tr class="table-head">
-                            <th>Top Gainers</th>
-                            <th>Value</th>
-                            <th>Gain</th>
-                        </tr>
-                        {% for data_item in dsc %}
-                        <tr>
+                    <div class="container-2b-ba" style="height:4%;border-radius: 5px;"></div>
+                    <div class="container-2b-bb" style="height:98%;">
+                        <table>
+                            <tr class="table-head">
+                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                    Gainers</th>
+                                <th>Value</th>
+                                <th style="color:green">Gain</th>
+                            </tr>
+                            {% for data_item in dsc %}
+                            <tr>
 
-                            <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">{{data_item['symbol']}}</td>
-                            <td>{{data_item['price']}}</td>
-                            <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
+                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                    {{data_item['symbol']}}</td>
+                                <td>{{data_item['price']}}</td>
+                                <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
 
-                            <script>
-                                var dataItems = document.querySelectorAll('.gain');
-                                dataItems.forEach(function (dataItem) {
-                                    var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
-                                    if (lossValue >= 0) {
-                                        dataItem.style.color = '#3cb242';
-                                    } else {
-                                        dataItem.style.color = 'red';
-                                    }
-                                });
-                            </script>
-                        </tr>
-                        {% endfor %}
-                    </table>
+                                <script>
+                                    var dataItems = document.querySelectorAll('.gain');
+                                    dataItems.forEach(function (dataItem) {
+                                        var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                        if (lossValue >= 0) {
+                                            dataItem.style.color = '#3cb242';
+                                        } else {
+                                            dataItem.style.color = 'red';
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
 
             </div>
         </div>
-        <div class="container-3" id="targetDiv"></div>
-        
+        <div class="container-3">
+            <div class="container-3a"></div>
+            <div class="container-3b">
+                <h3>Stock News Feed</h3>
+
+                {% for article in news_articles %}
+                <div class="article">
+                    <div class="headline">{{ article['title'] }}</div>
+                    <a class="source-link" href="{{ article['url'] }}" target="_blank">Read more here</a>
+                </div>
+                {% endfor %}
+            </div>
+
+
+
+
+
+        </div>
+
     </div>
 
 </body>
