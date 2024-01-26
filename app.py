@@ -113,7 +113,7 @@ def plot_compare():
         symbol_name_3 = request.form.get("stock3")
         parameter = request.form.get("stock_parameter")
         plot_div = gsd.plot_and_compare_symbols(
-            symbol_name_1, symbol_name_2, symbol_name_3, parameter,400,900
+            symbol_name_1, symbol_name_2, symbol_name_3, parameter,600,1000
         )
         if plot_div is None:
             return render_template(
@@ -123,11 +123,12 @@ def plot_compare():
             )
 
         return render_template(
-            "plot_compare_graph.html",
+            "plot_compare.html",
             plot_div=plot_div,
             stock1=symbol_name_1,
             stock2=symbol_name_2,
             stock3=symbol_name_3,
+            parameter_options=parameter_options,
         )
     return render_template("plot_compare.html", parameter_options=parameter_options)
 
