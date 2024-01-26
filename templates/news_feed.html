@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock News Feed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            justify-content: space-between; 
+        }
+
+        .article {
+            width: 23%;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .headline {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .content {
+            margin-top: 10px;
+        }
+
+        .source-link {
+            color: #0066cc;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Stock News Feed</h1>
+
+    {% for article in news_articles %}
+        <div class="article">
+            <div class="headline">{{ article['title'] }}</div>
+            <a class="source-link" href="{{ article['url'] }}" target="_blank">Read more here</a>
+        </div>
+    {% endfor %}
+
+</body>
+
+</html>
