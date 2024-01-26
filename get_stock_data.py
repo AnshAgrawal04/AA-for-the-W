@@ -80,13 +80,6 @@ def get_symbol_data(symbol, days):
     df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
     return df
 
-
-# def add_trace(fig, df, sym_name, xcolumn, ycolumn, title):
-#     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode="lines", name=sym_name))
-#     fig.update_layout(title=title)
-#     return fig
-
-
 def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode="lines", name=sym_name))
@@ -129,7 +122,6 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
     return plot_div
-
 
 def plot_index(height=500, width=1000):
     num_years = 2
@@ -183,6 +175,3 @@ def plot_and_compare_symbols(
         config={"displayModeBar": False},
     )
     return plot_div
-
-
-print()
