@@ -7,7 +7,9 @@ from datetime import date, timedelta
 import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
+from bsedata.bse import BSE
 
+b=BSE()
 n = NSELive()
 
 parameter_to_df_column = {
@@ -58,6 +60,11 @@ def get_live_symbol_data(symbol):
     query = n.stock_quote(symbol)
     return query["priceInfo"]
 
+def get_live_index_data(index):
+    if index=='SENSEX':
+        return b.getIndices(category="market_cap/broad")['indices'][0]
+    else:
+        return n.live_index('NIFTY 50')['marketStatus']
 
 def get_index_data(index, days):
     end_date = date.today()
@@ -72,13 +79,6 @@ def get_symbol_data(symbol, days):
     start_date = end_date - timedelta(days=days)
     df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
     return df
-
-
-# def add_trace(fig, df, sym_name, xcolumn, ycolumn, title):
-#     fig.add_trace(go.Scatter(x=df[xcolumn], y=df[ycolumn], mode="lines", name=sym_name))
-#     fig.update_layout(title=title)
-#     return fig
-
 
 def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     fig = go.Figure()
@@ -122,7 +122,6 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
     return plot_div
-
 
 def plot_index(height=500, width=1000):
     num_years = 2
@@ -176,7 +175,3 @@ def plot_and_compare_symbols(
         config={"displayModeBar": False},
     )
     return plot_div
-
-
-# print(get_symbol_data("SBIN", 1).columns)
-
