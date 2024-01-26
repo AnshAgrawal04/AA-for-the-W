@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='relu.css') }}">
+    <style>
+        body {
+            font-size: 16px;
+            background-color: rgb(232, 232, 232);
+            font-family: Arial, sans-serif;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #211c1c;
+            position: -webkit-sticky;
+            /* Safari */
+            position: sticky;
+            top: 0;
+        }
+
+        li {
+            float: left;
+
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .logo {
+            background-color: rgb(35, 34, 33);
+            color: #f3f3f3;
+            width: 100px;
+        }
+
+        .active {
+            background-color: #4c53af;
+        }
+
+        .user_tab {
+            background-color: rgb(181, 208, 239);
+            width: 100px;
+        }
+
+        .flex-container {
+            display: flex;
+            background-color: inherit;
+            height: 100vh;
+            flex-grow: inherit;
+        }
+
+        .flex-container>div {
+
+            margin: 10px;
+            padding: 20px;
+            font-size: 30px;
+        }
+
+        .container-1 {
+            width: 25%;
+            background-color:#ffffff;
+        }
+
+        .container-2 {
+            display: flex;
+            flex-direction: column;
+            width: 60%;
+            background-color: rgb(234, 234, 234);
+        }
+
+        .container-2a {
+            height: 60%;
+            background-color: rgb(255, 255, 255);
+            justify-content: center;
+        }
+
+        .graph {
+            height: 100px;
+            width: 100px;
+        }
+
+        .container-2b {
+            height: 40%;
+            background-color: rgb(221, 221, 221);
+            margin-top: 5%;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container-2b-a {
+            width: 48%;
+            background-color: rgb(255, 255, 255);
+            justify-content: left;
+        }
+
+        .container-2b-b {
+            width: 48%;
+            background-color: rgb(255, 255, 255);
+            justify-content: right;
+        }
+
+        .container-3 {
+            width: 15%;
+            background-color: rgb(21, 33, 65);
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            height: 250px;
+            font-size: 10px;
+        }
+
+        td{
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            
+        }
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            background-color:#211c1c;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #9c9c9c;
+        }
+    </style>
+</head>
+
+<body>
+
+    <ul>
+        <li><a class="logo" href="/dashboard">Stonks</a></li>
+        <li><a class="active" href="/register">Home</a></li>
+        <li><a href="/welcome">News</a></li>
+        <li><a href="/plot_compare">Plot Graph</a></li>
+        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
+    </ul>
+
+    <div class="flex-container">
+        <div class="container-1">
+            <div class="search-wrapper">
+                <input type="search" id="search" data-search placeholder="Enter stock value">
+            </div>
+            <div class="user-cards" data-user-cards-container></div>
+            <div class="card-container">
+                {% for symbol, data in stocks_data.items() %}
+                <a href="/{{symbol}}" class="card-link">
+                    <div class="card" data-symbol="{{ symbol }}">
+
+                        <div class="header">
+                            {{ symbol }}
+                        </div>
+                        <div class="body">
+                            <div class="stock-info">
+                                <p class="stock-open spaced"> {{ data.OPEN }}</p>
+                                <p class="stock-high spaced"> {{ data.HIGH }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+                <script>
+                    document.getElementById('search').addEventListener('input', function (e) {
+                        var search = e.target.value.toLowerCase();
+                        var cards = document.querySelectorAll('.card');
+                        cards.forEach(function (card) {
+                            var symbol = card.getAttribute('data-symbol').toLowerCase();
+                            if (symbol.includes(search)) {
+                                card.style.display = '';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    });
+                </script>
+            </div>
+
+
+
+        </div>
+        <div class="container-2">
+            <div class="container-2a">
+                <div class="graph">
+                    {{ plot_div|safe }}
+                </div>
+            </div>
+            <div class="container-2b">
+                <div class="container-2b-a">
+                    <table>
+                        <tr class="table-head">
+                            <th>Top Losers</th>
+                            <th>Value</th>
+                            <th>Loss</th>
+                        </tr>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td>Francisco Chang</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>Ernst Handel</td>
+                            <td>Roland Mendel</td>
+                            <td>Austria</td>
+                        </tr>
+                        <tr>
+                            <td>Island Trading</td>
+                            <td>Helen Bennett</td>
+                            <td>UK</td>
+                        </tr>
+                        <tr>
+                            <td>Laughing Bacchus Winecellars</td>
+                            <td>Yoshi Tannamuri</td>
+                            <td>Canada</td>
+                        </tr>
+                        <tr>
+                            <td>Magazzini Alimentari Riuniti</td>
+                            <td>Giovanni Rovelli</td>
+                            <td>Italy</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="container-2b-b">
+                    <table>
+                        <tr class="table-head">
+                            <th>Top Winners</th>
+                            <th>Value</th>
+                            <th>Gain</th>
+                        </tr>
+                        <tr>
+                            <td>Alfreds Futterkiste</td>
+                            <td>Maria Anders</td>
+                            <td>Germany</td>
+                        </tr>
+                        <tr>
+                            <td>Centro comercial Moctezuma</td>
+                            <td>Francisco Chang</td>
+                            <td>Mexico</td>
+                        </tr>
+                        <tr>
+                            <td>Ernst Handel</td>
+                            <td>Roland Mendel</td>
+                            <td>Austria</td>
+                        </tr>
+                        <tr>
+                            <td>Island Trading</td>
+                            <td>Helen Bennett</td>
+                            <td>UK</td>
+                        </tr>
+                        <tr>
+                            <td>Laughing Bacchus Winecellars</td>
+                            <td>Yoshi Tannamuri</td>
+                            <td>Canada</td>
+                        </tr>
+                        <tr>
+                            <td>Magazzini Alimentari Riuniti</td>
+                            <td>Giovanni Rovelli</td>
+                            <td>Italy</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="container-3">3</div>
+    </div>
+
+</body>
+
+</html>

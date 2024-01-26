@@ -1,0 +1,99 @@
+.search-wrapper {
+    margin-bottom: 20px;
+    width: 100%;
+    
+}
+.tables-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+    align-items: left;
+    
+}
+input{
+    padding: 10px;
+    border-radius: 2px;
+    border: 2px solid #4837db;
+    width: 300px;
+    height: 50px;
+    color:#ebebeb;
+    background-color:rgb(221, 221, 221);
+    font-weight: bold;
+    
+
+}
+
+.user-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+   
+}
+
+.card {
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    width:260px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height:10px;
+    font-size: small;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    margin-bottom: 2px;
+    padding: 20px;
+    background-color: #ebebeb;
+    transition: background-color 0.3s ease; /* This will animate the color change */
+}
+
+.card:hover {
+    background-color: #b3b3b3; /* This is a light green color */
+    border-color: #0b4426;
+}
+
+.card-container {
+    max-height: 600px; /* Adjust this value based on the height of your cards */
+    overflow-y: auto;
+}
+
+.spaced {
+    margin-left: 10px;
+}
+.card-link {
+    color: inherit; /* This will make the link text the same color as the rest of the text */
+    text-decoration: none; /* This will remove the underline from the link text */
+    display: block; /* This will make the entire card clickable, not just the text */
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-between;
+
+}
+.header{
+    font-weight: bold;
+    font-size: 15px;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.stock-open{
+    color: green;
+    margin-bottom: 3px;
+}
+.stock-high{
+    color: red;
+}
+.stock-info div {
+    flex: 1 0 20%; /* This will make the p elements take up 20% of the width of the .stock-info div and wrap to the next line if there's not enough space */
+    margin: 5px;
+}
+.ascending-data{
+    border: 1px solid #7c1d1d;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
