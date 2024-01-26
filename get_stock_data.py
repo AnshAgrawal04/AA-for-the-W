@@ -85,7 +85,7 @@ def get_index_data(index):
     return index_historic_data[index]
 
 
-def get_symbol_data(symbol, days):
+def get_symbol_data(symbol, days=2 * 365):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
     df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
@@ -119,15 +119,19 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     )
     fig.update_yaxes(autorange=True, scaleanchor="x", scaleratio=1)
     fig.update_yaxes(range=[min(df[ycolumn]), max(df[ycolumn])])
+    fig.update_layout(xaxis=dict(showgrid=False), plot_bgcolor="rgb(230,230,230)")
     return fig
 
 
 def plot_symbol(symbol, parameter, height=500, width=1000):
     days = 365 * base_years
+    df = get_symbol_data(symbol, days)
     ycolumn = parameter_to_df_column[parameter]
-    fig = get_plot(
-        get_symbol_data(symbol, days), symbol, "DATE", ycolumn, parameter, height, width
-    )
+    fig = get_plot(df, symbol, "DATE", ycolumn, parameter, height, width)
+    if df[ycolumn].iloc[0] > df[ycolumn].iloc[1]:
+        fig.update_traces(line_color="green")
+    else:
+        fig.update_traces(line_color="red")
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
@@ -145,6 +149,7 @@ def plot_index(index, height=500, width=1000):
         height,
         width,
     )
+    fig.update_traces(line_color="green")
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
@@ -184,3 +189,6 @@ def plot_and_compare_symbols(
         config={"displayModeBar": False},
     )
     return plot_div
+
+
+# print(get_symbol_data('RELIANCE', 1))
