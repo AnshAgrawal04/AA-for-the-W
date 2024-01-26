@@ -9,25 +9,25 @@ import pandas as pd
 from plotly.offline import plot
 from bsedata.bse import BSE
 
-b=BSE()
+b = BSE()
 n = NSELive()
-indices=['NIFTY 50']
+indices = ["NIFTY 50"]
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
-base_years=2
+base_years = 2
 
-#Fetch Live Index Data while starting the server
-index_live_data={}
-index_live_data['SENSEX']=b.getIndices(category="market_cap/broad")['indices'][0]
-index_live_data['NIFTY 50']=n.live_index('NIFTY 50')['marketStatus']
+# Fetch Live Index Data while starting the server
+index_live_data = {}
+index_live_data["SENSEX"] = b.getIndices(category="market_cap/broad")["indices"][0]
+index_live_data["NIFTY 50"] = n.live_index("NIFTY 50")["marketStatus"]
 
-#Store Historic index data
-index_historic_data={}
+# Store Historic index data
+index_historic_data = {}
 for index in indices:
     end_date = date.today()
-    start_date = end_date - timedelta(days=base_years*365)
+    start_date = end_date - timedelta(days=base_years * 365)
     df = index_df(symbol=index, from_date=start_date, to_date=end_date)
     df.drop_duplicates(subset=["HistoricalDate"], inplace=True)
-    index_historic_data[index]=df
+    index_historic_data[index] = df
 
 parameter_to_df_column = {
     "Closing Price": "CLOSE",
@@ -41,8 +41,9 @@ parameter_to_df_column = {
     "Number of Trades": "NO OF TRADES",
 }
 
+
 def get_nifty50():
-    return nifty_50
+    return nifty_50_stocks
 
 
 def get_stock_compare_parameters():
@@ -70,21 +71,26 @@ def get_stock_display_parameters():
         "52W L": "52 Week Low",
     }
 
+
 def get_live_symbol_data(symbol):
     query = n.stock_quote(symbol)
     return query["priceInfo"]
 
+
 def get_live_index_data(index):
     return index_live_data[index]
 
+
 def get_index_data(index):
     return index_historic_data[index]
+
 
 def get_symbol_data(symbol, days):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
     df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
     return df
+
 
 def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     fig = go.Figure()
@@ -95,7 +101,6 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
         xaxis_title="Date",
         yaxis_title=title,
         autosize=False,
-        
         width=width,
         height=height,
     )
@@ -128,7 +133,8 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
     )
     return plot_div
 
-def plot_index(index,height=500, width=1000):
+
+def plot_index(index, height=500, width=1000):
     days = 365 * base_years
     fig = get_plot(
         index_historic_data[index],
@@ -148,7 +154,7 @@ def plot_index(index,height=500, width=1000):
 def plot_and_compare_symbols(
     symbol_name_1, symbol_name_2, symbol_name_3, parameter, height=500, width=1000
 ):
-    if symbol_name_1 not in nifty_50 or symbol_name_2 not in nifty_50:
+    if symbol_name_1 not in nifty_50_stocks or symbol_name_2 not in nifty_50_stocks:
         return None
     days = 365 * base_years
     ycol = parameter_to_df_column[parameter]
@@ -166,7 +172,7 @@ def plot_and_compare_symbols(
         go.Scatter(x=df["DATE"], y=df[ycol], mode="lines", name=symbol_name_2)
     )
     fig.update_layout(title=parameter)
-    if symbol_name_3 in nifty_50:
+    if symbol_name_3 in nifty_50_stocks:
         df = get_symbol_data(symbol_name_3, days)
         fig.add_trace(
             go.Scatter(x=df["DATE"], y=df[ycol], mode="lines", name=symbol_name_3)
