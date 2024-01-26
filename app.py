@@ -79,7 +79,7 @@ def dashboard():
 
         plot_div=gsd.plot_index('NIFTY 50',width=750,height=460)
         
-        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
+        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
 
     else:
         return redirect(url_for('index'))
@@ -129,6 +129,9 @@ def plot_compare():
 def plot_compare_graph():
     if request.method == "POST":
         return redirect(url_for("plot_compare"))
+# @app.route("/live")
+# def live():
+#     return render_template("sensexnifty.html", sensex_data=gsd.get_live_index_data("SENSEX"), nifty50_data=gsd.get_live_index_data("NIFTY 50") )
 
 @app.route("/logout")
 def logout():
@@ -136,10 +139,10 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("index"))
 
-@app.route("/news")
-def news():
-    return render_template("news_feed.html", news_articles=n.get_news()['articles'][:3])
+# @app.route("/news")
+# def news():
+#     return render_template("news_feed.html", news_articles=n.get_news()['articles'][:3])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
     
