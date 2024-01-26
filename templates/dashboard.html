@@ -159,7 +159,7 @@
     <div class="flex-container">
         <div class="container-1">
             <div class="search-wrapper">
-                <input type="search" id="search" data-search placeholder="Enter stock value">
+                <input type="search" id="search" data-search placeholder="Enter stock symbol">
             </div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
@@ -172,8 +172,8 @@
                         </div>
                         <div class="body">
                             <div class="stock-info">
-                                <p class="stock-open spaced"> {{ data.OPEN }}</p>
-                                <p class="stock-high spaced"> {{ data.HIGH }}</p>
+                                <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
+                                <p class="stock-high spaced">({{ '%.2f'%data['pChange'] }}%)</p>
                             </div>
                         </div>
                     </div>
@@ -206,81 +206,36 @@
             </div>
             <div class="container-2b">
                 <div class="container-2b-a">
-                    <table>
+                    <table>  
                         <tr class="table-head">
                             <th>Top Losers</th>
                             <th>Value</th>
                             <th>Loss</th>
                         </tr>
+                        {% for data_item in asc %}
                         <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
+                            <td>{{data_item[2]}}</td>
+                            <td>{{data_item[1]}}</td>
+                            <td>{{ '%.2f'%data_item[0] }}%</td>
                         </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-                        <tr>
-                            <td>Ernst Handel</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                        </tr>
-                        <tr>
-                            <td>Island Trading</td>
-                            <td>Helen Bennett</td>
-                            <td>UK</td>
-                        </tr>
-                        <tr>
-                            <td>Laughing Bacchus Winecellars</td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>Canada</td>
-                        </tr>
-                        <tr>
-                            <td>Magazzini Alimentari Riuniti</td>
-                            <td>Giovanni Rovelli</td>
-                            <td>Italy</td>
-                        </tr>
+                        {% endfor %}
+                        
                     </table>
                 </div>
                 <div class="container-2b-b">
                     <table>
                         <tr class="table-head">
-                            <th>Top Winners</th>
+                            <th>Top Gainers</th>
                             <th>Value</th>
                             <th>Gain</th>
                         </tr>
+                        {% for data_item in dsc %}
                         <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
+                            <td>{{data_item[2]}}</td>
+                            <td>{{data_item[1]}}</td>
+                            <td>{{ '%.2f'%data_item[0] }}%</td>
                         </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-                        <tr>
-                            <td>Ernst Handel</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                        </tr>
-                        <tr>
-                            <td>Island Trading</td>
-                            <td>Helen Bennett</td>
-                            <td>UK</td>
-                        </tr>
-                        <tr>
-                            <td>Laughing Bacchus Winecellars</td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>Canada</td>
-                        </tr>
-                        <tr>
-                            <td>Magazzini Alimentari Riuniti</td>
-                            <td>Giovanni Rovelli</td>
-                            <td>Italy</td>
-                        </tr>
+                        {% endfor %}
                     </table>
                 </div>
 

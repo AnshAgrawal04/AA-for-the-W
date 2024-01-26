@@ -73,7 +73,7 @@ def dashboard():
 
         for symbol in stock_symbols:
             stockdata[symbol]=gsd.get_live_symbol_data(symbol)
-            ascending_data.append([(stockdata[symbol]['lastPrice']/stockdata[symbol]['open']-1)*100,-stockdata[symbol]['lastPrice'],symbol])
+            ascending_data.append([stockdata[symbol]['pChange'],stockdata[symbol]['lastPrice'],symbol])
 
         ascending_data.sort()
         plot_div=gsd.plot_index()
