@@ -6,6 +6,7 @@ from jugaad_data.nse import stock_df
 from datetime import date, timedelta
 
 import get_stock_data as gsd
+import news as n
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -143,6 +144,9 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("index"))
 
+@app.route("/news")
+def news():
+    return render_template("news_feed.html", news_articles=n.get_news()['articles'][:4])
 
 if __name__ == "__main__":
     app.run(debug=True)
