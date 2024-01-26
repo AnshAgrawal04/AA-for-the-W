@@ -18,7 +18,8 @@ base_years = 2
 # Fetch Live Index Data while starting the server
 index_live_data = {}
 index_live_data["SENSEX"] = b.getIndices(category="market_cap/broad")["indices"][0]
-index_live_data["NIFTY 50"] = n.live_index("NIFTY 50")["marketStatus"]
+index_live_data['SENSEX']['pChange']=float(index_live_data['SENSEX']['pChange'])
+index_live_data["NIFTY 50"] = n.live_index("NIFTY 50")["data"][0]
 
 # Store Historic index data
 index_historic_data = {}
