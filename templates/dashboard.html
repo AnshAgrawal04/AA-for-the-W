@@ -72,7 +72,7 @@
 
         .container-1 {
             width: 25%;
-            background-color:#ffffff;
+            background-color: #ffffff;
         }
 
         .container-2 {
@@ -126,17 +126,18 @@
             font-size: 10px;
         }
 
-        td{
+        td {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
-            
+
         }
+
         th {
             border: 1px solid #dddddd;
             text-align: left;
             padding: 8px;
-            background-color:#211c1c;
+            background-color: #211c1c;
             color: white;
         }
 
@@ -206,7 +207,7 @@
             </div>
             <div class="container-2b">
                 <div class="container-2b-a">
-                    <table>  
+                    <table>
                         <tr class="table-head">
                             <th>Top Losers</th>
                             <th>Value</th>
@@ -214,12 +215,12 @@
                         </tr>
                         {% for data_item in asc %}
                         <tr>
-                            <td>{{data_item[2]}}</td>
-                            <td>{{data_item[1]}}</td>
-                            <td>{{ '%.2f'%data_item[0] }}%</td>
+                            <td>{{data_item['symbol']}}</td>
+                            <td>{{data_item['price']}}</td>
+                            <td>{{ '%.2f'%data_item['pchange'] }}%</td>
                         </tr>
                         {% endfor %}
-                        
+
                     </table>
                 </div>
                 <div class="container-2b-b">
@@ -231,9 +232,9 @@
                         </tr>
                         {% for data_item in dsc %}
                         <tr>
-                            <td>{{data_item[2]}}</td>
-                            <td>{{data_item[1]}}</td>
-                            <td>{{ '%.2f'%data_item[0] }}%</td>
+                            <td>{{data_item['symbol']}}</td>
+                            <td>{{data_item['price']}}</td>
+                            <td>{{ '%.2f'%data_item['pchange'] }}%</td>
                         </tr>
                         {% endfor %}
                     </table>
