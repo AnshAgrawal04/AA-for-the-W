@@ -11,7 +11,7 @@
             font-size: 16px;
             background-color: rgb(232, 232, 232);
             font-family: Arial, sans-serif;
-            margin:0;
+            margin: 0;
         }
 
         ul {
@@ -73,7 +73,7 @@
 
         .flex-container>div {
 
-            margin: 2px ;   
+            margin: 2px;
             padding: 5px;
             font-size: 30px;
 
@@ -86,6 +86,14 @@
             border-radius: 10px;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
+
+        .stock-table-header {
+            width: 70%;
+            margin-left: 20%;
+            margin-top: 10px;
+        }
+
+        ;
 
         .container-2 {
             margin: 0px;
@@ -112,16 +120,12 @@
             flex-direction: row;
         }
 
-
-
-
         .container-2b {
             height: 40%;
             background-color: inherit;
             margin-top: 5%;
             display: flex;
             justify-content: space-between;
-
         }
 
         .container-2b>div {
@@ -137,7 +141,6 @@
             display: flex;
             flex-direction: column;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
-
         }
 
         .container-2b-aa {
@@ -196,8 +199,7 @@
         }
 
         .container-3a {
-            height: 20%;
-
+            height: 8%;
             background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
             justify-content: center;
             border-radius: 10px;
@@ -206,17 +208,17 @@
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
 
-        .container-3b {
+        /* .container-3b {
             height: 20%;
-
             background-color: #ffffff;
             justify-content: center;
+            align-items: center;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
-
+ */
 
 
         table {
@@ -272,8 +274,54 @@
             border-radius: 10px;
         }
 
-        .article {
+        .container-3b {
+            height: 20%;
+            background-color: #d7ee6ef5;
+            align-items: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+        }
+        .watchlist-stocks-cards {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            /* Adjust the width as per your preference */
+            margin: 0 auto;
+        }
 
+        .watchlist-header {
+            /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .watchlist-stocks {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            width: 80%;
+            /* Adjust the width as per your preference */
+            margin: 0 auto;
+        }
+
+        .w-stock {
+            width: 90%;
+            /* Adjust the width as per your preference */
+            margin-bottom: 8px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 12px;
+            text-align: center;
+    
+        }
+
+        .article {
             margin-bottom: 20px;
             box-sizing: border-box;
             padding: 10px;
@@ -289,7 +337,7 @@
 
         .headline {
             margin-top: 2%;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             height: 70%;
         }
@@ -299,25 +347,35 @@
         }
 
         .source-link {
-            font-size: 15px;
+            font-size: 16px;
             color: #ffffff;
             text-decoration: none;
             justify-content: right;
         }
 
-        .triangle {
+        .up_triangle {
             width: 0;
             height: 0;
             border-left: 10px solid transparent;
             border-right: 10px solid transparent;
-            border-bottom: 20px solid rgb(255, 255, 255);
+            border-bottom: 20px solid rgb(0, 255, 0);
+            /* Adjust color and size as needed */
+        }
+
+        .down_triangle {
+            width: 0;
+            height: 0;
+            color: red;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid rgb(255, 0, 0);
             /* Adjust color and size as needed */
         }
     </style>
 </head>
 
 <body>
-    
+
     <ul>
         <li><a class="logo" href="/dashboard">Stonks</a></li>
         <li><a class="active" href="/dashboard">Home</a></li>
@@ -329,10 +387,11 @@
 
     <div class="flex-container">
         <div class="container-1">
+            <!-- <div style="height:50px;justify-content:center;align-items: center;width: 300px;color:#ffffff;background: linear-gradient(to right,#0037ff,#0088e9);border-radius: 5px;font-size: x-large;">SYMBOL   Value    %Change</div> -->
+            <div class="stock-table-header"><strong>NIFTY 50 Stocks</strong></div>
             <div class="search-wrapper">
                 <input type="search" id="search" data-search placeholder="Enter stock symbol">
             </div>
-            <div style="height:50px;justify-content:center;align-items: center;width: 300px;color:#ffffff;background: linear-gradient(to right,#0037ff,#0088e9);border-radius: 5px;font-size: x-large;">SYMBOL   Value    %Change</div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for symbol, data in stocks_data.items() %}
@@ -403,7 +462,7 @@
                             <tr class="table-head">
                                 <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
                                     Losers</th>
-                                <th >Value</th>
+                                <th>Value</th>
                                 <th style="color:crimson">Loss</th>
                             </tr>
                             {% for data_item in asc %}
@@ -476,15 +535,54 @@
                     <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>+2.30%</div>
-                            <div class="triangle"></div>
+                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div
+                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
                         </div>
 
                     </div>
                 </div>
-                <div style="width:50%; display: flex; justify-content: center; align-items: center;">NIFTY50</div>
+                <div
+                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
+                    <div style="height: 50%;justify-content: center;align-items: center;">NIFTY 50</div>
+                    <div style="height: 50%;justify-content: center;align-items: left;">
+                        <div style="font-size: medium;display:flex;flex-direction: row;">
+                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div
+                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="container-3b"></div>
+            <div class="container-3b">
+                <div class="watchlist-header"><strong>WATCHLIST</strong></div>
+                <div class="watchlist-stocks-cards">
+                    <div class="watchlist-stocks">
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                    </div>
+                    <div class="watchlist-stocks">
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% set colors = ['#ffc80e', '#81fbb8', '#fb5060', 'yellow', 'purple', 'orange'] %}
             {% set colors2 = ['#ff6900', '#28c76f', '#a90d23', 'purple', 'purple', 'orange'] %}
             {% for article in news_articles %}
