@@ -69,16 +69,15 @@ def dashboard():
     if 'user_id' in session:        
         stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK','SBIN','LT']  # Add all your 50 stock symbols here
         stockdata={}
-
-        # stock_symbols=gsd.get_nifty50()
         ascending_data = []
         for symbol in stock_symbols:
-            stockdata[symbol]=gsd.get_live_symbol_data(symbol)
-            ascending_data.append({'symbol':symbol,'pchange':stockdata[symbol]['pChange'],'price':stockdata[symbol]['lastPrice']})
+            stockdata[symbol]=gsd.get_symbol_data(symbol,5).iloc[0]
+            stockdata[symbol]['pchange']=(stockdata[symbol]['LTP']/stockdata[symbol]['PREV. CLOSE'])*100-100
+            ascending_data.append({'symbol':symbol,'pchange':stockdata[symbol]['pchange'],'price':stockdata[symbol]['LTP']})
         ascending_data = sorted(ascending_data, key=lambda x: x['pchange'])
         descending_data = ascending_data[::-1]
 
-        plot_div=gsd.plot_index('NIFTY 50',width=600,height=400)
+        plot_div=gsd.plot_index('NIFTY 50',width=750,height=460)
         
         return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
 
@@ -88,21 +87,15 @@ def dashboard():
 @app.route('/<symbol>')
 def stock(symbol):
     livedata=gsd.get_live_symbol_data(symbol)
-    stockdata=gsd.get_symbol_data(symbol,1).iloc[0]
+    stockdata=gsd.get_symbol_data(symbol,5).iloc[0]
     stock_parameter=gsd.get_stock_display_parameters()
     plot_div = gsd.plot_symbol(symbol, 'Closing Price',450,900)
     return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div)
-    if "user_id" in session:
-        return redirect(url_for("graph"))
-        return render_template("welcome.html", username=session["username"])
-    else:
-        return redirect(url_for("index"))
 
-@app.route("/index_graph")
-def index_graph():
-    plot_div=gsd.plot_index(width=500,height=400)
-    return render_template("graph.html", plot_div=plot_div)
-
+# @app.route("/index_graph")
+# def index_graph():
+#     plot_div=gsd.plot_index(width=500,height=400)
+#     return render_template("graph.html", plot_div=plot_div)
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
@@ -132,13 +125,10 @@ def plot_compare():
         )
     return render_template("plot_compare.html", parameter_options=parameter_options)
 
-
 @app.route("/reset", methods=["POST"])
 def plot_compare_graph():
     if request.method == "POST":
         return redirect(url_for("plot_compare"))
-
-
 
 @app.route("/logout")
 def logout():
