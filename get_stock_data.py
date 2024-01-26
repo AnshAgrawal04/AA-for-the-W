@@ -1,4 +1,5 @@
 from jugaad_data.nse import index_df, stock_df
+from jugaad_data.nse import NSELive
 import sys
 import time
 import os
@@ -6,6 +7,9 @@ from datetime import date, timedelta
 import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
+# from nsetools import Nse
+# nse=Nse()
+n=NSELive()
 
 parameter_to_df_column = {
     "Closing Price": "CLOSE",
@@ -20,6 +24,34 @@ parameter_to_df_column = {
 }
 nifty_50 = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 
+# def get_top_gainers():
+#     top_gainers=nse.get_top_gainers()
+#     top_gainers_price=[]
+#     for gainer in top_gainers:
+#         gains={}
+#         gains['symbol']=gainer['symbol']
+#         gains['price']=gainer['ltp']
+#         gains['pchange']=(gainer['ltp']/gainer['previousPrice']-1)*100
+#         top_gainers_price.append(gains)
+#     return top_gainers_price
+
+# def get_top_losers():
+#     top_losers=nse.get_top_losers()[:5]
+#     top_losers_price=[]
+#     for loser in top_losers:
+#         losses={}
+#         losses['symbol']=loser['symbol']
+#         losses['price']=loser['ltp']
+#         losses['pchange']=(loser['ltp']/loser['previousPrice']-1)*100
+#         top_losers_price.append(losses)
+#     return top_losers_price
+
+
+
+def get_live_symbol_data(symbol):
+    query=n.stock_quote(symbol)
+    return query['priceInfo']
+    
 def get_index_data(index, days):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
@@ -80,6 +112,17 @@ def get_stock_compare_parameters():
         "Average Price",
     ]
 
+def plot_symbol(symbol, parameter):
+    num_years = 2
+    days = 365 * num_years
+    ycolumn=  parameter_to_df_column[parameter]
+    fig = get_plot(
+        get_symbol_data(symbol, days), symbol, 'DATE', ycolumn, parameter
+    )
+    plot_div = plot(
+        fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
+    )
+    return plot_div
 
 def plot_index():
     num_years = 2
@@ -126,5 +169,4 @@ def plot_and_compare_symbols(symbol_name_1, symbol_name_2, symbol_name_3, parame
     )
     return plot_div
 
-# df=get_index_data("NIFTY 50", 365*2)
-# print(df.tail())
+# print(get_live_symbol_data('LT'))

@@ -16,21 +16,21 @@
             </div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
-            {% for symbol, data in stocks_data.items() %}
-            <div class="card" data-symbol="{{ symbol }}">
-                <a href="/{{symbol}}" class="card-link">
-                <div class="header">
-                    {{ symbol }}
-                </div>
-                <div class="body">
-                    <div class="stock-info">
-                        <p class="stock-open spaced"> {{ data.OPEN }}</p>
-                        <p class="stock-high spaced"> {{ data.HIGH }}</p>
+                {% for symbol, data in stocks_data.items() %}
+                    <div class="card" data-symbol="{{ symbol }}">
+                        <a href="/{{symbol}}" class="card-link">
+                        <div class="header">
+                            {{ symbol }}
+                        </div>
+                        <div class="body">
+                            <div class="stock-info">
+                                <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
+                                <p class="stock-high spaced">{{ data['pChange'] }}%</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
             <script>
                 document.getElementById('search').addEventListener('input', function (e) {
                     var search = e.target.value.toLowerCase();
@@ -47,16 +47,15 @@
             </script>
         </section>
         <section>
-            <div>
-                <label>
-            </div>
-            {% for value,symbol in asc %}
-            <div class="ascending-data" data-symbol="{{ symbol }}">
+
+            {% for gainer in gainers %}
+            <div class="ascending-data" data-symbol="{{ gainer[2] }}">
                 <div class="header">
-                    {{ symbol }}</div>
+                    {{ gainer[2] }}</div>
                 <div class="body">
                     <div class="stock-info">
-                        <p class="stock-open"> {{ value}}</p>
+                        <p class="stock-pc"> {{ gainer[0]}}</p>
+                        <p class="stock-open"> {{ -gainer[1]}}</p>
                     </div>
                 </div>
 
@@ -64,20 +63,21 @@
             {% endfor %}
         </section>
         <section>
-            {% for value,symbol in desc %}
-            <div class="ascending-data" data-symbol="{{ symbol }}">
+            {% for loser in losers %}
+            <div class="ascending-data" data-symbol="{{ loser[2] }}">
                 <div class="header">
-                    {{ symbol }}</div>
+                    {{ loser[2] }}</div>
                 <div class="body">
                     <div class="stock-info">
-                        <p class="stock-open"> {{ value}}</p>
+                        <p class="stock-open"> {{ loser[0]}}</p>
+                        <p class="stock-open"> {{ -loser[1]}}</p>
+
                     </div>
                 </div>
 
             </div>
             {% endfor %}
         </section>
-
 
     </div>
 </body>
