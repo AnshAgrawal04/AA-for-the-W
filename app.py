@@ -90,7 +90,7 @@ def stock(symbol):
     livedata=gsd.get_live_symbol_data(symbol)
     stockdata=gsd.get_symbol_data(symbol,1).iloc[0]
     stock_parameter=gsd.get_stock_display_parameters()
-    plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,900)
+    plot_div = gsd.plot_symbol(symbol, 'Closing Price',450,900)
     return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div)
     if "user_id" in session:
         return redirect(url_for("graph"))
@@ -137,6 +137,7 @@ def plot_compare():
 def plot_compare_graph():
     if request.method == "POST":
         return redirect(url_for("plot_compare"))
+
 
 
 @app.route("/logout")

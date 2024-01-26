@@ -1,18 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title>{{ symbol }} Details</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+            font-size: 16px;
+            background-color: rgb(232, 232, 232);
+            font-family: Arial, sans-serif;
+            margin: 0;  
+            /* Remove default margin */
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #211c1c;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            /* Ensure the navbar appears above other elements */
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .logo {
+            background-color: rgb(35, 34, 33);
+            color: #f3f3f3;
+            width: 100px;
+        }
+
+        .active {
+            background-color: #4c53af;
+        }
+
+        .user_tab {
+            background-color: rgb(181, 208, 239);
+            width: 100px;
+            float: right;
+            /* Align to the right */
+            /* Add margin to the right */
+        }
+
+        h1 {
+            text-align: center;
+            color: #4c53af;
+            margin-top: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 10px;
+        }
+
+        p {
+            width: 15%;
+            margin-left: 14px;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+        .stock_attributes{
+            max-width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .graph {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 5px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
+    <ul>
+        <li><a class="logo" href="/dashboard">Stonks</a></li>
+        <li><a class="active" href="/register">Home</a></li>
+        <li><a href="/welcome">News</a></li>
+        <li><a href="/plot_compare">Plot Graph</a></li>
+        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
+    </ul>
+
     <h1>{{ symbol }} Details</h1>
-    <h2>Current Price: {{livedata['lastPrice']}} Percent Change: {{livedata['pChange']}}    </h2>
-    {% for col,para in stockpara.items() %}
-    <p>{{para}}: {{ historicaldata[col]}}</p>
-    {% endfor%}
-    <div class = "graph">
-        {{ plot_div|safe }}
+    <h2>Current Price: {{ livedata['lastPrice'] }} ({{ '%.2f'%livedata['pChange'] }}%)</h2>
+
+    <div class="graph">
+        {{ plot_div|safe}}
     </div>
-    <!-- Add more fields as needed -->
+    <div class="stock_attributes">{% for col, para in stockpara.items() %} <p><strong>{{ para }}</strong>: {{ historicaldata[col] }}</p>
+        {% endfor %}
+    </div>
+
+
 </body>
+
 </html>
