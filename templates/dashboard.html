@@ -162,7 +162,7 @@
 
         .container-2b-ba {
             width: 100%;
-            background-color: rgb(78, 187, 61);
+            background:linear-gradient(to right, rgb(255, 255, 255),rgb(0, 136, 14));
             justify-content: center;
 
         }
@@ -178,34 +178,40 @@
 
         .container-3 {
             width: 30%;
-            background-color:inherit;
+            background-color: inherit;
             border-radius: 10px;
-            display:flex;
+            display: flex;
             flex-direction: column;
         }
+
         .container-3>div {
             margin: 3px;
             padding: 10px;
         }
-        .container-3a{
+
+        .container-3a {
             height: 20%;
-            
-            background: linear-gradient( rgb(130, 121, 206), rgb(54, 8, 220));
+
+            background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
             justify-content: center;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
-        .container-3b{
-            height: 80%;
-            background-color: rgb(255, 255, 255);
+
+        .container-3b {
+            height: 20%;
+
+            background-color: #ffffff;
             justify-content: center;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
+
+       
 
         table {
             font-family: arial, sans-serif;
@@ -260,17 +266,25 @@
         }
 
         .article {
-
+            
             margin-bottom: 20px;
             box-sizing: border-box;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
+            height: 20%;
+            color:#ffffff;
+            border-radius: 10px;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+            justify-content: center;
+
         }
 
         .headline {
-            font-size: 10px;
+            margin-top: 2%;
+            font-size: 16px;
             font-weight: bold;
+            height: 70%;
         }
 
         .content {
@@ -278,9 +292,10 @@
         }
 
         .source-link {
-            font-size: 10px;
-            color: #0066cc;
+            font-size: 15px;
+            color: #ffffff;
             text-decoration: none;
+            justify-content: right;
         }
     </style>
 </head>
@@ -349,7 +364,7 @@
             <div class="container-2b">
                 <div class="container-2b-a" style="padding:5px;">
 
-                    <div style="height:4%;background-color: rgb(211, 78, 78);border-radius: 5px;"></div>
+                    <div style="height:4%;background:linear-gradient(to right, rgb(255, 255, 255),rgb(255, 0, 0));border-radius: 5px;"></div>
                     <div class="container-2b-ab" style="height:98%; justify-content: center;">
                         <table class="table1">
                             <tr class="table-head">
@@ -422,22 +437,25 @@
         </div>
         <div class="container-3">
             <div class="container-3a"></div>
-            <div class="container-3b">
-                <h3>Stock News Feed</h3>
-
+            <div class="container-3b"></div>
+            
+                {% set colors = ['#ffc80e', '#81fbb8', '#52e5e7', 'yellow', 'purple', 'orange'] %}
+                {% set colors2 = ['#ff6900', '#28c76f', '#130cb7', 'purple', 'purple', 'orange'] %}
                 {% for article in news_articles %}
-                <div class="article">
+                <div class="article"
+                    style="background: linear-gradient({{ colors2[loop.index0 % colors2|length] }},{{ colors[loop.index0 % colors|length] }});">
                     <div class="headline">{{ article['title'] }}</div>
-                    <a class="source-link" href="{{ article['url'] }}" target="_blank">Read more here</a>
+                    <a  class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
                 </div>
                 {% endfor %}
             </div>
-
-
-
-
-
         </div>
+
+
+
+
+
+    </div>
 
     </div>
 
