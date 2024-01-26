@@ -120,6 +120,8 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     fig.update_yaxes(autorange=True, scaleanchor="x", scaleratio=1)
     fig.update_yaxes(range=[min(df[ycolumn]), max(df[ycolumn])])
     fig.update_layout(xaxis=dict(showgrid=False), plot_bgcolor="rgb(230,230,230)")
+    fig.update_layout(
+    title_font=dict(size=25))
     return fig
 
 
@@ -132,6 +134,7 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
         fig.update_traces(line_color="green")
     else:
         fig.update_traces(line_color="red")
+    
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
@@ -150,6 +153,7 @@ def plot_index(index, height=500, width=1000):
         width,
     )
     fig.update_traces(line_color="green")
+    
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
