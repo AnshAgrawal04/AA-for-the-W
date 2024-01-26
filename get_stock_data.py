@@ -82,8 +82,8 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title):
         xaxis_title="Date",
         yaxis_title=title,
         autosize=False,
-        width=715,
-        height=430,
+        width=600,
+        height=400,
     )
     fig.update_xaxes(
         rangeslider_visible=False,

@@ -66,7 +66,7 @@ def login():
 def dashboard():
 
     if 'user_id' in session:        
-        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK']  # Add all your 50 stock symbols here
+        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK','SBIN','LT']  # Add all your 50 stock symbols here
         stockdata={}
         # stock_symbols=gsd.nifty_50
         ascending_data = []
