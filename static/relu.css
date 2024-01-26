@@ -1,7 +1,9 @@
+
 .search-wrapper {
     margin-bottom: 20px;
     width: 100%;
     
+
 }
 .tables-container {
     display: flex;
@@ -9,6 +11,7 @@
     /* justify-content: space-between; */
     justify-content: space-evenly;
     align-items: left;
+
     
 }
 input{
@@ -22,6 +25,7 @@ input{
     font-weight: bold;
     
 
+
 }
 
 .user-cards {
@@ -29,6 +33,7 @@ input{
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
+
    
 }
 
@@ -45,16 +50,21 @@ input{
     margin-bottom: 2px;
     padding: 20px;
     background-color: #ebebeb;
+
     transition: background-color 0.3s ease; /* This will animate the color change */
 }
 
 .card:hover {
+
     background-color: #b3b3b3; /* This is a light green color */
+
     border-color: #0b4426;
 }
 
 .card-container {
+
     max-height: 600px; /* Adjust this value based on the height of your cards */
+
     overflow-y: auto;
 }
 
@@ -69,13 +79,17 @@ input{
 
 .stock-info {
     display: flex;
+
     justify-content: space-between;
+
 
 }
 .header{
     font-weight: bold;
+
     font-size: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
 }
 .stock-open{
     color: green;

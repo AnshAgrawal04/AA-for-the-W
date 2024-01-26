@@ -82,13 +82,13 @@ def dashboard():
         for symbols in stock_symbols:
             stockdata[symbols]=get_stock_data(symbols)
             ascending_data.append([stockdata[symbols]['CLOSE']-stockdata[symbols]['OPEN'],symbols])
+
         
         ascending_data.sort()
         descending_data = ascending_data[::-1]
         plot_div=gsd.plot_index()
     #return render_template("graph.html", plot_div=plot_div)
         return render_template('dashboard.html', username=session['username'],stocks_data=stockdata,asc=ascending_data ,desc=descending_data,plot_div=plot_div)
-        return render_template('table.html', username=session['username'],stocks_data=stockdata,asc=ascending_data ,desc=descending_data)
     else:
         return redirect(url_for('index'))
     
