@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>Dashboard</title>
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='relu.css') }}">
@@ -59,64 +60,159 @@
         .flex-container {
             display: flex;
             background-color: inherit;
-            height: 100vh;
+            height: 90vh;
             flex-grow: inherit;
+            margin: 0px;
+
         }
 
         .flex-container>div {
 
-            margin: 10px;
-            padding: 20px;
+            margin: 2px;
+            padding: 5px;
             font-size: 30px;
+
         }
 
         .container-1 {
-            width: 25%;
-            background-color:#ffffff;
+
+            width: 22%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
 
         .container-2 {
+            margin: 0px;
+            padding: 0px;
             display: flex;
             flex-direction: column;
-            width: 60%;
-            background-color: rgb(234, 234, 234);
+            width: 45%;
+            background-color: inherit;
+        }
+
+        .container-2>div {
+            margin: 2px;
+            padding: 5px;
         }
 
         .container-2a {
             height: 60%;
             background-color: rgb(255, 255, 255);
             justify-content: center;
+            border-radius: 10px;
+            border-color: rgb(11, 22, 22);
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+            display: flex;
+            flex-direction: row;
         }
 
-        .graph {
-            height: 100px;
-            width: 100px;
-        }
+
+
 
         .container-2b {
             height: 40%;
-            background-color: rgb(221, 221, 221);
+            background-color: inherit;
             margin-top: 5%;
             display: flex;
             justify-content: space-between;
+
+        }
+
+        .container-2b>div {
+            margin: 5px;
+            padding: 7px;
         }
 
         .container-2b-a {
             width: 48%;
             background-color: rgb(255, 255, 255);
-            justify-content: left;
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+
         }
+
+        .container-2b-aa {
+            width: 90%;
+            background-color: rgb(255, 255, 255);
+            justify-content: center;
+
+        }
+
+        .container-2b-ab {
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            justify-content: center;
+
+        }
+
 
         .container-2b-b {
             width: 48%;
             background-color: rgb(255, 255, 255);
-            justify-content: right;
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+
         }
 
-        .container-3 {
-            width: 15%;
-            background-color: rgb(21, 33, 65);
+        .container-2b-ba {
+            width: 100%;
+            background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 136, 14));
+            justify-content: center;
+
         }
+
+        .container-2b-bb {
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            justify-content: center;
+
+        }
+
+
+
+        .container-3 {
+            width: 30%;
+            background-color: inherit;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container-3>div {
+            margin: 3px;
+            padding: 10px;
+        }
+
+        .container-3a {
+            height: 20%;
+
+            background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+        }
+
+        .container-3b {
+            height: 20%;
+
+            background-color: #ffffff;
+            justify-content: center;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+        }
+
+
 
         table {
             font-family: arial, sans-serif;
@@ -124,24 +220,92 @@
             width: 100%;
             height: 250px;
             font-size: 10px;
+
+
+
         }
 
-        td{
-            border: 1px solid #dddddd;
+        td {
+            border: 1px solid #ffffff;
             text-align: left;
             padding: 8px;
-            
+            height: 22px;
         }
+
         th {
-            border: 1px solid #dddddd;
+            font-size: medium;
+            border: 1px solid #ffffff;
             text-align: left;
             padding: 8px;
-            background-color:#211c1c;
-            color: white;
+            background-color: #ffffff;
+            color: rgb(103, 100, 100);
+            font-size: 12px;
+
         }
 
         tr:nth-child(even) {
-            background-color: #9c9c9c;
+            background-color: #eeeeee;
+
+        }
+
+        .loss {
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+        }
+
+        .gain {
+            font-size: 11px;
+            font-weight: bold;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+        }
+
+        .table1 {
+            border-radius: 10px;
+        }
+
+        .article {
+
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            height: 20%;
+            color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+            justify-content: center;
+
+        }
+
+        .headline {
+            margin-top: 2%;
+            font-size: 16px;
+            font-weight: bold;
+            height: 70%;
+        }
+
+        .content {
+            margin-top: 10px;
+        }
+
+        .source-link {
+            font-size: 15px;
+            color: #ffffff;
+            text-decoration: none;
+            justify-content: right;
+        }
+
+        .triangle {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 20px solid rgb(255, 255, 255);
+            /* Adjust color and size as needed */
         }
     </style>
 </head>
@@ -150,8 +314,9 @@
 
     <ul>
         <li><a class="logo" href="/dashboard">Stonks</a></li>
-        <li><a class="active" href="/register">Home</a></li>
+        <li><a class="active" href="/dashboard">Home</a></li>
         <li><a href="/welcome">News</a></li>
+
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
     </ul>
@@ -159,22 +324,35 @@
     <div class="flex-container">
         <div class="container-1">
             <div class="search-wrapper">
-                <input type="search" id="search" data-search placeholder="Enter stock value">
+                <input type="search" id="search" data-search placeholder="Enter stock symbol">
             </div>
+            <div style="height:50px;justify-content:center;align-items: center;width: 300px;color:#ffffff;background: linear-gradient(to right,#0037ff,#0088e9);border-radius: 5px;font-size: x-large;">SYMBOL   Value    %Change</div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for symbol, data in stocks_data.items() %}
                 <a href="/{{symbol}}" class="card-link">
-                    <div class="card" data-symbol="{{ symbol }}">
+                    <div class="card" data-symbol="{{ symbol }}"
+                        style="background-color: {{ 'white' if loop.index is odd else '#f0f0f0' }};">
 
-                        <div class="header">
+                        <div class="header" style="margin-bottom: 7px;font-size: 20px;">
                             {{ symbol }}
                         </div>
                         <div class="body">
                             <div class="stock-info">
-                                <p class="stock-open spaced"> {{ data.OPEN }}</p>
-                                <p class="stock-high spaced"> {{ data.HIGH }}</p>
+                                <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
+                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pChange'] }}%</p>
                             </div>
+                            <script>
+                                var dataItems = document.querySelectorAll('.stock-high');
+                                dataItems.forEach(function (dataItem) {
+                                    var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                    if (lossValue >= 0) {
+                                        dataItem.style.color = '#3cb242';
+                                    } else {
+                                        dataItem.style.color = 'red';
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </a>
@@ -199,94 +377,126 @@
 
         </div>
         <div class="container-2">
-            <div class="container-2a">
-                <div class="graph">
+            <div class="container-2a" style="display:flex;flex-direction: row;">
+
+                <div style="background:linear-gradient(#fff6b7,#f6416c); width:10px; height:100%;border-radius: 10px;">
+                </div>
+                <div class="graph" style="width:95%;">
                     {{ plot_div|safe }}
                 </div>
+                <div style="width:2%;"></div>
             </div>
             <div class="container-2b">
-                <div class="container-2b-a">
-                    <table>
-                        <tr class="table-head">
-                            <th>Top Losers</th>
-                            <th>Value</th>
-                            <th>Loss</th>
-                        </tr>
-                        <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                        </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-                        <tr>
-                            <td>Ernst Handel</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                        </tr>
-                        <tr>
-                            <td>Island Trading</td>
-                            <td>Helen Bennett</td>
-                            <td>UK</td>
-                        </tr>
-                        <tr>
-                            <td>Laughing Bacchus Winecellars</td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>Canada</td>
-                        </tr>
-                        <tr>
-                            <td>Magazzini Alimentari Riuniti</td>
-                            <td>Giovanni Rovelli</td>
-                            <td>Italy</td>
-                        </tr>
-                    </table>
+                <div class="container-2b-a" style="padding:5px;">
+
+                    <div
+                        style="height:4%;background:linear-gradient(to right, rgb(255, 255, 255),rgb(255, 0, 0));border-radius: 5px;">
+                    </div>
+                    <div class="container-2b-ab" style="height:98%; justify-content: center;">
+                        <table class="table1">
+                            <tr class="table-head">
+                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                    Losers</th>
+                                <th>Value</th>
+                                <th style="color:crimson">Loss</th>
+                            </tr>
+                            {% for data_item in asc %}
+                            <tr>
+                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                    {{data_item['symbol']}}
+                                </td>
+                                <td>{{data_item['price']}}</td>
+                                <td id="dataItem" class="loss">{{ '%.2f'%data_item['pchange'] }}%</td>
+
+                                <script>
+                                    var dataItems = document.querySelectorAll('.loss');
+                                    dataItems.forEach(function (dataItem) {
+                                        var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                        if (lossValue >= 0) {
+                                            dataItem.style.color = 'lightgreen';
+                                        } else {
+                                            dataItem.style.color = 'red';
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
                 </div>
                 <div class="container-2b-b">
-                    <table>
-                        <tr class="table-head">
-                            <th>Top Winners</th>
-                            <th>Value</th>
-                            <th>Gain</th>
-                        </tr>
-                        <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>Maria Anders</td>
-                            <td>Germany</td>
-                        </tr>
-                        <tr>
-                            <td>Centro comercial Moctezuma</td>
-                            <td>Francisco Chang</td>
-                            <td>Mexico</td>
-                        </tr>
-                        <tr>
-                            <td>Ernst Handel</td>
-                            <td>Roland Mendel</td>
-                            <td>Austria</td>
-                        </tr>
-                        <tr>
-                            <td>Island Trading</td>
-                            <td>Helen Bennett</td>
-                            <td>UK</td>
-                        </tr>
-                        <tr>
-                            <td>Laughing Bacchus Winecellars</td>
-                            <td>Yoshi Tannamuri</td>
-                            <td>Canada</td>
-                        </tr>
-                        <tr>
-                            <td>Magazzini Alimentari Riuniti</td>
-                            <td>Giovanni Rovelli</td>
-                            <td>Italy</td>
-                        </tr>
-                    </table>
+                    <div class="container-2b-ba" style="height:4%;border-radius: 5px;"></div>
+                    <div class="container-2b-bb" style="height:98%;">
+                        <table>
+                            <tr class="table-head">
+                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                    Gainers</th>
+                                <th>Value</th>
+                                <th style="color:green">Gain</th>
+                            </tr>
+                            {% for data_item in dsc %}
+                            <tr>
+
+                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                    {{data_item['symbol']}}</td>
+                                <td>{{data_item['price']}}</td>
+                                <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
+
+                                <script>
+                                    var dataItems = document.querySelectorAll('.gain');
+                                    dataItems.forEach(function (dataItem) {
+                                        var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                        if (lossValue >= 0) {
+                                            dataItem.style.color = '#3cb242';
+                                        } else {
+                                            dataItem.style.color = 'red';
+                                        }
+                                    });
+                                </script>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
                 </div>
 
             </div>
         </div>
-        <div class="container-3">3</div>
+        <div class="container-3">
+            <div class="container-3a"
+                style="display:flex;flex-direction: row;color:#ffffff;font-weight: 700;font-size: large;">
+                <div
+                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
+                    <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
+                    <div style="height: 50%;justify-content: center;align-items: left;">
+                        <div style="font-size: medium;display:flex;flex-direction: row;">
+                            <div>+2.30%</div>
+                            <div class="triangle"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div style="width:50%; display: flex; justify-content: center; align-items: center;">NIFTY50</div>
+            </div>
+            <div class="container-3b"></div>
+            {% set colors = ['#ffc80e', '#81fbb8', '#fb5060', 'yellow', 'purple', 'orange'] %}
+            {% set colors2 = ['#ff6900', '#28c76f', '#a90d23', 'purple', 'purple', 'orange'] %}
+            {% for article in news_articles %}
+            <div class="article"
+                style="background: linear-gradient({{ colors2[loop.index0 % colors2|length] }},{{ colors[loop.index0 % colors|length] }});">
+                <div class="headline">{{ article['title'] }}</div>
+                <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+    </div>
+
     </div>
 
 </body>
