@@ -324,20 +324,33 @@
             <div class="search-wrapper">
                 <input type="search" id="search" data-search placeholder="Enter stock symbol">
             </div>
+            <div style="height:50px;justify-content:center;align-items: center;width: 300px;color:#ffffff;background: linear-gradient(to right,#0037ff,#0088e9);border-radius: 5px;font-size: x-large;">SYMBOL   Value    %Change</div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for symbol, data in stocks_data.items() %}
                 <a href="/{{symbol}}" class="card-link">
-                    <div class="card" data-symbol="{{ symbol }}">
+                    <div class="card" data-symbol="{{ symbol }}"
+                        style="background-color: {{ 'white' if loop.index is odd else '#f0f0f0' }};">
 
-                        <div class="header">
+                        <div class="header" style="margin-bottom: 7px;font-size: 20px;">
                             {{ symbol }}
                         </div>
                         <div class="body">
                             <div class="stock-info">
                                 <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
-                                <p class="stock-high spaced">({{ '%.2f'%data['pChange'] }}%)</p>
+                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pChange'] }}%</p>
                             </div>
+                            <script>
+                                var dataItems = document.querySelectorAll('.stock-high');
+                                dataItems.forEach(function (dataItem) {
+                                    var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                    if (lossValue >= 0) {
+                                        dataItem.style.color = '#3cb242';
+                                    } else {
+                                        dataItem.style.color = 'red';
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </a>
@@ -363,12 +376,13 @@
         </div>
         <div class="container-2">
             <div class="container-2a" style="display:flex;flex-direction: row;">
-                <div style="background-color:rgb(1, 7, 7)" style="width:2%"></div>
-                <div class="graph" style="width:95%">
-                    {{ plot_div|safe }}
 
+                <div style="background:linear-gradient(#fff6b7,#f6416c); width:10px; height:100%;border-radius: 10px;">
                 </div>
-                <div style="width:2%"></div>
+                <div class="graph" style="width:95%;">
+                    {{ plot_div|safe }}
+                </div>
+                <div style="width:2%;"></div>
             </div>
             <div class="container-2b">
                 <div class="container-2b-a" style="padding:5px;">
@@ -453,15 +467,18 @@
                     style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
                     <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
-                        <div style="font-size: medium;display:flex;flex-direction: row;"><div>+2.30%</div><div class="triangle"></div></div>
-                        
+                        <div style="font-size: medium;display:flex;flex-direction: row;">
+                            <div>+2.30%</div>
+                            <div class="triangle"></div>
+                        </div>
+
                     </div>
                 </div>
                 <div style="width:50%; display: flex; justify-content: center; align-items: center;">NIFTY50</div>
             </div>
             <div class="container-3b"></div>
-            {% set colors = ['#ffc80e', '#81fbb8', '#52e5e7', 'yellow', 'purple', 'orange'] %}
-            {% set colors2 = ['#ff6900', '#28c76f', '#130cb7', 'purple', 'purple', 'orange'] %}
+            {% set colors = ['#ffc80e', '#81fbb8', '#fb5060', 'yellow', 'purple', 'orange'] %}
+            {% set colors2 = ['#ff6900', '#28c76f', '#a90d23', 'purple', 'purple', 'orange'] %}
             {% for article in news_articles %}
             <div class="article"
                 style="background: linear-gradient({{ colors2[loop.index0 % colors2|length] }},{{ colors[loop.index0 % colors|length] }});">

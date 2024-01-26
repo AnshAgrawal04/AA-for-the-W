@@ -39,7 +39,7 @@ input{
 }
 
 .card {
-    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    box-shadow: 3px 3px 1px rgb(234, 234, 234);
     width:260px;
     display: flex;
     justify-content: space-between;
@@ -86,18 +86,22 @@ input{
 
 }
 .header{
-    font-weight: bold;
+    color: #525252;
 
     font-size: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
 .stock-open{
-    color: green;
+    color: rgb(0, 60, 255);
     margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 15px;
 }
 .stock-high{
-    color: red;
+    
+    font-weight: bold;
+    font-size: 15px;
 }
 .stock-info div {
     flex: 1 0 20%; /* This will make the p elements take up 20% of the width of the .stock-info div and wrap to the next line if there's not enough space */
