@@ -11,6 +11,23 @@ from bsedata.bse import BSE
 
 b=BSE()
 n = NSELive()
+indices=['NIFTY 50']
+nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
+base_years=2
+
+#Fetch Live Index Data while starting the server
+index_live_data={}
+index_live_data['SENSEX']=b.getIndices(category="market_cap/broad")['indices'][0]
+index_live_data['NIFTY 50']=n.live_index('NIFTY 50')['marketStatus']
+
+#Store Historic index data
+index_historic_data={}
+for index in indices:
+    end_date = date.today()
+    start_date = end_date - timedelta(days=base_years*365)
+    df = index_df(symbol=index, from_date=start_date, to_date=end_date)
+    df.drop_duplicates(subset=["HistoricalDate"], inplace=True)
+    index_historic_data[index]=df
 
 parameter_to_df_column = {
     "Closing Price": "CLOSE",
@@ -23,9 +40,6 @@ parameter_to_df_column = {
     "Value": "VALUE",
     "Number of Trades": "NO OF TRADES",
 }
-
-nifty_50 = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
-
 
 def get_nifty50():
     return nifty_50
@@ -61,18 +75,10 @@ def get_live_symbol_data(symbol):
     return query["priceInfo"]
 
 def get_live_index_data(index):
-    if index=='SENSEX':
-        return b.getIndices(category="market_cap/broad")['indices'][0]
-    else:
-        return n.live_index('NIFTY 50')['marketStatus']
+    return index_live_data[index]
 
-def get_index_data(index, days):
-    end_date = date.today()
-    start_date = end_date - timedelta(days=days)
-    df = index_df(symbol=index, from_date=start_date, to_date=end_date)
-    df.drop_duplicates(subset=["HistoricalDate"], inplace=True)
-    return df
-
+def get_index_data(index):
+    return index_historic_data[index]
 
 def get_symbol_data(symbol, days):
     end_date = date.today()
@@ -112,8 +118,7 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
 
 
 def plot_symbol(symbol, parameter, height=500, width=1000):
-    num_years = 2
-    days = 365 * num_years
+    days = 365 * base_years
     ycolumn = parameter_to_df_column[parameter]
     fig = get_plot(
         get_symbol_data(symbol, days), symbol, "DATE", ycolumn, parameter, height, width
@@ -123,12 +128,11 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
     )
     return plot_div
 
-def plot_index(height=500, width=1000):
-    num_years = 2
-    days = 365 * num_years
+def plot_index(index,height=500, width=1000):
+    days = 365 * base_years
     fig = get_plot(
-        get_index_data("NIFTY 50", days),
-        "NIFTY 50",
+        index_historic_data[index],
+        index,
         "HistoricalDate",
         "CLOSE",
         "Closing Prices",
@@ -146,8 +150,7 @@ def plot_and_compare_symbols(
 ):
     if symbol_name_1 not in nifty_50 or symbol_name_2 not in nifty_50:
         return None
-    num_years = 2
-    days = 365 * num_years
+    days = 365 * base_years
     ycol = parameter_to_df_column[parameter]
     fig = get_plot(
         get_symbol_data(symbol_name_1, days),
