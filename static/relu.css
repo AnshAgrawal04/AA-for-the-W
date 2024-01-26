@@ -1,9 +1,9 @@
 
 .search-wrapper {
     margin-bottom: 20px;
+    margin-left:10px;
+    margin-top:10px;
     width: 100%;
-    
-
 }
 .tables-container {
     display: flex;
@@ -18,15 +18,12 @@ input{
     padding: 10px;
     border-radius: 2px;
     border: 2px solid #4837db;
-    width: 300px;
+    width: 95%;
     height: 50px;
     color:#525252;
     background-color:rgb(221, 221, 221);
     font-weight: bold;
     border-radius: 10px;
-    
-
-
 }
 
 .user-cards {
@@ -34,13 +31,11 @@ input{
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
-
-   
 }
 
 .card {
     box-shadow: 3px 3px 1px rgb(234, 234, 234);
-    width:260px;
+    width:80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +43,8 @@ input{
     font-size: small;
     border: 1px solid #c1c1c1;
     border-radius: 3px;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
+    margin-left: 15px;
     padding: 20px;
     background-color: #ebebeb;
 
@@ -58,7 +54,6 @@ input{
 .card:hover {
 
     background-color: #b3b3b3; /* This is a light green color */
-
     border-color: #0b4426;
 }
 
@@ -73,6 +68,7 @@ input{
     margin-left: 10px;
 }
 .card-link {
+    
     color: inherit; /* This will make the link text the same color as the rest of the text */
     text-decoration: none; /* This will remove the underline from the link text */
     display: block; /* This will make the entire card clickable, not just the text */
@@ -87,13 +83,13 @@ input{
 }
 .header{
     color: #525252;
-
+    margin-top:6    px;
     font-size: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
 .stock-open{
-    color: rgb(0, 60, 255);
+    color: rgb(64, 64, 64);
     margin-bottom: 3px;
     font-weight: bold;
     font-size: 15px;

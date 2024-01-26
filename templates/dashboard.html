@@ -11,6 +11,7 @@
             font-size: 16px;
             background-color: rgb(232, 232, 232);
             font-family: Arial, sans-serif;
+            margin:0;
         }
 
         ul {
@@ -20,14 +21,14 @@
             overflow: hidden;
             background-color: #211c1c;
             position: -webkit-sticky;
-            /* Safari */
             position: sticky;
             top: 0;
+            z-index: 1000;
+            /* Ensure the navbar appears above other elements */
         }
 
         li {
             float: left;
-
         }
 
         li a {
@@ -53,8 +54,12 @@
         }
 
         .user_tab {
-            background-color: rgb(181, 208, 239);
+            background-color: rgb(140, 140, 140);
             width: 100px;
+            float: right;
+            /* Align to the right */
+            /* margin-right: 20px; */
+            /* Add margin to the right */
         }
 
         .flex-container {
@@ -62,13 +67,13 @@
             background-color: inherit;
             height: 90vh;
             flex-grow: inherit;
-            margin: 0px;
+            margin: 10px;
 
         }
 
         .flex-container>div {
 
-            margin: 2px;
+            margin: 2px ;   
             padding: 5px;
             font-size: 30px;
 
@@ -230,6 +235,7 @@
             text-align: left;
             padding: 8px;
             height: 22px;
+            font-size: 12px;
         }
 
         th {
@@ -239,7 +245,7 @@
             padding: 8px;
             background-color: #ffffff;
             color: rgb(103, 100, 100);
-            font-size: 12px;
+            font-size: 15px;
 
         }
 
@@ -311,7 +317,7 @@
 </head>
 
 <body>
-
+    
     <ul>
         <li><a class="logo" href="/dashboard">Stonks</a></li>
         <li><a class="active" href="/dashboard">Home</a></li>
@@ -339,8 +345,8 @@
                         </div>
                         <div class="body">
                             <div class="stock-info">
-                                <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
-                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pChange'] }}%</p>
+                                <p class="stock-open spaced">{{ data['LTP'] }}</p>
+                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pchange'] }}%</p>
                             </div>
                             <script>
                                 var dataItems = document.querySelectorAll('.stock-high');
@@ -379,7 +385,7 @@
         <div class="container-2">
             <div class="container-2a" style="display:flex;flex-direction: row;">
 
-                <div style="background:linear-gradient(#fff6b7,#f6416c); width:10px; height:100%;border-radius: 10px;">
+                <div style="background:linear-gradient(#fff6b7,#4441f6); width:10px; height:100%;border-radius: 10px;">
                 </div>
                 <div class="graph" style="width:95%;">
                     {{ plot_div|safe }}
@@ -395,14 +401,14 @@
                     <div class="container-2b-ab" style="height:98%; justify-content: center;">
                         <table class="table1">
                             <tr class="table-head">
-                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
                                     Losers</th>
-                                <th>Value</th>
+                                <th >Value</th>
                                 <th style="color:crimson">Loss</th>
                             </tr>
                             {% for data_item in asc %}
                             <tr>
-                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                <td style="font-family: sans-serif;font-weight: bold;">
                                     {{data_item['symbol']}}
                                 </td>
                                 <td>{{data_item['price']}}</td>
@@ -430,7 +436,7 @@
                     <div class="container-2b-bb" style="height:98%;">
                         <table>
                             <tr class="table-head">
-                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
                                     Gainers</th>
                                 <th>Value</th>
                                 <th style="color:green">Gain</th>
@@ -438,7 +444,7 @@
                             {% for data_item in dsc %}
                             <tr>
 
-                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                <td style="font-family: sans-serif;font-weight: bold;">
                                     {{data_item['symbol']}}</td>
                                 <td>{{data_item['price']}}</td>
                                 <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
