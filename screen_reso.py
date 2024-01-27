@@ -7,4 +7,3 @@ def get_screen_resolution():
     root.destroy()  # Close the Tkinter window after obtaining the resolution
     return [screen_width, screen_height]
 
-# Example usage

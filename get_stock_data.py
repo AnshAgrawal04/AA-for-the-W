@@ -174,6 +174,9 @@ def plot_and_compare_symbols(
     if symbol_name_1 not in nifty_50_stocks or symbol_name_2 not in nifty_50_stocks:
         return None
     days = 365 * base_years
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.64)
+    width=int(dimensions[0]*0.65)
     ycol = parameter_to_df_column[parameter]
     fig = get_plot(
         get_symbol_data(symbol_name_1, days),

@@ -111,6 +111,14 @@ def plot_compare():
         symbol_name_2 = request.form.get("stock2")
         symbol_name_3 = request.form.get("stock3")
         parameter = request.form.get("stock_parameter")
+        nifty_50_stocks = gsd.get_nifty50()
+        # search_error=""
+        # if request.method=='POST':
+        #     symbol_entered=request.form.get('search').upper()
+        #     if symbol_entered in nifty_50_stocks:
+        #         return redirect(url_for('stock',symbol=symbol_entered))
+        #     else:
+        #         search_error="Wrong symbol entered"
         plot_div = gsd.plot_and_compare_symbols(
             symbol_name_1, symbol_name_2, symbol_name_3, parameter,600,1000
         )
@@ -119,6 +127,7 @@ def plot_compare():
                 "plot_compare.html",
                 parameter_options=parameter_options,
                 error="Please enter valid stock symbols",
+                news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
             )
 
         return render_template(
@@ -128,8 +137,9 @@ def plot_compare():
             stock2=symbol_name_2,
             stock3=symbol_name_3,
             parameter_options=parameter_options,
+            news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
         )
-    return render_template("plot_compare.html", parameter_options=parameter_options)
+    return render_template("plot_compare.html", parameter_options=parameter_options,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
 
 @app.route("/reset", methods=["POST"])
 def plot_compare_graph():
