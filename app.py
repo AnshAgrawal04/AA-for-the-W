@@ -99,10 +99,9 @@ def stock(symbol):
     plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,500)
     return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
 
-# @app.route("/index_graph")
-# def index_graph():
-#     plot_div=gsd.plot_index(width=500,height=400)
-#     return render_template("graph.html", plot_div=plot_div)
+@app.route("/stonks")
+def stonks():
+    return render_template('stonks.html')
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
