@@ -63,10 +63,17 @@ def login():
         return redirect(url_for("index"))
 
 
-@app.route("/dashboard")
+@app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
-
-    if 'user_id' in session:        
+    if 'user_id' in session:  
+        nifty_50_stocks = gsd.get_nifty50()
+        search_error=""
+        if request.method=='POST':
+            symbol_entered=request.form.get('search').upper()
+            if symbol_entered in nifty_50_stocks:
+                return redirect(url_for('stock',symbol=symbol_entered))
+            else:
+                search_error="Wrong symbol entered"
         stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK','SBIN','LT']  # Add all your 50 stock symbols here
         stockdata={}
         ascending_data = []
@@ -79,7 +86,7 @@ def dashboard():
 
         plot_div=gsd.plot_index('NIFTY 50',width=750,height=460)
         
-        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
+        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),search_error=search_error)
 
     else:
         return redirect(url_for('index'))
@@ -92,10 +99,9 @@ def stock(symbol):
     plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,500)
     return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
 
-# @app.route("/index_graph")
-# def index_graph():
-#     plot_div=gsd.plot_index(width=500,height=400)
-#     return render_template("graph.html", plot_div=plot_div)
+@app.route("/stonks")
+def stonks():
+    return render_template('stonks.html')
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():

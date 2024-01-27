@@ -62,6 +62,37 @@
             /* Add margin to the right */
         }
 
+        .search-tool {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: flex;
+        }
+
+        .search-bar {
+            border-radius: 5px;
+            padding: 2px;
+            margin-right: 5px;
+            border: 1px solid #ccc;
+            height: 90%;
+            width:40%;
+        }
+
+        .search-button {
+            border: none;
+            background-color: #4c53af;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .search_error {
+            color: red;
+        }
+
         .flex-container {
             display: flex;
             background-color: inherit;
@@ -208,7 +239,7 @@
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
 
-        /* .container-3b {
+/* .container-3b {
             height: 20%;
             background-color: #ffffff;
             justify-content: center;
@@ -227,8 +258,6 @@
             width: 100%;
             height: 250px;
             font-size: 10px;
-
-
 
         }
 
@@ -283,6 +312,7 @@
             flex-direction: column;
             box-shadow: 3px 3px 1px rgb(180, 187, 189);
         }
+
         .watchlist-stocks-cards {
             display: flex;
             flex-direction: row;
@@ -318,7 +348,7 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             font-size: 12px;
             text-align: center;
-    
+
         }
 
         .article {
@@ -377,12 +407,18 @@
 <body>
 
     <ul>
-        <li><a class="logo" href="/dashboard">Stonks</a></li>
+        <li><a class="logo" href="/stonks">Stonks</a></li>
         <li><a class="active" href="/dashboard">Home</a></li>
         <li><a href="/welcome">News</a></li>
 
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
+        <form action="/dashboard" class="search-tool" method="POST">
+            <input type="text" name="search" placeholder="Search..." class="search-bar">
+            <button type="submit" class="search-button">Submit</button>
+            <div class="search_error">{{ search_error }}</div>
+        </form>
+
     </ul>
 
     <div class="flex-container">
