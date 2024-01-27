@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
 from bsedata.bse import BSE
+import screen_reso as sr
 
 b = BSE()
 n = NSELive()
@@ -130,6 +131,9 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
     days = 365 * base_years
     df = get_symbol_data(symbol, days)
     ycolumn = parameter_to_df_column[parameter]
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.46)
+    width=int(dimensions[0]*0.35)
     fig = get_plot(df, symbol, "DATE", ycolumn, parameter, height, width)
     if df[ycolumn].iloc[0] > df[ycolumn].iloc[1]:
         fig.update_traces(line_color="green")
@@ -144,6 +148,9 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
 
 def plot_index(index, height=500, width=1000):
     days = 365 * base_years
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.46)
+    width=int(dimensions[0]*0.45)
     fig = get_plot(
         index_historic_data[index],
         index,
