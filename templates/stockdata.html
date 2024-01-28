@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>{{ symbol }} Details</title>
+    <title>{{ stock_card_data['symbol']}} Details</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         body {
@@ -211,20 +211,20 @@
         <div class="a" style="width:40%;display:flex;flex-direction: column;margin-left: 10px;">
             <div class="a1"
                 style="background-color: #ffffff;border-radius: 10px;height:130px;display: flex;flex-direction: column;">
-                <div class="a11" style="height:20px;margin:10px;font-size: 24px;font-weight: 440;">{{ symbol }} </div>
+                <div class="a11" style="height:20px;margin:10px;font-size: 24px;font-weight: 440;">{{ stock_card_data['symbol'] }} </div>
                 <div style="height: 1px;background-color: #e6e6e6;margin-left: 5px;margin-right: 5px;margin-top: 10px;">
                 </div>
                 <div style="display: flex;flex-direction: row;">
                     <div style="margin-top: 2px;margin-left: 25px; margin-right: 15px;font-size: xxx-large;">
-                        ₹ {{ livedata['lastPrice'] }}
+                        {{ stock_card_data['price']}}
                     </div>
-                    <div class="{% if livedata['pChange'] > 0 %}green{% elif livedata['pChange'] < 0 %}red{% endif %}">
+                    <div class="{% if stock_card_data['pchange'] > 0 %}green{% elif stock_card_data['pchange'] < 0 %}red{% endif %}">
 
-                        {% if livedata['pChange'] > 0 %}
+                        {% if stock_card_data['pchange'] > 0 %}
                         &#8593; <!-- Upwards arrow -->
-                        {% elif livedata['pChange'] < 0 %} &#8595; <!-- Downwards arrow -->
+                        {% elif stock_card_data['pchange'] < 0 %} &#8595; <!-- Downwards arrow -->
                             {% endif %}
-                            {{ '%.2f' % livedata['pChange'] }}%
+                            {{ '%.2f' % stock_card_data['pchange'] }}%
                     </div>
                 </div>
             </div>
@@ -249,20 +249,17 @@
                 </div>
                 <div>
                     <table style="width: 100%; font-size: 20px; border: #111;">
-                        {% for col, para in stockpara.items() %}
+                        {% for para,value in stock_detail_data.items() %}
                         <tr>
                             <td
                                 style="text-align:left; padding-bottom: 8px; padding-top: 8px;border-bottom: 1px solid #e6e6e6;font-size: small;color:#898989">
                                 {{ para|upper}}</td>
                             <td
                                 style="text-align:right; padding-bottom: 8px; padding-top: 8px;border-bottom: 1px solid #e6e6e6;font-weight: 500; font-size: medium;">
-                                ₹{{ historicaldata[col] }}</td>
+                                {{ value }}</td>
                         </tr>
                         {% endfor %}
-                    </table>
-                    <div>{{historicaldata['CH_OPENING_PRICE']}}</div>
-                    
-
+                    </table>                  
                 </div>
             </div>
         </div>
