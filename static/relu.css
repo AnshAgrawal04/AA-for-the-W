@@ -483,6 +483,14 @@ input{
     overflow-y: auto;
 }
 
+.btn-primary
+{
+    display: inline-block; 
+    padding: 5px; 
+    background-color: blue; 
+    color: white; 
+    text-decoration: none;
+}
 /* Add these styles to make the scrollbar thinner */
 .card-container::-webkit-scrollbar {
     width: 5px; /* Adjust as needed */

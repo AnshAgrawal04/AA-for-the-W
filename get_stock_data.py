@@ -81,6 +81,13 @@ def get_stock_compare_parameters():
         "Volume"
     ]
 
+def get_stock_filter_parameters():
+    return[
+        'High Price',
+        'Low Price',
+        'Volume',
+        'Last Traded Price',
+    ]
 
 def get_live_index_data(index):
     return index_live_data[index]
@@ -96,10 +103,11 @@ def get_stock_historic_data(symbol, parameter):
         stock_historic_data[symbol] = df
     return stock_historic_data[symbol][stock_parameter_to_df_column[parameter]]
 
-def get_all_stock_card_data():
+def get_all_stock_card_data(lt=1e10, gt=-1e10, parameter=""):
     stock_card_data = []
     for stock in nifty_50_stocks:
-        stock_card_data.append(get_stock_card_data(stock))
+        if parameter=="" or get_stock_curr_data(stock, parameter) <= lt and get_stock_curr_data(stock, parameter) >= gt:
+            stock_card_data.append(get_stock_card_data(stock))
     return stock_card_data
 
 def get_stock_curr_data(symbol, parameter):
