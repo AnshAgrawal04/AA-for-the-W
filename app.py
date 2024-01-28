@@ -4,10 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from jugaad_data.nse import stock_df
 from datetime import date, timedelta
-
+import pandas as pd
 import get_stock_data as gsd
 import news as n
-
+nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
@@ -74,7 +74,7 @@ def dashboard():
                 return redirect(url_for('stock',symbol=symbol_entered))
             else:
                 search_error="Wrong symbol entered"
-        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK','SBIN','LT']  # Add all your 50 stock symbols here
+        stock_symbols = nifty_50_stocks
         stockdata={}
         ascending_data = []
         for symbol in stock_symbols:

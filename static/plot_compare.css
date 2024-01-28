@@ -29,6 +29,7 @@ body {
 }
 .container-2{
     width:29%;
+    height: 800px;
     margin-left: 1%;
     background-color:rgb(224, 224, 224);
     display: flex;
@@ -145,7 +146,8 @@ button {
 
 .container-3 {
     height: 96%;
-    background-color: inherit;
+    background-color:inherit;
+    
     border-radius: 10px;
     display: flex;
     flex-direction: column;
