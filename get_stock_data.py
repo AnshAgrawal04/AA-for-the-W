@@ -8,6 +8,7 @@ import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
 from bsedata.bse import BSE
+import screen_reso as sr
 
 b = BSE()
 n = NSELive()
@@ -18,7 +19,8 @@ base_years = 2
 # Fetch Live Index Data while starting the server
 index_live_data = {}
 index_live_data["SENSEX"] = b.getIndices(category="market_cap/broad")["indices"][0]
-index_live_data["NIFTY 50"] = n.live_index("NIFTY 50")["marketStatus"]
+index_live_data['SENSEX']['pChange']=float(index_live_data['SENSEX']['pChange'])
+index_live_data["NIFTY 50"] = n.live_index("NIFTY 50")["data"][0]
 
 # Store Historic index data
 index_historic_data = {}
@@ -85,7 +87,7 @@ def get_index_data(index):
     return index_historic_data[index]
 
 
-def get_symbol_data(symbol, days):
+def get_symbol_data(symbol, days=2 * 365):
     end_date = date.today()
     start_date = end_date - timedelta(days=days)
     df = stock_df(symbol=symbol, from_date=start_date, to_date=end_date)
@@ -119,15 +121,25 @@ def get_plot(df, sym_name, xcolumn, ycolumn, title, height=400, width=600):
     )
     fig.update_yaxes(autorange=True, scaleanchor="x", scaleratio=1)
     fig.update_yaxes(range=[min(df[ycolumn]), max(df[ycolumn])])
+    fig.update_layout(xaxis=dict(showgrid=False), plot_bgcolor="rgb(230,230,230)")
+    fig.update_layout(
+    title_font=dict(size=25))
     return fig
 
 
 def plot_symbol(symbol, parameter, height=500, width=1000):
     days = 365 * base_years
+    df = get_symbol_data(symbol, days)
     ycolumn = parameter_to_df_column[parameter]
-    fig = get_plot(
-        get_symbol_data(symbol, days), symbol, "DATE", ycolumn, parameter, height, width
-    )
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.46)
+    width=int(dimensions[0]*0.35)
+    fig = get_plot(df, symbol, "DATE", ycolumn, parameter, height, width)
+    if df[ycolumn].iloc[0] > df[ycolumn].iloc[1]:
+        fig.update_traces(line_color="green")
+    else:
+        fig.update_traces(line_color="red")
+    
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
@@ -136,6 +148,9 @@ def plot_symbol(symbol, parameter, height=500, width=1000):
 
 def plot_index(index, height=500, width=1000):
     days = 365 * base_years
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.46)
+    width=int(dimensions[0]*0.45)
     fig = get_plot(
         index_historic_data[index],
         index,
@@ -145,6 +160,8 @@ def plot_index(index, height=500, width=1000):
         height,
         width,
     )
+    fig.update_traces(line_color="green")
+    
     plot_div = plot(
         fig, output_type="div", include_plotlyjs=False, config={"displayModeBar": False}
     )
@@ -157,6 +174,9 @@ def plot_and_compare_symbols(
     if symbol_name_1 not in nifty_50_stocks or symbol_name_2 not in nifty_50_stocks:
         return None
     days = 365 * base_years
+    dimensions=sr.get_screen_resolution()
+    height=int(dimensions[1]*0.64)
+    width=int(dimensions[0]*0.65)
     ycol = parameter_to_df_column[parameter]
     fig = get_plot(
         get_symbol_data(symbol_name_1, days),
@@ -184,3 +204,6 @@ def plot_and_compare_symbols(
         config={"displayModeBar": False},
     )
     return plot_div
+
+
+# print(get_symbol_data('RELIANCE', 1))

@@ -1,9 +1,418 @@
+body {
+    font-size: 16px;
+    background-color: rgb(232, 232, 232);
+    font-family: system-ui;
+    margin: 0;
+}
 
-.search-wrapper {
-    margin-bottom: 20px;
-    width: 100%;
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #211c1c;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Ensure the navbar appears above other elements */
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.logo {
+    background-color: rgb(35, 34, 33);
+    color: #f3f3f3;
+    width: 100px;
+}
+
+.active {
+    background-color: #4c53af;
+}
+
+.user_tab {
+    background-color: rgb(140, 140, 140);
+    width: 100px;
+    float: right;
+    /* Align to the right */
+    /* margin-right: 20px; */
+    /* Add margin to the right */
+}
+
+.search-tool {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: flex;
+    height: 30px;
+}
+
+.search-bar {
+    border-radius: 1px;
+    padding: 2px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    height: 90%;
+    width: 40%;
+}
+
+.search-button {
+    border: none;
+    background-color: #4c53af;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 1px;
+    cursor: pointer;
+}
+
+.search_error {
+    color: red;
+}
+
+.flex-container {
+    display: flex;
+    background-color: inherit;
+    height: 90vh;
+    flex-grow: inherit;
+    margin: 10px;
+    justify-content: space-evenly;
     
 
+}
+
+.flex-container>div {
+
+    margin: 0px;
+    padding: 0px;
+    font-size: 30px;
+    
+
+}
+
+.container-1 {
+
+    width: 22%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    padding: 0px;
+    margin: 0px;
+}
+
+.stock-table-header {
+    width: 85%;
+    padding-left:15%;
+    padding-right:0;
+    padding-top:5%;
+    padding-bottom: 5%;
+    font-weight: 500;
+    margin-top: 0px;
+    background-color: black;
+    color:#ffffff;
+    border-radius: 10px;
+    
+}
+
+;
+
+.container-2 {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    background-color: inherit;
+}
+
+.container-2>div {
+    margin: 0px;
+    padding: 0px;
+}
+
+.container-2a {
+    height: 60%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    border-radius: 10px;
+    border-color: rgb(11, 22, 22);
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    display: flex;
+    flex-direction: row;
+    padding:0px;
+    margin:0px;
+}
+
+.container-2b {
+    height: 40%;
+    background-color: inherit;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container-2b>div {
+    margin: 5px;
+    padding: 7px;
+}
+
+.container-2b-a {
+    width: 48%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+
+.container-2b-aa {
+    width: 90%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+
+}
+
+.container-2b-ab {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+
+}
+
+
+.container-2b-b {
+    width: 48%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+
+}
+
+.container-2b-ba {
+    width: 100%;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 136, 14));
+    justify-content: center;
+
+}
+
+.container-2b-bb {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+
+}
+
+
+
+.container-3 {
+    width: 30%;
+    background-color: inherit;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-3>div {
+    margin: 3px;
+    padding: 10px;
+}
+
+.container-3a {
+    height: 8%;
+    background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+
+/* .container-3b {
+    height: 20%;
+    background-color: #ffffff;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+*/
+
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    height: 250px;
+    font-size: 10px;
+
+}
+
+td {
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 8px;
+    height: 22px;
+    font-size: 12px;
+}
+
+th {
+    font-size: medium;
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 8px;
+    background-color: #ffffff;
+    color: rgb(103, 100, 100);
+    font-size: 15px;
+
+}
+
+tr:nth-child(even) {
+    background-color: #eeeeee;
+
+}
+
+.loss {
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.gain {
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.table1 {
+    border-radius: 10px;
+}
+
+.container-3b {
+    height: 20%;
+    background-color: #d7ee6ef5;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+
+.watchlist-stocks-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* Adjust the width as per your preference */
+    margin: 0 auto;
+}
+
+.watchlist-header {
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.watchlist-stocks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80%;
+    /* Adjust the width as per your preference */
+    margin: 0 auto;
+}
+
+.w-stock {
+    width: 90%;
+    /* Adjust the width as per your preference */
+    margin-bottom: 8px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+    text-align: center;
+
+}
+
+.article {
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 20%;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    justify-content: center;
+
+}
+
+.headline {
+    margin-top: 2%;
+    font-size: 18px;
+    font-weight: bold;
+    height: 70%;
+}
+
+.content {
+    margin-top: 10px;
+}
+
+.source-link {
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    justify-content: right;
+}
+
+.up_triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid rgb(0, 255, 0);
+    /* Adjust color and size as needed */
+}
+
+.down_triangle {
+    width: 0;
+    height: 0;
+    color: red;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid rgb(255, 0, 0);
+    /* Adjust color and size as needed */
+}
+.search-wrapper {
+    margin-bottom: 20px;
+    margin-left:10px;
+    margin-top:10px;
+    width: 100%;
 }
 .tables-container {
     display: flex;
@@ -17,16 +426,13 @@
 input{
     padding: 10px;
     border-radius: 2px;
-    border: 2px solid #4837db;
-    width: 300px;
+    border: 2px solid #080054;
+    width: 95%;
     height: 50px;
     color:#525252;
     background-color:rgb(221, 221, 221);
     font-weight: bold;
     border-radius: 10px;
-    
-
-
 }
 
 .user-cards {
@@ -34,13 +440,11 @@ input{
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 20px;
-
-   
 }
 
 .card {
     box-shadow: 3px 3px 1px rgb(234, 234, 234);
-    width:260px;
+    width:80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,7 +452,8 @@ input{
     font-size: small;
     border: 1px solid #c1c1c1;
     border-radius: 3px;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
+    margin-left: 15px;
     padding: 20px;
     background-color: #ebebeb;
 
@@ -58,21 +463,38 @@ input{
 .card:hover {
 
     background-color: #b3b3b3; /* This is a light green color */
-
     border-color: #0b4426;
 }
 
 .card-container {
 
-    max-height: 600px; /* Adjust this value based on the height of your cards */
+    max-height:75%; /* Adjust this value based on the height of your cards */
 
     overflow-y: auto;
+}
+.card-container {
+    max-height:75%; /* Adjust this value based on the height of your cards */
+    overflow-y: auto;
+}
+
+/* Add these styles to make the scrollbar thinner */
+.card-container::-webkit-scrollbar {
+    width: 5px; /* Adjust as needed */
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background: #ffffff; /* Adjust as needed */
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+    background: #ffffff; /* Adjust as needed */
 }
 
 .spaced {
     margin-left: 10px;
 }
 .card-link {
+    
     color: inherit; /* This will make the link text the same color as the rest of the text */
     text-decoration: none; /* This will remove the underline from the link text */
     display: block; /* This will make the entire card clickable, not just the text */
@@ -87,13 +509,13 @@ input{
 }
 .header{
     color: #525252;
-
+    margin-top:6    px;
     font-size: 15px;
     font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
 }
 .stock-open{
-    color: rgb(0, 60, 255);
+    color: rgb(64, 64, 64);
     margin-bottom: 3px;
     font-weight: bold;
     font-size: 15px;

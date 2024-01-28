@@ -6,327 +6,28 @@
 
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='relu.css') }}">
-    <style>
-        body {
-            font-size: 16px;
-            background-color: rgb(232, 232, 232);
-            font-family: Arial, sans-serif;
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #211c1c;
-            position: -webkit-sticky;
-            /* Safari */
-            position: sticky;
-            top: 0;
-        }
-
-        li {
-            float: left;
-
-        }
-
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            background-color: #111;
-        }
-
-        .logo {
-            background-color: rgb(35, 34, 33);
-            color: #f3f3f3;
-            width: 100px;
-        }
-
-        .active {
-            background-color: #4c53af;
-        }
-
-        .user_tab {
-            background-color: rgb(181, 208, 239);
-            width: 100px;
-        }
-
-        .flex-container {
-            display: flex;
-            background-color: inherit;
-            height: 90vh;
-            flex-grow: inherit;
-            margin: 0px;
-
-        }
-
-        .flex-container>div {
-
-            margin: 2px;
-            padding: 5px;
-            font-size: 30px;
-
-        }
-
-        .container-1 {
-
-            width: 22%;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-        }
-
-        .container-2 {
-            margin: 0px;
-            padding: 0px;
-            display: flex;
-            flex-direction: column;
-            width: 45%;
-            background-color: inherit;
-        }
-
-        .container-2>div {
-            margin: 2px;
-            padding: 5px;
-        }
-
-        .container-2a {
-            height: 60%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-            border-radius: 10px;
-            border-color: rgb(11, 22, 22);
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-            display: flex;
-            flex-direction: row;
-        }
-
-
-
-
-        .container-2b {
-            height: 40%;
-            background-color: inherit;
-            margin-top: 5%;
-            display: flex;
-            justify-content: space-between;
-
-        }
-
-        .container-2b>div {
-            margin: 5px;
-            padding: 7px;
-        }
-
-        .container-2b-a {
-            width: 48%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-
-        }
-
-        .container-2b-aa {
-            width: 90%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-
-        }
-
-        .container-2b-ab {
-            width: 100%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-
-        }
-
-
-        .container-2b-b {
-            width: 48%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-
-        }
-
-        .container-2b-ba {
-            width: 100%;
-            background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 136, 14));
-            justify-content: center;
-
-        }
-
-        .container-2b-bb {
-            width: 100%;
-            background-color: rgb(255, 255, 255);
-            justify-content: center;
-
-        }
-
-
-
-        .container-3 {
-            width: 30%;
-            background-color: inherit;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container-3>div {
-            margin: 3px;
-            padding: 10px;
-        }
-
-        .container-3a {
-            height: 20%;
-
-            background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
-            justify-content: center;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-        }
-
-        .container-3b {
-            height: 20%;
-
-            background-color: #ffffff;
-            justify-content: center;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-        }
-
-
-
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-            height: 250px;
-            font-size: 10px;
-
-
-
-        }
-
-        td {
-            border: 1px solid #ffffff;
-            text-align: left;
-            padding: 8px;
-            height: 22px;
-        }
-
-        th {
-            font-size: medium;
-            border: 1px solid #ffffff;
-            text-align: left;
-            padding: 8px;
-            background-color: #ffffff;
-            color: rgb(103, 100, 100);
-            font-size: 12px;
-
-        }
-
-        tr:nth-child(even) {
-            background-color: #eeeeee;
-
-        }
-
-        .loss {
-            font-size: 11px;
-            font-weight: bold;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-        }
-
-        .gain {
-            font-size: 11px;
-            font-weight: bold;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-
-        }
-
-        .table1 {
-            border-radius: 10px;
-        }
-
-        .article {
-
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            height: 20%;
-            color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-            justify-content: center;
-
-        }
-
-        .headline {
-            margin-top: 2%;
-            font-size: 16px;
-            font-weight: bold;
-            height: 70%;
-        }
-
-        .content {
-            margin-top: 10px;
-        }
-
-        .source-link {
-            font-size: 15px;
-            color: #ffffff;
-            text-decoration: none;
-            justify-content: right;
-        }
-
-        .triangle {
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-bottom: 20px solid rgb(255, 255, 255);
-            /* Adjust color and size as needed */
-        }
-    </style>
 </head>
 
 <body>
-
     <ul>
-        <li><a class="logo" href="/dashboard">Stonks</a></li>
+        <li><a class="logo" href="/stonks">Stonks</a></li>
         <li><a class="active" href="/dashboard">Home</a></li>
-        <li><a href="/welcome">News</a></li>
-
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
+        <form action="/dashboard" class="search-tool" method="POST">
+            <input type="text" name="search" placeholder="Search..." class="search-bar">
+            <button type="submit" class="search-button">Submit</button>
+            <div class="search_error">{{ search_error }}</div>
+        </form>
+
     </ul>
 
     <div class="flex-container">
         <div class="container-1">
+            <div class="stock-table-header">NIFTY 50 Stocks</div>
             <div class="search-wrapper">
                 <input type="search" id="search" data-search placeholder="Enter stock symbol">
             </div>
-            <div style="height:50px;justify-content:center;align-items: center;width: 300px;color:#ffffff;background: linear-gradient(to right,#0037ff,#0088e9);border-radius: 5px;font-size: x-large;">SYMBOL   Value    %Change</div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for symbol, data in stocks_data.items() %}
@@ -339,8 +40,8 @@
                         </div>
                         <div class="body">
                             <div class="stock-info">
-                                <p class="stock-open spaced">{{ data['lastPrice'] }}</p>
-                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pChange'] }}%</p>
+                                <p class="stock-open spaced">{{ data['LTP'] }}</p>
+                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pchange'] }}%</p>
                             </div>
                             <script>
                                 var dataItems = document.querySelectorAll('.stock-high');
@@ -377,9 +78,9 @@
 
         </div>
         <div class="container-2">
-            <div class="container-2a" style="display:flex;flex-direction: row;">
+            <div class="container-2a" style="display:flex;flex-direction: row;justify-content: left;">
 
-                <div style="background:linear-gradient(#fff6b7,#f6416c); width:10px; height:100%;border-radius: 10px;">
+                <div style="background:linear-gradient(#383838,#222222);width:10px; height:100%;border-radius: 10px;">
                 </div>
                 <div class="graph" style="width:95%;">
                     {{ plot_div|safe }}
@@ -395,14 +96,14 @@
                     <div class="container-2b-ab" style="height:98%; justify-content: center;">
                         <table class="table1">
                             <tr class="table-head">
-                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
                                     Losers</th>
                                 <th>Value</th>
                                 <th style="color:crimson">Loss</th>
                             </tr>
                             {% for data_item in asc %}
                             <tr>
-                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                <td style="font-family: sans-serif;font-weight: bold;">
                                     {{data_item['symbol']}}
                                 </td>
                                 <td>{{data_item['price']}}</td>
@@ -430,7 +131,7 @@
                     <div class="container-2b-bb" style="height:98%;">
                         <table>
                             <tr class="table-head">
-                                <th style="font-size: 13px; font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                                <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
                                     Gainers</th>
                                 <th>Value</th>
                                 <th style="color:green">Gain</th>
@@ -438,7 +139,7 @@
                             {% for data_item in dsc %}
                             <tr>
 
-                                <td style="font-family: sans-serif;font-weight: bold;font-size: 10px;">
+                                <td style="font-family: sans-serif;font-weight: bold;">
                                     {{data_item['symbol']}}</td>
                                 <td>{{data_item['price']}}</td>
                                 <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
@@ -470,15 +171,54 @@
                     <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>+2.30%</div>
-                            <div class="triangle"></div>
+                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div
+                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
                         </div>
 
                     </div>
                 </div>
-                <div style="width:50%; display: flex; justify-content: center; align-items: center;">NIFTY50</div>
+                <div
+                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
+                    <div style="height: 50%;justify-content: center;align-items: center;">NIFTY 50</div>
+                    <div style="height: 50%;justify-content: center;align-items: left;">
+                        <div style="font-size: medium;display:flex;flex-direction: row;">
+                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div
+                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="container-3b"></div>
+            <div class="container-3b">
+                <div class="watchlist-header"><strong>WATCHLIST</strong></div>
+                <div class="watchlist-stocks-cards">
+                    <div class="watchlist-stocks">
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                    </div>
+                    <div class="watchlist-stocks">
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                        <div class="w-stock">
+                            STOCK PRICE (PCHANGE)
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% set colors = ['#ffc80e', '#81fbb8', '#fb5060', 'yellow', 'purple', 'orange'] %}
             {% set colors2 = ['#ff6900', '#28c76f', '#a90d23', 'purple', 'purple', 'orange'] %}
             {% for article in news_articles %}

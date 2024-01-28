@@ -4,10 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from jugaad_data.nse import stock_df
 from datetime import date, timedelta
-
+import pandas as pd
 import get_stock_data as gsd
 import news as n
-
+nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
@@ -63,24 +63,30 @@ def login():
         return redirect(url_for("index"))
 
 
-@app.route("/dashboard")
+@app.route("/dashboard",methods=['GET','POST'])
 def dashboard():
-
-    if 'user_id' in session:        
-        stock_symbols = ['DRREDDY','EICHERMOT','GRASIM','HCLTECH','ADANIENT','ADANIPORTS','APOLLOHOSP','ASIANPAINT','AXISBANK','SBIN','LT']  # Add all your 50 stock symbols here
+    if 'user_id' in session:  
+        nifty_50_stocks = gsd.get_nifty50()
+        search_error=""
+        if request.method=='POST':
+            symbol_entered=request.form.get('search').upper()
+            if symbol_entered in nifty_50_stocks:
+                return redirect(url_for('stock',symbol=symbol_entered))
+            else:
+                search_error="Wrong symbol entered"
+        stock_symbols = nifty_50_stocks
         stockdata={}
-
-        # stock_symbols=gsd.get_nifty50()
         ascending_data = []
         for symbol in stock_symbols:
-            stockdata[symbol]=gsd.get_live_symbol_data(symbol)
-            ascending_data.append({'symbol':symbol,'pchange':stockdata[symbol]['pChange'],'price':stockdata[symbol]['lastPrice']})
+            stockdata[symbol]=gsd.get_symbol_data(symbol,5).iloc[0]
+            stockdata[symbol]['pchange']=(stockdata[symbol]['LTP']/stockdata[symbol]['PREV. CLOSE'])*100-100
+            ascending_data.append({'symbol':symbol,'pchange':stockdata[symbol]['pchange'],'price':stockdata[symbol]['LTP']})
         ascending_data = sorted(ascending_data, key=lambda x: x['pchange'])
         descending_data = ascending_data[::-1]
 
-        plot_div=gsd.plot_index('NIFTY 50',width=600,height=400)
+        plot_div=gsd.plot_index('NIFTY 50',width=750,height=460)
         
-        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
+        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),search_error=search_error)
 
     else:
         return redirect(url_for('index'))
@@ -88,21 +94,14 @@ def dashboard():
 @app.route('/<symbol>')
 def stock(symbol):
     livedata=gsd.get_live_symbol_data(symbol)
-    stockdata=gsd.get_symbol_data(symbol,1).iloc[0]
+    stockdata=gsd.get_symbol_data(symbol,5).iloc[0]
     stock_parameter=gsd.get_stock_display_parameters()
-    plot_div = gsd.plot_symbol(symbol, 'Closing Price',450,900)
-    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div)
-    if "user_id" in session:
-        return redirect(url_for("graph"))
-        return render_template("welcome.html", username=session["username"])
-    else:
-        return redirect(url_for("index"))
+    plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,500)
+    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
 
-@app.route("/index_graph")
-def index_graph():
-    plot_div=gsd.plot_index(width=500,height=400)
-    return render_template("graph.html", plot_div=plot_div)
-
+@app.route("/stonks")
+def stonks():
+    return render_template('stonks.html')
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
@@ -112,6 +111,14 @@ def plot_compare():
         symbol_name_2 = request.form.get("stock2")
         symbol_name_3 = request.form.get("stock3")
         parameter = request.form.get("stock_parameter")
+        nifty_50_stocks = gsd.get_nifty50()
+        # search_error=""
+        # if request.method=='POST':
+        #     symbol_entered=request.form.get('search').upper()
+        #     if symbol_entered in nifty_50_stocks:
+        #         return redirect(url_for('stock',symbol=symbol_entered))
+        #     else:
+        #         search_error="Wrong symbol entered"
         plot_div = gsd.plot_and_compare_symbols(
             symbol_name_1, symbol_name_2, symbol_name_3, parameter,600,1000
         )
@@ -120,6 +127,7 @@ def plot_compare():
                 "plot_compare.html",
                 parameter_options=parameter_options,
                 error="Please enter valid stock symbols",
+                news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
             )
 
         return render_template(
@@ -129,16 +137,17 @@ def plot_compare():
             stock2=symbol_name_2,
             stock3=symbol_name_3,
             parameter_options=parameter_options,
+            news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
         )
-    return render_template("plot_compare.html", parameter_options=parameter_options)
-
+    return render_template("plot_compare.html", parameter_options=parameter_options,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
 
 @app.route("/reset", methods=["POST"])
 def plot_compare_graph():
     if request.method == "POST":
         return redirect(url_for("plot_compare"))
-
-
+# @app.route("/live")
+# def live():
+#     return render_template("sensexnifty.html", sensex_data=gsd.get_live_index_data("SENSEX"), nifty50_data=gsd.get_live_index_data("NIFTY 50") )
 
 @app.route("/logout")
 def logout():
@@ -146,10 +155,10 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("index"))
 
-@app.route("/news")
-def news():
-    return render_template("news_feed.html", news_articles=n.get_news()['articles'][:3])
+# @app.route("/news")
+# def news():
+#     return render_template("news_feed.html", news_articles=n.get_news()['articles'][:3])
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, threaded=True)
     

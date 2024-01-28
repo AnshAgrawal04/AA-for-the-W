@@ -1,0 +1,276 @@
+body {
+    font-size: 16px;
+    background-color: rgb(224, 224, 224);
+    font-family: system-ui;
+    margin: 0;
+    /* Remove default margin */
+}
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    /* Align horizontally */
+    
+    /* Extra space in the container */
+    flex-direction: row;
+    height: 100%;
+    /* Make the container full height */
+}
+
+.container-1 {
+    width: 70%;
+    
+    /* Make the container full width */
+    height: 100%;
+    /* Make the container full height */
+    background-color: rgb(224, 224, 224);
+    
+    /* background-color: rgb(224, 224, 224); */
+}
+.container-2{
+    width:29%;
+    height: 800px;
+    margin-left: 1%;
+    background-color:rgb(224, 224, 224);
+    display: flex;
+    flex-direction: column;
+    
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #211c1c;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    /* Ensure the navbar appears above other elements */
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.logo {
+    background-color: rgb(35, 34, 33);
+    color: #f3f3f3;
+    width: 100px;
+}
+
+.active {
+    background-color: #4c53af;
+}
+
+.user_tab {
+    background-color: rgb(140, 140, 140);
+    width: 100px;
+    float: right;
+    /* Align to the right */
+    /* margin-right: 20px; */
+    /* Add margin to the right */
+}
+
+h1 {
+    text-align: center;
+    color: black;
+}
+
+form {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(50, 50, 50, 1);
+}
+
+.form-container {
+    text-align: justify;
+}
+
+.input-box {
+    width: 20%;
+    /* 33.33% width with some spacing */
+    padding: 10px;
+    margin: 10px 5px;
+    box-sizing: border-box;
+}
+
+select {
+    width: 23%;
+    padding: 10px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4c53af;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.graph {
+    margin-top: 20px auto;
+    text-align: center;
+}
+
+
+
+.container-3 {
+    height: 96%;
+    background-color:inherit;
+    
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+}
+
+.container-3>div {
+    margin: 3px;
+    padding: 10px;
+    
+}
+
+.container-3a {
+    
+    background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    display:flex;flex-direction: row;color:#ffffff;font-weight: 700;font-size: large;
+}
+.container-3b {
+    
+    background-color: #d7ee6ef5;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+.watchlist-stocks-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    /* Adjust the width as per your preference */
+    margin: 0 auto;
+}
+
+.watchlist-header {
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.watchlist-stocks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 80%;
+    /* Adjust the width as per your preference */
+    margin: 0 auto;
+}
+
+.w-stock {
+    width: 90%;
+    /* Adjust the width as per your preference */
+    margin-bottom: 8px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    font-size: 12px;
+    text-align: center;
+
+}
+
+.article {
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 20%;
+    color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    justify-content: center;
+
+}
+
+.headline {
+    margin-top: 2%;
+    font-size: 18px;
+    font-weight: bold;
+    height: 70%;
+}
+
+.content {
+    margin-top: 10px;
+}
+
+.source-link {
+    font-size: 16px;
+    color: #ffffff;
+    text-decoration: none;
+    justify-content: right;
+}
+
+.up_triangle {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 20px solid rgb(0, 255, 0);
+    /* Adjust color and size as needed */
+}
+
+.down_triangle {
+    width: 0;
+    height: 0;
+    color: red;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid rgb(255, 0, 0);
+    /* Adjust color and size as needed */
+}
+.sensex{
+    width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;
+}
+.nifty50{
+    width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;
+}
