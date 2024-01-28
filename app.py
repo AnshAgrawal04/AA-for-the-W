@@ -8,7 +8,6 @@ import pandas as pd
 import get_stock_data as gsd
 import news as n
 
-
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -80,7 +79,7 @@ def dashboard():
             else:
                 search_error = "Wrong symbol entered"
         stock_symbols = nifty_50_stocks
-        stocks_data=gsd.get_all_stock_card_data()
+        stocks_data = gsd.get_all_stock_card_data()
 
         ascending_data = sorted(stocks_data, key=lambda x: x['pchange'])
         descending_data = ascending_data[::-1]
@@ -108,11 +107,14 @@ def stock(symbol):
     stock_card_data = gsd.get_stock_card_data(symbol)
     stock_detail_data = gsd.get_stock_detail_data(symbol)
     plot_div = gsd.plot_stock_prices(symbol, 400, 500)
-    return render_template('stockdata.html',
-                           stock_card_data = stock_card_data, #dictionary with symbol,
-                           stock_detail_data = stock_detail_data,
-                           plot_div=plot_div,
-                           news_articles=n.get_news()['articles'][:4])
+    return render_template(
+        'stockdata.html',
+        stock_card_data=stock_card_data,  #dictionary with symbol,
+        stock_detail_data=stock_detail_data,
+        plot_div=plot_div,
+        nifty50_data=gsd.get_live_index_data("NIFTY 50"),
+        sensex_data=gsd.get_live_index_data("SENSEX"),
+        news_articles=n.get_news()['articles'][:4])
 
 
 @app.route("/stonks")
