@@ -30,18 +30,18 @@
             </div>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
-                {% for symbol, data in stocks_data.items() %}
-                <a href="/{{symbol}}" class="card-link">
-                    <div class="card" data-symbol="{{ symbol }}"
+                {% for card in stocks_data%}
+                <a href="/stock/{{card['symbol']}}" class="card-link">
+                    <div class="card" data-symbol="{{ card['symbol'] }}"
                         style="background-color: {{ 'white' if loop.index is odd else '#f0f0f0' }};">
 
                         <div class="header" style="margin-bottom: 7px;font-size: 20px;">
-                            {{ symbol }}
+                            {{ card['symbol'] }}
                         </div>
                         <div class="body">
                             <div class="stock-info">
-                                <p class="stock-open spaced">{{ data['LTP'] }}</p>
-                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%data['pchange'] }}%</p>
+                                <p class="stock-open spaced">{{ card['price'] }}</p>
+                                <p class="stock-high spaced" id="dataItem">{{ '%.2f'%card['pchange']}}%</p>
                             </div>
                             <script>
                                 var dataItems = document.querySelectorAll('.stock-high');
