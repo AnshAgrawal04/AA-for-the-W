@@ -103,7 +103,7 @@ def dashboard():
         return redirect(url_for('index'))
 
 
-@app.route('/<symbol>')
+@app.route('/stock/<symbol>')
 def stock(symbol):
     stock_card_data = gsd.get_stock_card_data(symbol)
     stock_detail_data = gsd.get_stock_detail_data(symbol)

@@ -123,21 +123,15 @@ def get_stock_card_data(symbol):
 
 def get_stock_detail_data(symbol):
     detail_data={}
-    for parameter in stock_parameter_to_display.keys():
+    for parameter in stock_parameter_to_display:
         detail_data[parameter] = get_stock_curr_data(symbol, parameter)
     return detail_data
-
-
-
-
-
-
 
 
 def get_plot(data_x,
              data_y,
              line_name,
-             graph_title,
+             title,
              y_label,
              x_label,
              height=400,
@@ -194,14 +188,14 @@ def plot_stock_prices(symbol, height=400, width=600):
 
 def plot_index(index, height=400, width=600):
     days = 365 * base_years
-    df = get_index_historic_data(index)
+    df = get_index_data(index)
 
     dimensions = sr.get_screen_resolution()
     height = int(dimensions[1] * 0.46)
     width = int(dimensions[0] * 0.35)
 
-    fig = get_plot(df['HistoricalDate'], df['CLOSE'], symbol,
-                   f"{symbol} Closing Prices", "Prices", "Date", height, width)
+    fig = get_plot(df['HistoricalDate'], df['CLOSE'], index,
+                   f"{index} Closing Prices", "Prices", "Date", height, width)
 
     fig.update_traces(line_color="black")
 
@@ -228,7 +222,7 @@ def plot_and_compare_symbols(symbol_name_1,
     data_x = get_stock_historic_data(symbol_name_1, 'Date')
     data_y = get_stock_historic_data(symbol_name_1, parameter)
 
-    fig = get_plot(data_x, data_y, symbol, f"{symbol} {parameter}", parameter,
+    fig = get_plot(data_x, data_y, symbol_name_1, f"{symbol_name_1} {parameter}", parameter,
                    "Date", height, width)
 
     data_x = get_stock_historic_data(symbol_name_2, 'Date')
