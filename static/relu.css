@@ -34,6 +34,14 @@ li a:hover {
     background-color: #111;
 }
 
+.btn-primary {
+    display: inline-block;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    text-decoration: none;
+}
+
 .logo {
     background-color: rgb(35, 34, 33);
     color: #f3f3f3;
@@ -577,5 +585,4 @@ input {
     background-color: rgb(221, 221, 221);
     font-weight: bold;
     border-radius: 10px;
-<<<<<<< HEAD
 }
