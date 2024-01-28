@@ -112,6 +112,8 @@ def stock(symbol):
                            stock_card_data = stock_card_data, #dictionary with symbol,
                            stock_detail_data = stock_detail_data,
                            plot_div=plot_div,
+                           nifty50_data=gsd.get_live_index_data("NIFTY 50"),
+                            sensex_data=gsd.get_live_index_data("SENSEX"),
                            news_articles=n.get_news()['articles'][:4])
 
 
