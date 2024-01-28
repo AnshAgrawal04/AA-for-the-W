@@ -31,7 +31,7 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return render_template("login.html")
+    return redirect(url_for("dashboard"))
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -86,7 +86,7 @@ def dashboard():
 
         plot_div=gsd.plot_index('NIFTY 50',width=750,height=460)
         
-        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),search_error=search_error)
+        return render_template('dashboard.html', username=session['username'],stocks_data=stockdata, dsc=descending_data[:5], asc=ascending_data[:5],plot_div=plot_div,news_articles=n.get_news()['articles'][:4],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),search_error=search_error)
 
     else:
         return redirect(url_for('index'))
@@ -97,7 +97,7 @@ def stock(symbol):
     stockdata=gsd.get_symbol_data(symbol,5).iloc[0]
     stock_parameter=gsd.get_stock_display_parameters()
     plot_div = gsd.plot_symbol(symbol, 'Closing Price',400,500)
-    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:3])
+    return render_template('stockdata.html', symbol=symbol, stockpara=stock_parameter, livedata=livedata, historicaldata=stockdata, plot_div=plot_div,news_articles=n.get_news()['articles'][:4],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
 
 @app.route("/stonks")
 def stonks():
@@ -127,7 +127,7 @@ def plot_compare():
                 "plot_compare.html",
                 parameter_options=parameter_options,
                 error="Please enter valid stock symbols",
-                news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
+                news_articles=n.get_news()['articles'][:4],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
             )
 
         return render_template(
@@ -137,9 +137,9 @@ def plot_compare():
             stock2=symbol_name_2,
             stock3=symbol_name_3,
             parameter_options=parameter_options,
-            news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
+            news_articles=n.get_news()['articles'][:4],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"),
         )
-    return render_template("plot_compare.html", parameter_options=parameter_options,news_articles=n.get_news()['articles'][:3],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
+    return render_template("plot_compare.html", parameter_options=parameter_options,news_articles=n.get_news()['articles'][:4],nifty50_data=gsd.get_live_index_data("NIFTY 50"),sensex_data=gsd.get_live_index_data("SENSEX"))
 
 @app.route("/reset", methods=["POST"])
 def plot_compare_graph():

@@ -124,23 +124,21 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .container-3 {
+        .b {
             width: 30%;
             background-color: inherit;
             border-radius: 10px;
             display: flex;
+            justify-content: space-evenly;
             flex-direction: column;
+            margin-right: 5px;
         }
 
-        .container-3>div {
-            margin: 3px;
-            padding: 10px;
-        }
+
 
         .container-3a {
-            height: 20%;
-
-            background: linear-gradient(rgb(130, 121, 206), rgb(54, 8, 220));
+            height: 12%;
+            background: linear-gradient(rgb(112, 179, 255), rgb(8, 104, 215));
             justify-content: center;
             border-radius: 10px;
             display: flex;
@@ -149,28 +147,30 @@
         }
 
         .container-3b {
-            height: 20%;
-
-            background-color: #ffffff;
-            justify-content: center;
-            border-radius: 10px;
+            height: 65%;
             display: flex;
             flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
+            background-color: rgb(252, 252, 252);
+            border-color: #111;
+            border-radius: 10px;
+            box-shadow: 3px 3px 1px rgb(0, 0, 0);
+            padding: 0px;
+
         }
 
         .article {
 
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            height: 20%;
-            color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-            justify-content: center;
+            display: flex;
+            flex-direction: column;
+            background-color: inherit;
+            justify-content: space-evenly;
+            margin-left: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .snippet:hover {
+            transform: scale(1.01);
+            background-color: #f5f5f5;
 
         }
 
@@ -178,7 +178,6 @@
             margin-top: 2%;
             font-size: 16px;
             font-weight: bold;
-            height: 70%;
         }
 
         .content {
@@ -186,15 +185,41 @@
         }
 
         .source-link {
-            font-size: 15px;
-            color: #ffffff;
+            font-size: 12px;
+            color: #343434;
             text-decoration: none;
-            justify-content: right;
-        }
-        tr:hover {
-        background-color: #f5f5f5; /* Set the background color on hover */
+            margin-left: 75%;
+            margin-top: 20px;
+
         }
 
+        tr:hover {
+            background-color: #f5f5f5;
+            /* Set the background color on hover */
+        }
+
+        .up_triangle {
+            width: 0;
+            height: 0;
+            margin-top: 4px;
+            margin-left: 6px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-bottom: 16px solid rgb(0, 255, 0);
+            /* Adjust color and size as needed */
+        }
+
+        .down_triangle {
+            width: 0;
+            height: 0;
+            margin-top: 4px;
+            color: red;
+            margin-left: 6px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 16px solid rgb(255, 0, 0);
+            /* Adjust color and size as needed */
+        }
     </style>
 </head>
 
@@ -202,7 +227,7 @@
     <ul>
         <li><a class="logo" href="/stonks">Stonks</a></li>
         <li><a href="/dashboard">Home</a></li>
-        <li><a href="/welcome">News</a></li>
+        
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
     </ul>
@@ -233,7 +258,8 @@
                     {{ plot_div|safe}}
                 </div>
             </div>
-            <div class="a3" style="height: 100px;display: flex;flex-direction: row;background-color:none;justify-content: space-evenly;">
+            <div class="a3"
+                style="height: 100px;display: flex;flex-direction: row;background-color:none;justify-content: space-evenly;">
                 <div style="background-color: #ffffff;width: 30%;border-radius: 10px;"></div>
                 <div style="background-color: #ffffff;width: 30%;border-radius: 10px;"></div>
                 <div style="background-color: #ffffff;width: 30%;border-radius: 10px;"></div>
@@ -261,7 +287,7 @@
                         {% endfor %}
                     </table>
                     <div>{{historicaldata['CH_OPENING_PRICE']}}</div>
-                    
+
 
                 </div>
             </div>
@@ -270,7 +296,7 @@
 
 
 
-        <div class="b" style="width:30%;">
+        <div class="b">
             <div class="container-3a"
                 style="display:flex;flex-direction: row;color:#ffffff;font-weight: 700;font-size: large;">
                 <div
@@ -278,24 +304,48 @@
                     <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>+2.30%</div>
-                            <div class="triangle"></div>
+                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div
+                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
                         </div>
 
                     </div>
                 </div>
-                <div style="width:50%; display: flex; justify-content: center; align-items: center;">NIFTY50</div>
+                <div
+                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
+                    <div style="height: 50%;justify-content: center;align-items: center;">NIFTY 50</div>
+                    <div style="height: 50%;justify-content: center;align-items: left;">
+                        <div style="font-size: medium;display:flex;flex-direction: row;">
+                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div
+                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="container-3b"></div>
-            {% set colors = ['#ffc80e', '#81fbb8', '#fb5060', 'yellow', 'purple', 'orange'] %}
-            {% set colors2 = ['#ff6900', '#28c76f', '#a90d23', 'purple', 'purple', 'orange'] %}
-            {% for article in news_articles %}
-            <div class="article"
-                style="background: linear-gradient({{ colors2[loop.index0 % colors2|length] }},{{ colors[loop.index0 % colors|length] }});">
-                <div class="headline">{{ article['title'] }}</div>
-                <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
+            <div style="height:30%"></div>
+            <div class="container-3b">
+                <div class="News-title"
+                    style="margin: 0%;width:100%;height: 15%; background-color: #050720;border-top-left-radius: 10px;border-top-right-radius: 10px;display: flex;align-items: center;color:#dedede">
+                    <h3
+                        style="margin-left: 3%;margin-top: 5%;font-family:Helvetica; font-size: 26px;font-style: normal;font-weight: 500;">
+                        Stock News</h3>
+                </div>
+                <div class="article" style="background-color:white;color:#111;height: 80%;">
+                    {% for article in news_articles %}
+                    <div style="height: 30%;" class="snippet">
+
+                        <div class="headline">{{ article['title'] }}</div>
+                        <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
+                        <div style="height:1px;background-color: #dadada;margin-top: 10px;margin-right: 5px;"></div>
+                    </div>
+
+                    {% endfor %}
+                </div>
+
             </div>
-            {% endfor %}
         </div>
     </div>
 </body>
