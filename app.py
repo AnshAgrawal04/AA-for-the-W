@@ -33,7 +33,7 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return render_template("login.html")
+    return redirect(url_for("dashboard"))
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -94,7 +94,7 @@ def dashboard():
             dsc=descending_data[:5],
             asc=ascending_data[:5],
             plot_div=plot_div,
-            news_articles=n.get_news()['articles'][:3],
+            news_articles=n.get_news()['articles'][:4],
             nifty50_data=gsd.get_live_index_data("NIFTY 50"),
             sensex_data=gsd.get_live_index_data("SENSEX"),
             search_error=search_error)
@@ -112,7 +112,7 @@ def stock(symbol):
                            stock_card_data = stock_card_data, #dictionary with symbol,
                            stock_detail_data = stock_detail_data,
                            plot_div=plot_div,
-                           news_articles=n.get_news()['articles'][:3])
+                           news_articles=n.get_news()['articles'][:4])
 
 
 @app.route("/stonks")
@@ -137,7 +137,7 @@ def plot_compare():
                 "plot_compare.html",
                 parameter_options=parameter_options,
                 error="Please enter valid stock symbols",
-                news_articles=n.get_news()['articles'][:3],
+                news_articles=n.get_news()['articles'][:4],
                 nifty50_data=gsd.get_live_index_data("NIFTY 50"),
                 sensex_data=gsd.get_live_index_data("SENSEX"),
             )
@@ -149,13 +149,13 @@ def plot_compare():
             stock2=symbol_name_2,
             stock3=symbol_name_3,
             parameter_options=parameter_options,
-            news_articles=n.get_news()['articles'][:3],
+            news_articles=n.get_news()['articles'][:4],
             nifty50_data=gsd.get_live_index_data("NIFTY 50"),
             sensex_data=gsd.get_live_index_data("SENSEX"),
         )
     return render_template("plot_compare.html",
                            parameter_options=parameter_options,
-                           news_articles=n.get_news()['articles'][:3],
+                           news_articles=n.get_news()['articles'][:4],
                            nifty50_data=gsd.get_live_index_data("NIFTY 50"),
                            sensex_data=gsd.get_live_index_data("SENSEX"))
 
