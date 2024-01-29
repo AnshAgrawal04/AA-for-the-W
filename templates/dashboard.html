@@ -15,7 +15,8 @@
         <li><a href="/plot_compare">Plot Graph</a></li>
         <li style="float:right"><a class="user_tab" href="#about">User</a></li>
         <form action="/dashboard" class="search-tool" method="POST">
-            <input type="text" name="search" placeholder="   Search..." class="search-bar">
+            <input type="hidden" name="form_type" value="search">
+            <input type="text" name="search" placeholder="Search..." class="search-bar">
             <button type="submit" class="search-button">Submit</button>
             <div class="search_error">{{ search_error }}</div>
         </form>
@@ -24,9 +25,24 @@
     <div class="flex-container">
         <div class="container-1">
             <div class="stock-table-header">NIFTY 50 Stocks</div>
-            <div class="search-wrapper">
-                <input type="search" id="search" data-search placeholder="Enter stock symbol">
-            </div>
+            <form action="/dashboard" method="POST" class="filter-container">
+                <div>
+                    <input type="hidden" name="form_type" value="filter">
+                    <input type="text" class="greater-box" name="greater" placeholder="Greater than">
+                    <input type="text" class="less-box" name="less" placeholder="Less than">
+                    <select id="parameter" name="stock_parameter" required>
+                        <option value="" disabled selected>Select Parameter to Compare</option>
+                        {% for option in parameter_options %}
+                        <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Submit</button>
+                    {%if form_posted %}
+                    <a href="{{ url_for('reset_filter') }}" class="btn-primary">Reset Filter</a>
+                    {%endif%}
+                </div>
+                <div class="filter-error">{{filter_error }}</div>
+            </form>
             <div class="user-cards" data-user-cards-container></div>
             <div class="card-container">
                 {% for card in stocks_data%}

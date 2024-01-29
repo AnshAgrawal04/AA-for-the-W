@@ -8,7 +8,6 @@ import pandas as pd
 import get_stock_data as gsd
 import news as n
 
-
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -71,22 +70,58 @@ def login():
 @app.route("/dashboard", methods=['GET', 'POST'])
 def dashboard():
     if 'user_id' in session:
+        form_posted=False
         nifty_50_stocks = gsd.get_nifty50()
-        search_error = ""
-        if request.method == 'POST':
-            symbol_entered = request.form.get('search').upper()
-            if symbol_entered in nifty_50_stocks:
-                return redirect(url_for('stock', symbol=symbol_entered))
-            else:
-                search_error = "Wrong symbol entered"
-        stock_symbols = nifty_50_stocks
-        stocks_data=gsd.get_all_stock_card_data()
+        plot_div = gsd.plot_index('NIFTY 50', width=750, height=460)
+        stocks_data = gsd.get_all_stock_card_data()
 
         ascending_data = sorted(stocks_data, key=lambda x: x['pchange'])
         descending_data = ascending_data[::-1]
+        search_error = ""
+        filter_error = ""
+        if request.method == 'POST':
+            form_posted=True
+            form_type = request.form.get('form_type')
+            if form_type == 'search':
+                symbol_entered = request.form.get('search').upper()
+                if symbol_entered in nifty_50_stocks:
+                    return redirect(url_for('stock', symbol=symbol_entered))
+                else:
+                    search_error = "Wrong symbol entered"
+            elif form_type == 'filter':
+                less_than = request.form.get("less")
+                greater_than = request.form.get("greater")
+                parameter = request.form.get("stock_parameter")
+                try:
+                    if less_than == "":
+                        lt = 1e10
+                    else:
+                        lt = float(less_than)
 
-        plot_div = gsd.plot_index('NIFTY 50', width=750, height=460)
+                    if greater_than == "":
+                        gt = -1e10
+                    else:
+                        gt = float(greater_than)
+                except:
+                    filter_error = "Please enter valid values"
+                else:
+                    stocks_data = gsd.get_all_stock_card_data(
+                        lt, gt, parameter)
 
+                    return render_template(
+                        'dashboard.html',
+                        username=session['username'],
+                        stocks_data=stocks_data,
+                        dsc=descending_data[:5],
+                        asc=ascending_data[:5],
+                        plot_div=plot_div,
+                        news_articles=n.get_news()['articles'][:4],
+                        nifty50_data=gsd.get_live_index_data("NIFTY 50"),
+                        sensex_data=gsd.get_live_index_data("SENSEX"),
+                        parameter_options=gsd.get_stock_filter_parameters(),
+                        search_error=search_error,
+                        filter_error=filter_error,
+                        form_posted=form_posted,)
         return render_template(
             'dashboard.html',
             username=session['username'],
@@ -97,7 +132,10 @@ def dashboard():
             news_articles=n.get_news()['articles'][:4],
             nifty50_data=gsd.get_live_index_data("NIFTY 50"),
             sensex_data=gsd.get_live_index_data("SENSEX"),
-            search_error=search_error)
+            parameter_options=gsd.get_stock_filter_parameters(),
+            search_error=search_error,
+            filter_error=filter_error,
+            form_posted=form_posted,)
 
     else:
         return redirect(url_for('index'))
@@ -108,14 +146,14 @@ def stock(symbol):
     stock_card_data = gsd.get_stock_card_data(symbol)
     stock_detail_data = gsd.get_stock_detail_data(symbol)
     plot_div = gsd.plot_stock_prices(symbol, 400, 500)
-    return render_template('stockdata.html',
-                           stock_card_data = stock_card_data, #dictionary with symbol,
-                           stock_detail_data = stock_detail_data,
-                           plot_div=plot_div,
-                           nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-                            sensex_data=gsd.get_live_index_data("SENSEX"),
-                           news_articles=n.get_news()['articles'][:4])
-
+    return render_template(
+        'stockdata.html',
+        stock_card_data=stock_card_data,  #dictionary with symbol,
+        stock_detail_data=stock_detail_data,
+        plot_div=plot_div,
+        nifty50_data=gsd.get_live_index_data("NIFTY 50"),
+        sensex_data=gsd.get_live_index_data("SENSEX"),
+        news_articles=n.get_news()['articles'][:4])
 
 @app.route("/stonks")
 def stonks():
@@ -162,10 +200,9 @@ def plot_compare():
                            sensex_data=gsd.get_live_index_data("SENSEX"))
 
 
-@app.route("/reset", methods=["POST"])
-def plot_compare_graph():
-    if request.method == "POST":
-        return redirect(url_for("plot_compare"))
+@app.route("/reset_filter")
+def reset_filter():
+    return redirect(url_for("dashboard"))
 
 
 @app.route("/logout")
