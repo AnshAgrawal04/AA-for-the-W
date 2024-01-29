@@ -22,7 +22,6 @@ nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 news_articles = n.get_news()["articles"][:4]
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
-all_stock_cards = sd.get_all_stock_cards()
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -83,78 +82,53 @@ def login():
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    if "user_id" in session:
-        form_posted = False
-        nifty_50_stocks = sd.get_nifty50()
-        plot_div = sp.plot_index("NIFTY 50", width=750, height=460)
-
-        stocks_data = all_stock_cards[:]
-        ascending_data = sorted(stocks_data, key=lambda x: x["pchange"])
-        descending_data = ascending_data[::-1]
-        search_error = ""
-        filter_error = ""
-        if request.method == "POST":
-            form_posted = True
-            form_type = request.form.get("form_type")
-            if form_type == "search":
-                symbol_entered = request.form.get("search").upper()
-                if symbol_entered in nifty_50_stocks:
-                    return redirect(url_for("stock", symbol=symbol_entered))
-                else:
-                    search_error = "Wrong symbol entered"
-            elif form_type == "filter":
-                less_than = request.form.get("less")
-                greater_than = request.form.get("greater")
-                parameter = request.form.get("stock_parameter")
-                try:
-                    if less_than == "":
-                        lt = 1e10
-                    else:
-                        lt = float(less_than)
-
-                    if greater_than == "":
-                        gt = -1e10
-                    else:
-                        gt = float(greater_than)
-                except:
-                    filter_error = "Please enter valid values"
-                else:
-                    stocks_data = sd.get_all_stock_cards(lt, gt, parameter)
-
-                    return render_template(
-                        "dashboard.html",
-                        username=session["username"],
-                        stocks_data=stocks_data,
-                        dsc=descending_data[:5],
-                        asc=ascending_data[:5],
-                        plot_div=plot_div,
-                        news_articles=news_articles,
-                        nifty50_data=nifty50_data,
-                        sensex_data=sensex_data,
-                        parameter_options=sd.get_stock_filter_parameters(),
-                        search_error=search_error,
-                        filter_error=filter_error,
-                        form_posted=form_posted,
-                    )
-        return render_template(
-            "dashboard.html",
-            username=session["username"],
-            stocks_data=stocks_data,
-            dsc=descending_data[:5],
-            asc=ascending_data[:5],
-            plot_div=plot_div,
-            news_articles=news_articles,
-            nifty50_data=nifty50_data,
-            sensex_data=sensex_data,
-            parameter_options=sd.get_stock_filter_parameters(),
-            search_error=search_error,
-            filter_error=filter_error,
-            form_posted=form_posted,
-        )
-
-    else:
+    if "user_id" not in session:
         return redirect(url_for("index"))
+        
+    plot_div = sp.plot_index("NIFTY 50", width=750, height=460)
+    stocks_data = sd.get_all_stock_cards()
+    ascending_data = sorted(stocks_data, key=lambda x: x["pchange"])
+    descending_data = ascending_data[::-1]
 
+    search_error, filter_error, form_posted = "", "", False
+
+    if request.method == "POST":
+        form_posted = True
+        form_type = request.form.get("form_type")
+        if form_type == "search":
+            symbol_entered = request.form.get("search").upper()
+            if symbol_entered in sd.get_nifty50():
+                return redirect(url_for("stock", symbol=symbol_entered))
+            search_error = "Wrong symbol entered"
+        elif form_type == "filter":
+            less_than = request.form.get("less")
+            greater_than = request.form.get("greater")
+            parameter = request.form.get("stock_parameter")
+
+            try:
+                lt = float(less_than) if less_than else 1e10
+                gt = float(greater_than) if greater_than else -1e10
+            except:
+                filter_error = "Please enter valid values"
+                form_posted = False
+            else:
+                stocks_data = sd.get_all_stock_cards(lt, gt, parameter)
+
+    return render_template(
+        "dashboard.html",
+        username=session["username"],
+        stocks_data=stocks_data,
+        dsc=descending_data[:5],
+        asc=ascending_data[:5],
+        plot_div=plot_div,
+        news_articles=news_articles,
+        nifty50_data=nifty50_data,
+        sensex_data=sensex_data,
+        parameter_options=sd.get_stock_filter_parameters(),
+        search_error=search_error,
+        filter_error=filter_error,
+        form_posted=form_posted,
+    )
 
 @app.route("/stock/<symbol>")
 def stock(symbol):
@@ -180,21 +154,19 @@ def stonks():
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
     parameter_options = sd.get_stock_compare_parameters()
-    symbol_1=""
-    symbol_2=""
-    symbol_3=""
-    error = ""
-    plot_div = ""
+    symbol_1 = symbol_2 = symbol_3 = error = plot_div = ""
+
     if request.method == "POST":
         symbol_1 = request.form.get("stock1").upper()
         symbol_2 = request.form.get("stock2").upper()
         symbol_3 = request.form.get("stock3").upper()
         parameter = request.form.get("stock_parameter")
+
         plot_div = sp.plot_and_compare_symbols(
-            symbol_1,symbol_2,symbol_3, parameter, height=600, width=1000
+            symbol_1, symbol_2, symbol_3, parameter, height=600, width=1000
         )
         if plot_div is None:
-            plot_div=""
+            plot_div = ""
             error = "Please enter valid stock symbols"
 
     return render_template(
@@ -209,6 +181,7 @@ def plot_compare():
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
     )
+
 
 @app.route("/reset_filter")
 def reset_filter():

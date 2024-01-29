@@ -141,11 +141,7 @@ def get_stock_card(symbol):
 def get_all_stock_cards(lt=1e10, gt=-1e10, parameter=""):
     stock_card_data = []
     for stock in nifty_50_stocks:
-        if (
-            parameter == ""
-            or get_today_stock_data(stock, parameter) <= lt
-            and get_today_stock_data(stock, parameter) >= gt
-        ):
+        if parameter == "" or (get_today_stock_data(stock, parameter) <= lt and get_today_stock_data(stock, parameter) >= gt):
             stock_card_data.append(get_stock_card(stock))
     return stock_card_data
 
