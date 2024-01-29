@@ -32,7 +32,7 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return redirect(url_for("dashboard"))
+    return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
