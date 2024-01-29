@@ -44,9 +44,9 @@
                     <div>SENSEX</div>
                     <div>
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div>{{sensex_data['price']}} ({{sensex_data['pchange']}}%)</div>
                             <div
-                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if sensex_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>
@@ -55,9 +55,9 @@
                     <div class="container-3a-aa">NIFTY 50</div>
                     <div class="container-3a-ab">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div>{{nifty50_data['price']}} ({{nifty50_data['pchange']}}%)</div>
                             <div
-                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if nifty50_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>

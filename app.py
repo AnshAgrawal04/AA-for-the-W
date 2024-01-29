@@ -1,14 +1,29 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    jsonify,
+    session,
+)
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from jugaad_data.nse import stock_df
 from datetime import date, timedelta
 import pandas as pd
-import get_stock_data as gsd
+import stock_data as sd
+import stock_plots as sp
 import news as n
 
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
+news_articles = n.get_news()["articles"][:4]
+sensex_data = sd.get_live_index_data("SENSEX")
+nifty50_data = sd.get_live_index_data("NIFTY 50")
+all_stock_cards = sd.get_all_stock_cards()
+
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
@@ -40,8 +55,7 @@ def register():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        hashed_password = generate_password_hash(password,
-                                                 method="pbkdf2:sha256")
+        hashed_password = generate_password_hash(password, method="pbkdf2:sha256")
 
         new_user = User(username=username, password_hash=hashed_password)
         db.session.add(new_user)
@@ -67,28 +81,28 @@ def login():
         return redirect(url_for("index"))
 
 
-@app.route("/dashboard", methods=['GET', 'POST'])
+@app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
-    if 'user_id' in session:
-        form_posted=False
-        nifty_50_stocks = gsd.get_nifty50()
-        plot_div = gsd.plot_index('NIFTY 50', width=750, height=460)
-        stocks_data = gsd.get_all_stock_card_data()
+    if "user_id" in session:
+        form_posted = False
+        nifty_50_stocks = sd.get_nifty50()
+        plot_div = sp.plot_index("NIFTY 50", width=750, height=460)
 
-        ascending_data = sorted(stocks_data, key=lambda x: x['pchange'])
+        stocks_data = all_stock_cards[:]
+        ascending_data = sorted(stocks_data, key=lambda x: x["pchange"])
         descending_data = ascending_data[::-1]
         search_error = ""
         filter_error = ""
-        if request.method == 'POST':
-            form_posted=True
-            form_type = request.form.get('form_type')
-            if form_type == 'search':
-                symbol_entered = request.form.get('search').upper()
+        if request.method == "POST":
+            form_posted = True
+            form_type = request.form.get("form_type")
+            if form_type == "search":
+                symbol_entered = request.form.get("search").upper()
                 if symbol_entered in nifty_50_stocks:
-                    return redirect(url_for('stock', symbol=symbol_entered))
+                    return redirect(url_for("stock", symbol=symbol_entered))
                 else:
                     search_error = "Wrong symbol entered"
-            elif form_type == 'filter':
+            elif form_type == "filter":
                 less_than = request.form.get("less")
                 greater_than = request.form.get("greater")
                 parameter = request.form.get("stock_parameter")
@@ -105,100 +119,96 @@ def dashboard():
                 except:
                     filter_error = "Please enter valid values"
                 else:
-                    stocks_data = gsd.get_all_stock_card_data(
-                        lt, gt, parameter)
+                    stocks_data = sd.get_all_stock_cards(lt, gt, parameter)
 
                     return render_template(
-                        'dashboard.html',
-                        username=session['username'],
+                        "dashboard.html",
+                        username=session["username"],
                         stocks_data=stocks_data,
                         dsc=descending_data[:5],
                         asc=ascending_data[:5],
                         plot_div=plot_div,
-                        news_articles=n.get_news()['articles'][:4],
-                        nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-                        sensex_data=gsd.get_live_index_data("SENSEX"),
-                        parameter_options=gsd.get_stock_filter_parameters(),
+                        news_articles=news_articles,
+                        nifty50_data=nifty50_data,
+                        sensex_data=sensex_data,
+                        parameter_options=sd.get_stock_filter_parameters(),
                         search_error=search_error,
                         filter_error=filter_error,
-                        form_posted=form_posted,)
+                        form_posted=form_posted,
+                    )
         return render_template(
-            'dashboard.html',
-            username=session['username'],
+            "dashboard.html",
+            username=session["username"],
             stocks_data=stocks_data,
             dsc=descending_data[:5],
             asc=ascending_data[:5],
             plot_div=plot_div,
-            news_articles=n.get_news()['articles'][:4],
-            nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-            sensex_data=gsd.get_live_index_data("SENSEX"),
-            parameter_options=gsd.get_stock_filter_parameters(),
+            news_articles=news_articles,
+            nifty50_data=nifty50_data,
+            sensex_data=sensex_data,
+            parameter_options=sd.get_stock_filter_parameters(),
             search_error=search_error,
             filter_error=filter_error,
-            form_posted=form_posted,)
+            form_posted=form_posted,
+        )
 
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
 
-@app.route('/stock/<symbol>')
+@app.route("/stock/<symbol>")
 def stock(symbol):
-    stock_card_data = gsd.get_stock_card_data(symbol)
-    stock_detail_data = gsd.get_stock_detail_data(symbol)
-    plot_div = gsd.plot_stock_prices(symbol, 400, 500)
+    stock_card_data = sd.get_stock_card(symbol)
+    stock_detail_data = sd.get_stock_page_data(symbol)
+    plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
     return render_template(
-        'stockdata.html',
-        stock_card_data=stock_card_data,  #dictionary with symbol,
+        "stockdata.html",
+        stock_card_data=stock_card_data,
         stock_detail_data=stock_detail_data,
         plot_div=plot_div,
-        nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-        sensex_data=gsd.get_live_index_data("SENSEX"),
-        news_articles=n.get_news()['articles'][:4])
+        nifty50_data=nifty50_data,
+        sensex_data=sensex_data,
+        news_articles=news_articles,
+    )
+
 
 @app.route("/stonks")
 def stonks():
-    return render_template('stonks.html')
+    return render_template("stonks.html")
 
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
-    parameter_options = gsd.get_stock_compare_parameters()
+    parameter_options = sd.get_stock_compare_parameters()
+    symbol_1=""
+    symbol_2=""
+    symbol_3=""
+    error = ""
+    plot_div = ""
     if request.method == "POST":
-        symbol_name_1 = request.form.get("stock1")
-        symbol_name_2 = request.form.get("stock2")
-        symbol_name_3 = request.form.get("stock3")
+        symbol_1 = request.form.get("stock1").upper()
+        symbol_2 = request.form.get("stock2").upper()
+        symbol_3 = request.form.get("stock3").upper()
         parameter = request.form.get("stock_parameter")
-
-        plot_div = gsd.plot_and_compare_symbols(symbol_name_1, symbol_name_2,
-                                                symbol_name_3, parameter, 600,
-                                                1000)
-        if plot_div is None:
-            return render_template(
-                "plot_compare.html",
-                parameter_options=parameter_options,
-                error="Please enter valid stock symbols",
-                news_articles=n.get_news()['articles'][:4],
-                nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-                sensex_data=gsd.get_live_index_data("SENSEX"),
-            )
-
-        return render_template(
-            "plot_compare.html",
-            plot_div=plot_div,
-            stock1=symbol_name_1,
-            stock2=symbol_name_2,
-            stock3=symbol_name_3,
-            parameter_options=parameter_options,
-            news_articles=n.get_news()['articles'][:4],
-            nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-            sensex_data=gsd.get_live_index_data("SENSEX"),
+        plot_div = sp.plot_and_compare_symbols(
+            symbol_1,symbol_2,symbol_3, parameter, height=600, width=1000
         )
-    return render_template("plot_compare.html",
-                           parameter_options=parameter_options,
-                           news_articles=n.get_news()['articles'][:4],
-                           nifty50_data=gsd.get_live_index_data("NIFTY 50"),
-                           sensex_data=gsd.get_live_index_data("SENSEX"))
+        if plot_div is None:
+            plot_div=""
+            error = "Please enter valid stock symbols"
 
+    return render_template(
+        "plot_compare.html",
+        plot_div=plot_div,
+        stock1=symbol_1,
+        stock2=symbol_2,
+        stock3=symbol_3,
+        error=error,
+        parameter_options=parameter_options,
+        news_articles=news_articles,
+        nifty50_data=nifty50_data,
+        sensex_data=sensex_data,
+    )
 
 @app.route("/reset_filter")
 def reset_filter():
