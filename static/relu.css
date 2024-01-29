@@ -61,23 +61,29 @@ li a:hover {
     text-decoration: none;
     display: flex;
     height: 30px;
+    
 }
 
 .search-bar {
-    border-radius: 1px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     padding: 2px;
-    margin-right: 5px;
+    
     border: 1px solid #ccc;
-    height: 90%;
+    height: 100%;
     width: 40%;
+    background: #F7F6F9;
+    flex-shrink: 0;
 }
 
 .search-button {
+    border-top-right-radius:8px ;
+    border-bottom-right-radius: 8px;
+    
     border: none;
-    background-color: #4c53af;
+    background: #6425FE;
     color: white;
-    padding: 8px 12px;
-    border-radius: 1px;
+    height: 35px;
     cursor: pointer;
 }
 
@@ -569,12 +575,12 @@ tr:nth-child(even) {
 
 input {
     padding: 10px;
-    border-radius: 2px;
+    
     border: 2px solid #080054;
     width: 95%;
     height: 50px;
     color: #525252;
     background-color: rgb(221, 221, 221);
     font-weight: bold;
-    border-radius: 10px;
+    
 }
