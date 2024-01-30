@@ -69,14 +69,14 @@ li a:hover {
     text-decoration: none;
     display: flex;
     height: 30px;
-    
+
 }
 
 .search-bar {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
     padding: 2px;
-    
+
     border: 1px solid #ccc;
     height: 100%;
     width: 40%;
@@ -85,9 +85,9 @@ li a:hover {
 }
 
 .search-button {
-    border-top-right-radius:8px ;
+    border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
-    
+
     border: none;
     background: #6425FE;
     color: white;
@@ -133,7 +133,10 @@ li a:hover {
     margin-top: 0px;
     background-color: black;
     color: #ffffff;
-    border-radius: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 20px;
+    ;
 }
 
 .search-wrapper {
@@ -262,7 +265,7 @@ li a:hover {
     padding: 0px;
     display: flex;
     flex-direction: column;
-    width: 35%;
+    width: 41%;
     background-color: inherit;
 }
 
@@ -358,8 +361,9 @@ li a:hover {
     background-color: inherit;
     border-radius: 10px;
     display: flex;
+    justify-content: space-evenly;
     flex-direction: column;
-    margin-left: 10px;
+    margin-right: 5px;
 }
 
 
@@ -583,12 +587,18 @@ tr:nth-child(even) {
 
 input {
     padding: 10px;
-    
+
     border: 2px solid #080054;
     width: 95%;
     height: 50px;
     color: #525252;
     background-color: rgb(221, 221, 221);
     font-weight: bold;
-    
+
+}
+
+
+.greater-box {
+    height: 10px;
+    ;
 }

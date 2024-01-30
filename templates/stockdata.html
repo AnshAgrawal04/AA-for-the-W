@@ -41,7 +41,7 @@
             padding-right: 15px;
         }
 
-        ul {
+        nav-bar {
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -72,7 +72,7 @@
         }
 
         .logo {
-            
+
             color: #f3f3f3;
             width: 100px;
         }
@@ -82,7 +82,7 @@
         }
 
         .user_tab {
-            
+
             width: 100px;
             float: right;
         }
@@ -223,56 +223,93 @@
         }
 
         .add-button {
-                margin-top: 5%;
-                background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
-                border-radius: 8px;
-                border-style: none;
-                box-sizing: border-box;
-                color: #FFFFFF;
-                cursor: pointer;
-                flex-shrink: 0;
-                font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-                font-size: 35px;
-                font-weight: 100;
-                height: 4rem;
-                padding: 0 1.6rem;
-                text-align: center;
-                text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
-                transition: all .5s;
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-                width:85%;
-                margin-left: 6%;
-                height:15%;
-            }
+            margin-top: 5%;
+            background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+            border-radius: 8px;
+            border-style: none;
+            box-sizing: border-box;
+            color: #FFFFFF;
+            cursor: pointer;
+            flex-shrink: 0;
+            font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            font-size: 35px;
+            font-weight: 100;
+            height: 4rem;
+            padding: 0 1.6rem;
+            text-align: center;
+            text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
+            transition: all .5s;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            width: 85%;
+            margin-left: 6%;
+            height: 15%;
+        }
 
-            .add-button:hover {
-                box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
-                transition-duration: .1s;
-            }
-            .a1:hover {
-                box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
-                transition-duration: .1s;
-            }
-            .grid-item{
-                background-color: #EFE9FF;
-                color:#6425fe;
+        .add-button:hover {
+            box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+            transition-duration: .1s;
+        }
 
-                border-radius: 8px;
-            }
-        
+        .a1:hover {
+            box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+            transition-duration: .1s;
+        }
+
+        .grid-item {
+            background-color: #EFE9FF;
+            color: #6425fe;
+
+            border-radius: 8px;
+        }
+
+        .custom-stock-1 {
+            background: #9E7BFF;
+            width: 30%;
+            border-radius: 10px;
+            color: #050720;
+            margin: 10px;
+            transition: background 1s, color 0.7s;
+        }
+
+        .custom-stock-1:hover {
+            background: linear-gradient(to left, #000, #060606);
+            color: white;
+        }
+        .custom-stock-2 {
+            background: #ffffff;
+            width: 30%;
+            border-radius: 10px;
+            color: #050720;
+            margin: 10px;
+            transition: background 1s, color 0.7s;
+        }
+
+        .custom-stock-2:hover {
+            background: linear-gradient(to left, #000, #060606);
+            color: white;
+        }
+        .custom-stock-3 {
+            background:  #6425fe;
+            width: 30%;
+            border-radius: 10px;
+            color: #050720;
+            margin: 10px;
+            transition: background 1s, color 0.7s;
+        }
+
+        .custom-stock-3:hover {
+            background: linear-gradient(to left, #000, #060606);
+            color: white;
+        }
     </style>
 </head>
 
 <body>
-    <ul>
-        <li><a class="logo" href="/stonks">Stonks</a></li>
-        <li><a href="/dashboard">Home</a></li>
 
-        <li><a href="/plot_compare">Plot Graph</a></li>
-        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
-    </ul>
+    <iframe frameborder='0' width="100%" src="{{ iframe }}" frameborder="0" class="nav-bar" height="50px"></iframe>
+
     <div class="flex-container"
         style="display: flex;flex-direction: row;justify-content: space-evenly;margin-top: 20px;">
         <div class="a" style="width:40%;display:flex;flex-direction: column;margin-left: 10px;">
@@ -303,10 +340,10 @@
                 </div>
             </div>
             <div class="a3"
-                style="height: 110px;display: flex;flex-direction: row;background-color:#ffffff;justify-content: space-evenly;border-radius: 12px;">
-                <div style="background: #96f8de;;width: 30%;border-radius: 10px;color:#111;margin: 10px;">Stock1, content bhar dena mein style kar doonga</div>
-                <div style="background: #B79BFF;;width: 30%;border-radius: 10px;color: azure;margin: 10px;">Stock2</div>
-                <div style="background: #FFE5A5;;width: 30%;border-radius: 10px;color:#050720;margin: 10px;">Stock3</div>
+                style="height: 110px;display: flex;flex-direction: row;background-color:none;justify-content: space-evenly;border-radius: 12px;">
+                <div class="custom-stock-1">Stock1</div>
+                <div class="custom-stock-2">Stock2</div>
+                <div class="custom-stock-3">Stock3</div>
             </div>
 
 
@@ -331,7 +368,7 @@
                         {% endfor %}
                     </table>
                 </div>
-                
+
 
             </div>
             <div class="add-button" role="button"> Add Stock to Watchlist</div>
@@ -369,12 +406,15 @@
                     </div>
                 </div>
             </div>
-            <div class="grid-container" style="height:25%;background-color: #ffffff;margin-top: 4%;margin-bottom: 4%;border-radius: 8px;display: grid;gap:5px;padding:5px;">
-                <div class="grid-item item1" style="grid-column: 1/ span 2; grid-row: 1;background-color: #fff;color:#343434;font-size: 20px;height: 10px;">Your Watchlist</div>
-                <div class="grid-item item2" >Stock1</div>
+            <div class="grid-container"
+                style="height:25%;background-color: #ffffff;margin-top: 4%;margin-bottom: 4%;border-radius: 8px;display: grid;gap:5px;padding:5px;">
+                <div class="grid-item item1"
+                    style="grid-column: 1/ span 2; grid-row: 1;background-color: #fff;color:#343434;font-size: 20px;height: 10px;">
+                    Your Watchlist</div>
+                <div class="grid-item item2">Stock1</div>
                 <div class="grid-item item3">Stock2</div>
                 <div class="grid-item item4">Stock3</div>
-                <div class="grid-item item4">Stock3</div>            
+                <div class="grid-item item4">Stock3</div>
 
 
             </div>

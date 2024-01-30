@@ -37,6 +37,7 @@ def index():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    iframe='/static/nav-bar.html',
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -49,7 +50,7 @@ def register():
 
         flash("Registration successful! Please login.")
         return redirect(url_for("index"))
-    return render_template("register.html")
+    return render_template("register.html",iframe=iframe)
 
 
 @app.route("/login", methods=["POST"])
@@ -64,7 +65,7 @@ def login():
         return redirect(url_for("dashboard"))
     else:
         flash("Invalid username or password")
-        return redirect(url_for("index"))
+        return redirect(url_for("index"),iframe='/static/nav-bar.html')
 
 
 @app.route("/dashboard", methods=['GET', 'POST'])
@@ -121,6 +122,7 @@ def dashboard():
                         parameter_options=gsd.get_stock_filter_parameters(),
                         search_error=search_error,
                         filter_error=filter_error,
+                        iframe='/static/nav-bar.html',
                         form_posted=form_posted,)
         return render_template(
             'dashboard.html',
@@ -135,6 +137,7 @@ def dashboard():
             parameter_options=gsd.get_stock_filter_parameters(),
             search_error=search_error,
             filter_error=filter_error,
+            iframe='/static/nav-bar.html',
             form_posted=form_posted,)
 
     else:
@@ -146,6 +149,7 @@ def stock(symbol):
     stock_card_data = gsd.get_stock_card_data(symbol)
     stock_detail_data = gsd.get_stock_detail_data(symbol)
     plot_div = gsd.plot_stock_prices(symbol, 400, 500)
+    url='/static/nav-bar.html'
     return render_template(
         'stockdata.html',
         stock_card_data=stock_card_data,  #dictionary with symbol,
@@ -153,7 +157,8 @@ def stock(symbol):
         plot_div=plot_div,
         nifty50_data=gsd.get_live_index_data("NIFTY 50"),
         sensex_data=gsd.get_live_index_data("SENSEX"),
-        news_articles=n.get_news()['articles'][:4])
+        news_articles=n.get_news()['articles'][:4],
+        iframe=url)
 
 @app.route("/stonks")
 def stonks():
@@ -180,6 +185,7 @@ def plot_compare():
                 news_articles=n.get_news()['articles'][:4],
                 nifty50_data=gsd.get_live_index_data("NIFTY 50"),
                 sensex_data=gsd.get_live_index_data("SENSEX"),
+                iframe='/static/nav-bar.html',
             )
 
         return render_template(
@@ -192,11 +198,13 @@ def plot_compare():
             news_articles=n.get_news()['articles'][:4],
             nifty50_data=gsd.get_live_index_data("NIFTY 50"),
             sensex_data=gsd.get_live_index_data("SENSEX"),
+            iframe='/static/nav-bar.html',
         )
     return render_template("plot_compare.html",
                            parameter_options=parameter_options,
                            news_articles=n.get_news()['articles'][:4],
                            nifty50_data=gsd.get_live_index_data("NIFTY 50"),
+                           iframe='/static/nav-bar.html',
                            sensex_data=gsd.get_live_index_data("SENSEX"))
 
 
@@ -211,6 +219,9 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("index"))
 
+@app.route("/nav-bar")
+def nav_bar():
+    return render_template("./static/nav-bar.html")
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
