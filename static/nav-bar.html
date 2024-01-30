@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <base target="_top">
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            font-family: system-ui;
+        }
+
+        ul {
+            margin: 0px;
+            padding: 0px;
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #211c1c;
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+        }
+
+        li {
+            float: left;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover {
+            background-color: #111;
+        }
+
+        .logo {
+
+            color: #f3f3f3;
+            width: 100px;
+        }
+
+        .active {
+            background-color: #4c53af;
+        }
+
+        .user_tab {
+
+            width: 100px;
+            float: right;
+        }
+
+        .search-tool {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: flex;
+            height: 30px;
+
+        }
+
+        .search-bar {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+            padding: 2px;
+
+            border: 1px solid #ccc;
+            height: 100%;
+            width: 40%;
+            background: #F7F6F9;
+            flex-shrink: 0;
+        }
+
+        .search-button {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+
+            border: none;
+            background: #6425FE;
+            color: white;
+            height: 35px;
+            cursor: pointer;
+        }
+
+        .search_error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <ul>
+        <li><a class="logo" href="/stonks" taget="_top">Stonks</a></li>
+        <li><a href="/dashboard">Home</a></li>
+        <li><a href="/plot_compare">Plot Graph</a></li>
+        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
+        <form action="/dashboard" class="search-tool" method="POST">
+            <input type="hidden" name="form_type" value="search">
+            <input type="text" name="search" placeholder="Search..." class="search-bar">
+            <button type="submit" class="search-button">Submit</button>
+            <div class="search_error">{{ search_error }}</div>
+        </form>
+    </ul>
+</body>
+
+</html>
