@@ -9,18 +9,9 @@
 </head>
 
 <body>
-    <ul>
-        <li><a class="logo" href="/stonks">Stonks</a></li>
-        <li><a class="active" href="/dashboard">Home</a></li>
-        <li><a href="/plot_compare">Plot Graph</a></li>
-        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
-        <form action="/dashboard" class="search-tool" method="POST">
-            <input type="hidden" name="form_type" value="search">
-            <input type="text" name="search" placeholder="Search..." class="search-bar">
-            <button type="submit" class="search-button">Submit</button>
-            <div class="search_error">{{ search_error }}</div>
-        </form>
-    </ul>
+    {% with search_error = search_error %}
+    {% include 'navbar.html' %}
+    {% endwith %}
 
     <div class="flex-container">
         <div class="container-1">

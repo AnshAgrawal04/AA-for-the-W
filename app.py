@@ -8,9 +8,9 @@ from flask import (
     jsonify,
     session,
 )
+
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from jugaad_data.nse import stock_df
 from datetime import date, timedelta
 import pandas as pd
@@ -23,6 +23,7 @@ news_articles = n.get_news()["articles"][:4]
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
 
+watchlist=[]
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
@@ -130,11 +131,16 @@ def dashboard():
         form_posted=form_posted,
     )
 
-@app.route("/stock/<symbol>")
+@app.route("/stock/<symbol>",methods=["GET","POST"])
 def stock(symbol):
     stock_card_data = sd.get_stock_card(symbol)
     stock_detail_data = sd.get_stock_page_data(symbol)
     plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
+    if request.method == "POST":
+        if stock_card_data not in watchlist:
+            if len(watchlist)==4:
+                watchlist.pop(0)
+            watchlist.append(stock_card_data)
     return render_template(
         "stockdata.html",
         stock_card_data=stock_card_data,
@@ -143,6 +149,7 @@ def stock(symbol):
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
         news_articles=news_articles,
+        watchlist=watchlist,
     )
 
 
@@ -153,7 +160,6 @@ def stonks():
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
-    parameter_options = sd.get_stock_compare_parameters()
     symbol_1 = symbol_2 = symbol_3 = error = plot_div = ""
 
     if request.method == "POST":
@@ -176,7 +182,7 @@ def plot_compare():
         stock2=symbol_2,
         stock3=symbol_3,
         error=error,
-        parameter_options=parameter_options,
+        parameter_options=sd.get_stock_compare_parameters(),
         news_articles=news_articles,
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,

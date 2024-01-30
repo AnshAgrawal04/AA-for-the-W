@@ -6,7 +6,6 @@ import screen_reso as sr
 
 nifty_50_stocks = sd.get_nifty50()
 
-
 def get_plot(data_x, data_y, line_name, title, y_label, x_label, height=400, width=600):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=data_x, y=data_y, mode="lines", name=line_name))
