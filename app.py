@@ -32,7 +32,7 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return redirect(url_for("dashboard"))
+    return render_template("login.html")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -141,7 +141,7 @@ def dashboard():
             form_posted=form_posted,)
 
     else:
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
 
 @app.route('/stock/<symbol>')
