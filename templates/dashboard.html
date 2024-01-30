@@ -9,7 +9,10 @@
 </head>
 
 <body>
-    <iframe frameborder='0' width="100%" src="{{ iframe }}?search_error={{ search_error }}" frameborder="0" class="nav-bar" height="50px"></iframe>
+
+    {% with search_error = search_error %}
+    {% include 'navbar.html' %}
+    {% endwith %}
 
 
     <div class="flex-container">
@@ -162,9 +165,9 @@
                     <div class="sensex-header"style="">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div>{{sensex_data['price']}} ({{sensex_data['pchange']}}%)</div>
                             <div
-                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if sensex_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>
@@ -173,9 +176,9 @@
                     <div class="nifty-header" >NIFTY 50</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div>{{nifty50_data['price']}} ({{nifty50_data['pchange']}}%)</div>
                             <div
-                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if nifty50_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>

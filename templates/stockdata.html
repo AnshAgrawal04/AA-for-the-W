@@ -68,21 +68,22 @@
                     </table>
                 </div>
             </div>
-            <div class="add-button" role="button"> Add Stock to Watchlist</div>
+            <form method="post" class="add-button">
+            <button class="add-button" type="submit" role="button"> Add Stock to Watchlist</button>
+            </form>
         </div>
 
 
 
-        <!-- This is the correct news class -->
         <div class="b">
             <div class="container-3a">
                 <div class="sensex">
                     <div class="sensex-header"style="">SENSEX</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
+                            <div>{{sensex_data['price']}} ({{sensex_data['pchange']}}%)</div>
                             <div
-                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if sensex_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>
@@ -91,22 +92,25 @@
                     <div class="nifty-header" >NIFTY 50</div>
                     <div style="height: 50%;justify-content: center;align-items: left;">
                         <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
+                            <div>{{nifty50_data['price']}} ({{nifty50_data['pchange']}}%)</div>
                             <div
-                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
+                                class="{% if nifty50_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div class="grid-container">
                 <div class="grid-item item1"
                     style="grid-column: 1/ span 2; grid-row: 1;background-color: #fff;color:#343434;font-size: 20px;height: 10px;">
                     Your Watchlist</div>
-                <div class="grid-item item2">Stock1</div>
-                <div class="grid-item item3">Stock2</div>
-                <div class="grid-item item4">Stock3</div>
-                <div class="grid-item item4">Stock3</div>
+               
+                {% for stock in watchlist %}
+                <div class="grid-item item2" >{{stock['symbol']}} {{stock['price']}} ({{'%.2f' % stock['pchange']}}%)</div>
+                {% endfor %}
+
+
             </div>
             <div class="container-3b">
                 <div class="news-title">
