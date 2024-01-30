@@ -59,6 +59,7 @@ def index():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    iframe='/static/nav-bar.html',
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -70,7 +71,7 @@ def register():
 
         flash("Registration successful! Please login.")
         return redirect(url_for("index"))
-    return render_template("register.html")
+    return render_template("register.html",iframe=iframe)
 
 
 @app.route("/login", methods=["POST"])
@@ -85,11 +86,12 @@ def login():
         return redirect(url_for("dashboard"))
     else:
         flash("Invalid username or password")
-        return redirect(url_for("index"))
+        return redirect(url_for("index"),iframe='/static/nav-bar.html')
 
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+
     if "user_id" not in session:
         return redirect(url_for("index"))
         
@@ -187,11 +189,13 @@ def stock(symbol):
         stock_card_data=stock_card_data,
         stock_detail_data=stock_detail_data,
         plot_div=plot_div,
+
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
         news_articles=news_articles,
         watchlist=watchlist_cards,
     )
+
 
 
 @app.route("/stonks")
@@ -208,6 +212,7 @@ def plot_compare():
         symbol_2 = request.form.get("stock2").upper()
         symbol_3 = request.form.get("stock3").upper()
         parameter = request.form.get("stock_parameter")
+
 
         plot_div = sp.plot_and_compare_symbols(
             symbol_1, symbol_2, symbol_3, parameter, height=600, width=1000
@@ -241,6 +246,9 @@ def logout():
     session.pop("username", None)
     return redirect(url_for("index"))
 
+@app.route("/nav-bar")
+def nav_bar():
+    return render_template("./static/nav-bar.html")
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)
