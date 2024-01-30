@@ -23,7 +23,6 @@ news_articles = n.get_news()["articles"][:4]
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
 
-watchlist=[]
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
 
@@ -38,7 +37,15 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password_hash = db.Column(db.String(200), nullable=False)
+    watchlist = db.relationship("Watchlist", backref="user", lazy=True)
 
+class Watchlist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True, nullable=False)
+    symbol1 = db.Column(db.String(100))
+    symbol2 = db.Column(db.String(100))
+    symbol3 = db.Column(db.String(100))
+    symbol4 = db.Column(db.String(100))
 
 # Initialize Database within Application Context
 with app.app_context():
@@ -133,14 +140,48 @@ def dashboard():
 
 @app.route("/stock/<symbol>",methods=["GET","POST"])
 def stock(symbol):
+    user = User.query.filter_by(username=session['username']).first()
+    
     stock_card_data = sd.get_stock_card(symbol)
     stock_detail_data = sd.get_stock_page_data(symbol)
     plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
     if request.method == "POST":
-        if stock_card_data not in watchlist:
-            if len(watchlist)==4:
-                watchlist.pop(0)
-            watchlist.append(stock_card_data)
+        
+        if not user.watchlist:
+            
+            watchlist = Watchlist(user_id=user.id,symbol1=symbol)
+            db.session.add(watchlist)
+            db.session.commit()
+        else:
+            watchlist = user.watchlist[0]
+            if not watchlist.symbol1:
+                watchlist.symbol1 = symbol
+            elif not watchlist.symbol2:
+                watchlist.symbol2 = symbol
+            elif not watchlist.symbol3:
+                watchlist.symbol3 = symbol
+            elif not watchlist.symbol4:
+                watchlist.symbol4 = symbol
+            elif watchlist.symbol1 != symbol and watchlist.symbol2 != symbol and watchlist.symbol3 != symbol and watchlist.symbol4 != symbol:
+                watchlist.symbol1 = watchlist.symbol2
+                watchlist.symbol2 = watchlist.symbol3
+                watchlist.symbol3 = watchlist.symbol4
+                watchlist.symbol4 = symbol
+            db.session.commit()
+    local_watchlist = []
+    if user.watchlist:
+        if user.watchlist[0].symbol1:
+            local_watchlist.append(user.watchlist[0].symbol1)
+        if user.watchlist[0].symbol2:
+            local_watchlist.append(user.watchlist[0].symbol2)
+        if user.watchlist[0].symbol3:
+            local_watchlist.append(user.watchlist[0].symbol3)
+        if user.watchlist[0].symbol4:
+            local_watchlist.append(user.watchlist[0].symbol4)  
+    watchlist_cards=[]   
+    for symbol in local_watchlist:
+        watchlist_cards.append(sd.get_stock_card(symbol))
+
     return render_template(
         "stockdata.html",
         stock_card_data=stock_card_data,
@@ -149,7 +190,7 @@ def stock(symbol):
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
         news_articles=news_articles,
-        watchlist=watchlist,
+        watchlist=watchlist_cards,
     )
 
 
