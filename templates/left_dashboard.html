@@ -1,5 +1,5 @@
 <div class="container-1">
-    <div class="stock-table-header">NIFTY 50 Stocks</div>
+    <div class="stock-table-header">Filter NIFTY 50 Stocks</div>
     <form action="/dashboard" method="POST" class="filter-container">
         <div>
             <input type="hidden" name="form_type" value="filter">
@@ -7,6 +7,7 @@
             <input type="text" class="greater-box" name="greater" placeholder="Greater than">
             <input type="text" class="greater-box" name="less" placeholder="Less than">
             </div>
+            <div style="display: flex;margin-top: 10px;">
             <select id="parameter" name="stock_parameter" required>
                 <option value="" disabled selected>Select Parameter to Compare</option>
                 {% for option in parameter_options %}
@@ -19,6 +20,7 @@
             {%else%}
             <button type="submit" class="submit-button">Submit</button>
             {%endif%}
+            </div>
         </div>
         <div class="filter-error">{{filter_error }}</div>
     </form>
