@@ -75,6 +75,7 @@
     display: grid;
     gap: 5px;
     padding: 5px;
+    font-size: 16px;
 }
 
 .grid-item {
@@ -160,5 +161,4 @@ h3 {
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-top: 16px solid rgb(255, 0, 0);
-    /* Adjust color and size as needed */
 }

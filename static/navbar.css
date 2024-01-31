@@ -1,0 +1,87 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #211c1c;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+
+.logo {
+    background-color: rgb(35, 34, 33);
+    color: #f3f3f3;
+    width: 100px;
+}
+
+.active {
+    background-color: #4c53af;
+}
+
+.user_tab {
+    background-color: rgb(140, 140, 140);
+    width: 100px;
+    float: right;
+}
+
+.search-tool {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: flex;
+    height: 30px;
+
+}
+
+.search-bar {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    padding: 2px;
+
+    border: 1px solid #ccc;
+    height: 100%;
+    width: 40%;
+    background: #F7F6F9;
+    flex-shrink: 0;
+}
+.active-logo
+{
+    background-color: #4c53af;
+    color: #f3f3f3;
+    width: 100px;
+}
+.search-button {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    border: none;
+    background: #6425FE;
+    color: white;
+    height: 35px;
+    cursor: pointer;
+}
+
+.search_error {
+    color: red;
+}

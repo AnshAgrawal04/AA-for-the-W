@@ -1,9 +1,10 @@
 <ul>
-    <li><a class="logo" href="/stonks">Stonks</a></li>
-    <li><a class="active" href="/dashboard">Home</a></li>
-    <li><a href="/plot_compare">Plot Graph</a></li>
-    <li style="float:right"><a class="user_tab" href="/logout">User</a></li>
-    <form action="/dashboard" class="search-tool" method="POST">
+    <li><a class="{% if active_tab=='stonks' %}active-logo{%else%}logo{%endif%}" href="/stonks">Stonks</a></li>
+    <li {% if active_tab == 'dashboard' %} class="active"{% endif %}><a href="/dashboard">Home</a></li>
+    <li {% if active_tab == 'plot_compare' %} class="active"{% endif %}><a href="/plot_compare">Compare Stocks</a></li>
+    <li style="float:right"><a class="user_tab" href="{% if login_display=='Login' %}/login_page {%elif login_display=='Logout'%} /logout {%endif%}">{{login_display}}</a></li>
+    <li style="float:right"><a  class="navbar-message" {%if login_display=='Logout'%}>Welcome {{user}}{%else%}href="\register"> First Time? Register Here{%endif%}</a></li>
+    <form  class="search-tool" method="POST">
         <input type="hidden" name="form_type" value="search">
         <input type="text" name="search" placeholder="Search..." class="search-bar">
         <button type="submit" class="search-button">Submit</button>

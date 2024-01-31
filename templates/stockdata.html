@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
     <title>{{ stock_card_data['symbol']}} Details</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stock-page.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='news.css') }}">
 
     <style>
         p {
@@ -18,7 +17,9 @@
 
 <body>
 
-    <iframe frameborder='0' width="100%" src="{{ iframe }}" frameborder="0" class="nav-bar" height="50px"></iframe>
+    {%with active_tab=active_tab, login_display=login_display, user=user, search_error=search_error%}
+    {% include 'navbar.html' %}
+    {% endwith %}
 
     <div class="flex-container">
         <div class="a">
@@ -45,9 +46,12 @@
                 </div>
             </div>
             <div class="a3">
-                <div class="custom-stock-1">Stock1</div>
-                <div class="custom-stock-2">Stock2</div>
-                <div class="custom-stock-3">Stock3</div>
+                <div class="custom-stock-1">{{popular_stocks[0]['symbol']}} {{popular_stocks[0]['price']}}({{'%.2f'
+                    %popular_stocks[0]['pchange']}}%)</div>
+                <div class="custom-stock-2">{{popular_stocks[1]['symbol']}} {{popular_stocks[1]['price']}}({{'%.2f'
+                    %popular_stocks[1]['pchange']}}%)</div>
+                <div class="custom-stock-3">{{popular_stocks[2]['symbol']}} {{popular_stocks[2]['price']}}({{'%.2f'
+                    %popular_stocks[2]['pchange']}}%)</div>
             </div>
         </div>
         <div class="c">
@@ -68,66 +72,21 @@
                     </table>
                 </div>
             </div>
+            {%if login_display=='Logout' %}
             <form method="post" class="add-button">
-            <button class="add-button" type="submit" role="button"> Add Stock to Watchlist</button>
+                <input type="hidden" name="form_type" value="add_to_watchlist">
+                <button class="add-button" type="submit" role="button"> Add Stock to Watchlist </button>
             </form>
+            {%elif login_display=='Login'%}
+            <button class="add-button"> Login to access this feature </button>
+            {%endif%}
         </div>
 
+        {% with sensex_data=sensex_data, nifty50_data=nifty50_data, news_articles=news_articles,
+        watchlist=watchlist,user=user,login_display=login_display %}
+        {% include 'right_dashboard.html' %}
+        {% endwith %}
 
-
-        <div class="b">
-            <div class="container-3a">
-                <div class="sensex">
-                    <div class="sensex-header"style="">SENSEX</div>
-                    <div style="height: 50%;justify-content: center;align-items: left;">
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['price']}} ({{sensex_data['pchange']}}%)</div>
-                            <div
-                                class="{% if sensex_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="nifty50">
-                    <div class="nifty-header" >NIFTY 50</div>
-                    <div style="height: 50%;justify-content: center;align-items: left;">
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['price']}} ({{nifty50_data['pchange']}}%)</div>
-                            <div
-                                class="{% if nifty50_data['pchange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-container">
-                <div class="grid-item item1"
-                    style="grid-column: 1/ span 2; grid-row: 1;background-color: #fff;color:#343434;font-size: 20px;height: 10px;">
-                    Your Watchlist</div>
-               
-                {% for stock in watchlist %}
-                <div class="grid-item item2" >{{stock['symbol']}} {{stock['price']}} ({{'%.2f' % stock['pchange']}}%)</div>
-                {% endfor %}
-
-
-            </div>
-            <div class="container-3b">
-                <div class="news-title">
-                    <h3>Stock News</h3>
-                </div>
-                <div class="article" style="background-color:white;color:#111;height: 80%;">
-                    {% for article in news_articles %}
-                    <div style="height: 30%;" class="snippet">
-                        <div class="headline">{{ article['title'] }}</div>
-                        <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
-                        <div style="height:1px;background-color: #dadada;margin-top: 10px;margin-right: 5px;"></div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-            </div>
-        </div>
     </div>
 </body>
 

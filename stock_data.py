@@ -99,7 +99,8 @@ def get_stock_compare_parameters():
         "Number of Trades",
     ]
 
-
+def get_popular_stocks():
+    return ['RELIANCE','HDFCBANK','LT']
 def get_stock_filter_parameters():
     return [
         "Closing Price",

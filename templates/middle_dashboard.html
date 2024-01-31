@@ -1,0 +1,78 @@
+<div class="container-2">
+    <div class="container-2a">
+        <div class="graph">
+            {{ plot_div|safe }}
+        </div>
+        <div style="width:2%;"></div>
+    </div>
+    <div class="container-2b">
+        <div class="container-2b-a">
+            <div class="red-bar"></div>
+            <div class="container-2b-ab">
+                <table class="table1">
+                    <tr class="table-head">
+                        <th style=" font-family: Verdana, Geneva, Tahoma, sans-serif;">Top
+                            Losers</th>
+                        <th>Value</th>
+                        <th style="color:crimson">Loss</th>
+                    </tr>
+                    {% for data_item in asc %}
+                    <tr>
+                        <td style="font-family: sans-serif;font-weight: bold;">
+                            {{data_item['symbol']}}
+                        </td>
+                        <td>{{data_item['price']}}</td>
+                        <td id="dataItem" class="loss">{{ '%.2f'%data_item['pchange'] }}%</td>
+
+                        <script>
+                            var dataItems = document.querySelectorAll('.loss');
+                            dataItems.forEach(function (dataItem) {
+                                var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                if (lossValue >= 0) {
+                                    dataItem.style.color = 'lightgreen';
+                                } else {
+                                    dataItem.style.color = 'red';
+                                }
+                            });
+                        </script>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+        <div class="container-2b-b">
+            <div class="container-2b-ba"></div>
+            <div class="container-2b-bb">
+                <table>
+                    <tr class="table-head">
+                        <th>Top
+                            Gainers</th>
+                        <th>Value</th>
+                        <th style="color:green">Gain</th>
+                    </tr>
+                    {% for data_item in dsc %}
+                    <tr>
+                        <td>
+                            {{data_item['symbol']}}</td>
+                        <td>{{data_item['price']}}</td>
+                        <td id="dataItem" class="gain">{{ '%.2f'%data_item['pchange'] }}%</td>
+                        <script>
+                            var dataItems = document.querySelectorAll('.gain');
+                            dataItems.forEach(function (dataItem) {
+                                var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                                if (lossValue >= 0) {
+                                    dataItem.style.color = '#3cb242';
+                                } else {
+                                    dataItem.style.color = 'red';
+                                }
+                            });
+                        </script>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>

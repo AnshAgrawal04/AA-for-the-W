@@ -1,0 +1,65 @@
+<div class="container-1">
+    <div class="stock-table-header">NIFTY 50 Stocks</div>
+    <form action="/dashboard" method="POST" class="filter-container">
+        <div>
+            <input type="hidden" name="form_type" value="filter">
+            <input type="text" class="greater-box" name="greater" placeholder="Greater than">
+            <input type="text" class="less-box" name="less" placeholder="Less than">
+            <select id="parameter" name="stock_parameter" required>
+                <option value="" disabled selected>Select Parameter to Compare</option>
+                {% for option in parameter_options %}
+                <option value="{{ option }}">{{ option }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Submit</button>
+            {%if form_posted %}
+            <a href="{{ url_for('reset_filter') }}" class="btn-primary">Reset Filter</a>
+            {%endif%}
+        </div>
+        <div class="filter-error">{{filter_error }}</div>
+    </form>
+    <div class="user-cards" data-user-cards-container></div>
+    <div class="card-container">
+        {% for card in stocks_data%}
+        <a href="/stock/{{card['symbol']}}" class="card-link">
+            <div class="card" data-symbol="{{ card['symbol'] }}"
+                style="background-color: {{ 'white' if loop.index is odd else '#f0f0f0' }};">
+                <div class="header" style="margin-bottom: 7px;font-size: 20px;">
+                    {{ card['symbol'] }}
+                </div>
+                <div class="body">
+                    <div class="stock-info">
+                        <p class="stock-open spaced">{{ card['price'] }}</p>
+                        <p class="stock-high spaced" id="dataItem">{{ '%.2f'%card['pchange']}}%</p>
+                    </div>
+                    <script>
+                        var dataItems = document.querySelectorAll('.stock-high');
+                        dataItems.forEach(function (dataItem) {
+                            var lossValue = parseFloat(dataItem.textContent.replace('%', ''));
+                            if (lossValue >= 0) {
+                                dataItem.style.color = '#3cb242';
+                            } else {
+                                dataItem.style.color = 'red';
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        <script>
+            document.getElementById('search').addEventListener('input', function (e) {
+                var search = e.target.value.toLowerCase();
+                var cards = document.querySelectorAll('.card');
+                cards.forEach(function (card) {
+                    var symbol = card.getAttribute('data-symbol').toLowerCase();
+                    if (symbol.includes(search)) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        </script>
+    </div>
+</div>

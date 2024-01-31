@@ -20,8 +20,14 @@ import news as n
 
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
 news_articles = n.get_news()["articles"][:4]
+
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
+popular_stocks = sd.get_popular_stocks()
+popular_stock_cards = []
+for stock in popular_stocks:
+    popular_stock_cards.append(sd.get_stock_card(stock))
+
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -39,13 +45,17 @@ class User(db.Model):
     password_hash = db.Column(db.String(200), nullable=False)
     watchlist = db.relationship("Watchlist", backref="user", lazy=True)
 
+
 class Watchlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True, nullable=False)
+    user_id = db.Column(
+        db.Integer, db.ForeignKey("user.id"), unique=True, nullable=False
+    )
     symbol1 = db.Column(db.String(100))
     symbol2 = db.Column(db.String(100))
     symbol3 = db.Column(db.String(100))
     symbol4 = db.Column(db.String(100))
+
 
 # Initialize Database within Application Context
 with app.app_context():
@@ -54,12 +64,11 @@ with app.app_context():
 
 @app.route("/")
 def index():
-    return render_template("login.html")
+    return redirect(url_for("dashboard"))
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    iframe='/static/nav-bar.html',
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -70,8 +79,13 @@ def register():
         db.session.commit()
 
         flash("Registration successful! Please login.")
-        return redirect(url_for("index"))
-    return render_template("register.html",iframe=iframe)
+        return redirect(url_for("login_page"))
+    return render_template("register.html")
+
+
+@app.route("/login_page")
+def login_page():
+    return render_template("login.html")
 
 
 @app.route("/login", methods=["POST"])
@@ -86,15 +100,45 @@ def login():
         return redirect(url_for("dashboard"))
     else:
         flash("Invalid username or password")
-        return redirect(url_for("index"),iframe='/static/nav-bar.html')
+        return redirect(url_for("index"))
+
+
+def get_navbar_state():
+    if "user_id" in session:
+        login_display = "Logout"
+        user = session["username"]
+    else:
+        login_display = "Login"
+        user = ""
+    return login_display, user
+
+
+def get_watchlist():
+    user = User.query.filter_by(username=session["username"]).first()
+    local_watchlist = []
+    if user.watchlist:
+        if user.watchlist[0].symbol1:
+            local_watchlist.append(user.watchlist[0].symbol1)
+        if user.watchlist[0].symbol2:
+            local_watchlist.append(user.watchlist[0].symbol2)
+        if user.watchlist[0].symbol3:
+            local_watchlist.append(user.watchlist[0].symbol3)
+        if user.watchlist[0].symbol4:
+            local_watchlist.append(user.watchlist[0].symbol4)
+    watchlist_cards = []
+    for symbol in local_watchlist:
+        watchlist_cards.append(sd.get_stock_card(symbol))
+    return watchlist_cards
 
 
 @app.route("/dashboard", methods=["GET", "POST"])
 def dashboard():
+    active_tab = "dashboard"
+    login_display, user = get_navbar_state()
+    watchlist=[]
+    if user:
+        watchlist = get_watchlist()
 
-    if "user_id" not in session:
-        return redirect(url_for("index"))
-        
     plot_div = sp.plot_index("NIFTY 50", width=750, height=460)
     stocks_data = sd.get_all_stock_cards()
     ascending_data = sorted(stocks_data, key=lambda x: x["pchange"])
@@ -103,7 +147,6 @@ def dashboard():
     search_error, filter_error, form_posted = "", "", False
 
     if request.method == "POST":
-        form_posted = True
         form_type = request.form.get("form_type")
         if form_type == "search":
             symbol_entered = request.form.get("search").upper()
@@ -111,10 +154,10 @@ def dashboard():
                 return redirect(url_for("stock", symbol=symbol_entered))
             search_error = "Wrong symbol entered"
         elif form_type == "filter":
+            form_posted = True
             less_than = request.form.get("less")
             greater_than = request.form.get("greater")
             parameter = request.form.get("stock_parameter")
-
             try:
                 lt = float(less_than) if less_than else 1e10
                 gt = float(greater_than) if greater_than else -1e10
@@ -126,7 +169,6 @@ def dashboard():
 
     return render_template(
         "dashboard.html",
-        username=session["username"],
         stocks_data=stocks_data,
         dsc=descending_data[:5],
         asc=ascending_data[:5],
@@ -138,89 +180,131 @@ def dashboard():
         search_error=search_error,
         filter_error=filter_error,
         form_posted=form_posted,
+        active_tab=active_tab,
+        login_display=login_display,
+        user=user,
+        watchlist=watchlist,
     )
 
-@app.route("/stock/<symbol>",methods=["GET","POST"])
+
+def update_watchlist(watchlist, symbol):
+    if not watchlist.symbol1:
+        watchlist.symbol1 = symbol
+    elif not watchlist.symbol2:
+        watchlist.symbol2 = symbol
+    elif not watchlist.symbol3:
+        watchlist.symbol3 = symbol
+    elif not watchlist.symbol4:
+        watchlist.symbol4 = symbol
+    elif (
+        watchlist.symbol1 != symbol
+        and watchlist.symbol2 != symbol
+        and watchlist.symbol3 != symbol
+        and watchlist.symbol4 != symbol
+    ):
+        watchlist.symbol1 = watchlist.symbol2
+        watchlist.symbol2 = watchlist.symbol3
+        watchlist.symbol3 = watchlist.symbol4
+        watchlist.symbol4 = symbol
+    db.session.commit()
+
+
+@app.route("/stock/<symbol>", methods=["GET", "POST"])
 def stock(symbol):
-    user = User.query.filter_by(username=session['username']).first()
-    
+    search_error = ""
     stock_card_data = sd.get_stock_card(symbol)
     stock_detail_data = sd.get_stock_page_data(symbol)
     plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
+
     if request.method == "POST":
-        
-        if not user.watchlist:
-            
-            watchlist = Watchlist(user_id=user.id,symbol1=symbol)
-            db.session.add(watchlist)
-            db.session.commit()
-        else:
-            watchlist = user.watchlist[0]
-            if not watchlist.symbol1:
-                watchlist.symbol1 = symbol
-            elif not watchlist.symbol2:
-                watchlist.symbol2 = symbol
-            elif not watchlist.symbol3:
-                watchlist.symbol3 = symbol
-            elif not watchlist.symbol4:
-                watchlist.symbol4 = symbol
-            elif watchlist.symbol1 != symbol and watchlist.symbol2 != symbol and watchlist.symbol3 != symbol and watchlist.symbol4 != symbol:
-                watchlist.symbol1 = watchlist.symbol2
-                watchlist.symbol2 = watchlist.symbol3
-                watchlist.symbol3 = watchlist.symbol4
-                watchlist.symbol4 = symbol
-            db.session.commit()
-    local_watchlist = []
-    if user.watchlist:
-        if user.watchlist[0].symbol1:
-            local_watchlist.append(user.watchlist[0].symbol1)
-        if user.watchlist[0].symbol2:
-            local_watchlist.append(user.watchlist[0].symbol2)
-        if user.watchlist[0].symbol3:
-            local_watchlist.append(user.watchlist[0].symbol3)
-        if user.watchlist[0].symbol4:
-            local_watchlist.append(user.watchlist[0].symbol4)  
-    watchlist_cards=[]   
-    for symbol in local_watchlist:
-        watchlist_cards.append(sd.get_stock_card(symbol))
+        form_type = request.form.get("form_type")
+        if form_type == "search":
+            symbol_entered = request.form.get("search").upper()
+            if symbol_entered in sd.get_nifty50():
+                return redirect(url_for("stock", symbol=symbol_entered))
+            search_error = "Wrong symbol entered"
+        elif form_type == "add_to_watchlist":
+            user = User.query.filter_by(username=session["username"]).first()
+            if not user.watchlist:
+                watchlist = Watchlist(user_id=user.id, symbol1=symbol)
+                db.session.add(watchlist)
+                db.session.commit()
+            else:
+                update_watchlist(user.watchlist[0], symbol)
+
+    active_tab = ""
+    login_display, user = get_navbar_state()
+    watchlist=[]
+    if user:
+        watchlist = get_watchlist()
 
     return render_template(
         "stockdata.html",
         stock_card_data=stock_card_data,
         stock_detail_data=stock_detail_data,
         plot_div=plot_div,
-
+        search_error=search_error,
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
         news_articles=news_articles,
-        watchlist=watchlist_cards,
+        watchlist=watchlist,
+        active_tab=active_tab,
+        login_display=login_display,
+        user=user,
+        popular_stocks=popular_stock_cards,
     )
 
 
-
-@app.route("/stonks")
+@app.route("/stonks", methods=["GET", "POST"])
 def stonks():
-    return render_template("stonks.html")
+    search_error = ""
+    if request.method == "POST":
+        symbol_entered = request.form.get("search").upper()
+        if symbol_entered in sd.get_nifty50():
+            return redirect(url_for("stock", symbol=symbol_entered))
+        search_error = "Wrong symbol entered"
+
+    active_tab = "stonks"
+    login_display, user = get_navbar_state()
+    return render_template(
+        "stonks.html",
+        active_tab=active_tab,
+        login_display=login_display,
+        user=user,
+        search_error=search_error,
+    )
 
 
 @app.route("/plot_compare", methods=["GET", "POST"])
 def plot_compare():
+    search_error = ""
     symbol_1 = symbol_2 = symbol_3 = error = plot_div = ""
 
     if request.method == "POST":
-        symbol_1 = request.form.get("stock1").upper()
-        symbol_2 = request.form.get("stock2").upper()
-        symbol_3 = request.form.get("stock3").upper()
-        parameter = request.form.get("stock_parameter")
+        form_type = request.form.get("form_type")
+        if form_type == "search":
+            symbol_entered = request.form.get("search").upper()
+            if symbol_entered in sd.get_nifty50():
+                return redirect(url_for("stock", symbol=symbol_entered))
+            search_error = "Wrong symbol entered"
+        elif form_type == "compare":
+            symbol_1 = request.form.get("stock1").upper()
+            symbol_2 = request.form.get("stock2").upper()
+            symbol_3 = request.form.get("stock3").upper()
+            parameter = request.form.get("stock_parameter")
+            plot_div = sp.plot_and_compare_symbols(
+                symbol_1, symbol_2, symbol_3, parameter, height=600, width=1000
+            )
+            if plot_div is None:
+                plot_div = ""
+                error = "Please enter valid stock symbols"
 
-
-        plot_div = sp.plot_and_compare_symbols(
-            symbol_1, symbol_2, symbol_3, parameter, height=600, width=1000
-        )
-        if plot_div is None:
-            plot_div = ""
-            error = "Please enter valid stock symbols"
-
+    active_tab = "plot_compare"
+    login_display, user = get_navbar_state()
+    watchlist=[]
+    if user:
+        watchlist = get_watchlist()
+        
     return render_template(
         "plot_compare.html",
         plot_div=plot_div,
@@ -232,6 +316,11 @@ def plot_compare():
         news_articles=news_articles,
         nifty50_data=nifty50_data,
         sensex_data=sensex_data,
+        active_tab=active_tab,
+        login_display=login_display,
+        user=user,
+        watchlist=watchlist,
+        search_error=search_error,
     )
 
 
@@ -244,11 +333,8 @@ def reset_filter():
 def logout():
     session.pop("user_id", None)
     session.pop("username", None)
-    return redirect(url_for("index"))
+    return redirect(url_for("dashboard"))
 
-@app.route("/nav-bar")
-def nav_bar():
-    return render_template("./static/nav-bar.html")
 
 if __name__ == "__main__":
     app.run(debug=True, threaded=True)

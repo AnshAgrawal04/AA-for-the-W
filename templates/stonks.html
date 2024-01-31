@@ -1,102 +1,20 @@
 <!DOCTYPE html>
-<html></html>
+<html>
 
-<head></head>
+<head>
     <title>STONKS Trading Company</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-image: url("{{ url_for('static', filename='stonks.png') }}");
+            background-image: url("{{ url_for('static', filename='stonks_low_quality.png') }}");
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             font-family: 'Arial', sans-serif;
             color: #fff;
-        }
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #211c1c;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            /* Ensure the navbar appears above other elements */
-        }
-
-        li {
-            float: left;
-        }
-
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            background-color: #111;
-        }
-
-        .logo {
-            background-color: rgb(35, 34, 33);
-            color: #f3f3f3;
-            width: 100px;
-        }
-
-        .active {
-            background-color: #4c53af;
-        }
-        .active-logo
-        {
-            background-color: #4c53af;
-            color: #f3f3f3;
-            width: 100px;
-        }
-
-        .user_tab {
-            background-color: rgb(140, 140, 140);
-            width: 100px;
-            float: right;
-            /* Align to the right */
-            /* margin-right: 20px; */
-            /* Add margin to the right */
-        }
-
-        .search-tool {
-            display: block; 
-            color: white;
-            text-align: center;
-            padding: 8px 16px;
-            text-decoration: none;
-            display: flex;
-        }
-
-        .search-bar {
-            border-radius: 5px;
-            padding: 2px;
-            margin-right: 5px;
-            border: 1px solid #ccc;
-            height: 90%;
-            width:40%;
-        }
-
-        .search-button {
-            border: none;
-            background-color: #4c53af;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .search_error {
-            color: red;
         }
 
         .overlay {
@@ -105,9 +23,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             padding: 20px;
-            background: rgba(0, 0, 0, 0.5); /* Adjust the opacity as needed */
+            background: rgba(0, 0, 0, 0.5);
             border-radius: 10px;
-            backdrop-filter: blur(10px); /* Adjust the blur intensity as needed */
+            backdrop-filter: blur(10px);
             text-align: center;
         }
 
@@ -127,26 +45,19 @@
 
 <body>
 
-    <ul>
-        <li><a class="active-logo"  href="/stonks">Stonks</a></li>
-        <li><a   href="/dashboard">Home</a></li>
-        <li><a href="/welcome">News</a></li>
-        <li><a href="/plot_compare">Plot Graph</a></li>
-        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
-        <form action="/dashboard" class="search-tool" method="POST">
-            <input type="text" name="search" placeholder="Search..." class="search-bar">
-            <button type="submit" class="search-button">Submit</button>
-            <div class="search_error">{{ search_error }}</div>
-        </form>
-    </ul>
+    {%with active_tab=active_tab, login_display=login_display, user=user, search_error=search_error%}
+    {% include 'navbar.html' %}
+    {% endwith %}
 
     <div class="overlay">
         <div class="company-name">STONKS Quantitative Trading</div>
         <div class="company-description">
-            <p>Welcome to STONKS, your premier destination for smart and savvy quantitative trading. We are committed to providing
+            <p>Welcome to STONKS, your premier destination for smart and savvy quantitative trading. We are committed to
+                providing
                 you with top-notch financial services and investment solutions.</p>
             <p>At STONKS, we believe in empowering our clients with the knowledge and tools they need to navigate the
-                dynamic world of stock markets. We use top-quality quantitative research to give you the edge over the competition. Join us on a journey towards financial success!</p>
+                dynamic world of stock markets. We use top-quality quantitative research to give you the edge over the
+                competition. Join us on a journey towards financial success!</p>
         </div>
     </div>
 </body>
