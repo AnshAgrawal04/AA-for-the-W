@@ -18,7 +18,7 @@ body {
     background-color: inherit;
     height: 90vh;
     flex-grow: inherit;
-    margin: 6px;
+    margin-top: 10px;
     justify-content: space-evenly;
 }
 

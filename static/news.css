@@ -162,3 +162,12 @@ h3 {
     border-right: 8px solid transparent;
     border-top: 16px solid rgb(255, 0, 0);
 }
+
+.watchlist-link
+{
+    background-color: #EFE9FF;
+    color: #6425fe;
+
+    border-radius: 8px;
+    text-decoration: none;
+}

@@ -30,7 +30,8 @@
             {%if login_display=='Logout'%}{{user}}'s Watchlist{%elif login_display=='Login'%}Login to see your watchlist{%endif%}</div>
        
         {% for stock in watchlist %}
-        <div class="grid-item item2" >{{stock['symbol']}} {{stock['price']}} ({{'%.2f' % stock['pchange']}}%)</div>
+        <a class="watchlist-link"href="/stock/{{stock['symbol']}}" >{{stock['symbol']}} 
+        <div class="grid-item item2">{{stock['price']}} ({{'%.2f' % stock['pchange']}}%)</div></a>
         {% endfor %}
 
 

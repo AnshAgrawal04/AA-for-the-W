@@ -9,7 +9,7 @@ body {
     background-color: inherit;
     height: 90vh;
     flex-grow: inherit;
-    margin: 6px;
+    margin-top: 10px;
     justify-content: space-evenly;
 }
 
@@ -23,13 +23,11 @@ body {
 input {
     padding: 10px;
 
-    border: 2px solid #080054;
+    border: 2px solid #0800548f;
     width: 95%;
-    height: 50px;
+    height: 40px;
     color: #525252;
     background-color: rgb(244, 244, 244);
-    /* font-weight: bold; */
-
 }
 
 h1 {
@@ -55,6 +53,7 @@ h1 {
     padding: 10px;
     margin: 10px 5px;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 
 select {
@@ -62,6 +61,9 @@ select {
     padding: 10px;
     margin: 10px 0;
     box-sizing: border-box;
+    border: 2px solid #0800548f;
+    border-radius: 5px;
+
 }
 
 .compare-submit-button {
