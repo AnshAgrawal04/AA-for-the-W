@@ -79,7 +79,6 @@ def get_today_stock_data(symbol, parameter):
         stock_curr_data[symbol] = df.iloc[0]
     return stock_curr_data[symbol][stock_parameter_to_df_column[parameter]]
 
-
 # Initiate today's stock data
 stock_historic_data = {}
 stock_curr_data = {}
@@ -89,6 +88,8 @@ def get_nifty50():
     return nifty_50_stocks
 
 
+    
+        
 def get_stock_compare_parameters():
     return [
         "Closing Price",
@@ -99,8 +100,14 @@ def get_stock_compare_parameters():
         "Number of Trades",
     ]
 
-def get_popular_stocks():
-    return ['RELIANCE','HDFCBANK','LT']
+def get_popular_stocks(n = 3):
+    stock_values=[]
+    for stock in nifty_50_stocks:
+        stock_values.append((get_today_stock_data(stock,'Value'),stock))
+    stock_values.sort(reverse=True)
+    return stock_values[:n]
+
+
 def get_stock_filter_parameters():
     return [
         "Closing Price",

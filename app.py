@@ -23,11 +23,12 @@ news_articles = n.get_news()["articles"][:4]
 
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
+
 popular_stocks = sd.get_popular_stocks()
 popular_stock_cards = []
 for stock in popular_stocks:
-    popular_stock_cards.append(sd.get_stock_card(stock))
-
+    popular_stock_cards.append(sd.get_stock_card(stock[1]))
+    
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"  # Replace with your actual secret key
@@ -215,6 +216,7 @@ def stock(symbol):
     stock_card_data = sd.get_stock_card(symbol)
     stock_detail_data = sd.get_stock_page_data(symbol)
     plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
+
 
     if request.method == "POST":
         form_type = request.form.get("form_type")
