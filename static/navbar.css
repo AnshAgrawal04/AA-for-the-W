@@ -64,6 +64,7 @@ li a:hover {
     width: 40%;
     background: #F7F6F9;
     flex-shrink: 0;
+    padding-left: 10px;
 }
 .active-logo
 {
@@ -82,6 +83,14 @@ li a:hover {
     cursor: pointer;
 }
 
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+}
+
 .search_error {
     color: red;
+    margin-top:5px ;
+    margin-left: 5px;
+    animation: fadeOut 5s forwards;
 }

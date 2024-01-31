@@ -293,7 +293,7 @@ def plot_compare():
             symbol_3 = request.form.get("stock3").upper()
             parameter = request.form.get("stock_parameter")
             plot_div = sp.plot_and_compare_symbols(
-                symbol_1, symbol_2, symbol_3, parameter, height=600, width=1000
+                symbol_1, symbol_2, symbol_3, parameter, height=600, width=900
             )
             if plot_div is None:
                 plot_div = ""

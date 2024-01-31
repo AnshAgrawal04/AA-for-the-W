@@ -111,6 +111,7 @@ input {
     height: 110px;
     display: flex;
     flex-direction: row;
+    flex-shrink:0.5;
     background-color: none;
     justify-content: space-evenly;
     border-radius: 12px;
@@ -235,3 +236,63 @@ tr:hover {
     transition-duration: .1s;
 }
 
+.custom-stock-1, .custom-stock-2, .custom-stock-3 {
+    font-size: 18px;
+    color: #333;
+    background-color: #f8f8f8;
+    padding: 10px;
+    margin-left: 5%;
+    flex-shrink: 10%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.custom-stock-1 {
+    border-left: 7px solid #ffffff;
+    color:#f3f3f3;
+    background-color: #5643CC;
+}
+
+.custom-stock-2 {
+    border-left: 7px solid #040404;
+    background-color: #ffffff;
+    color:#000
+}
+
+.custom-stock-2:hover .symbol {
+    color: #ffffff;
+}
+.custom-stock-3 {
+    border-left: 7px solid #ffffff;
+    background-color: #9E7BFF;
+    
+}
+.custom-stock-1, .custom-stock-2, .custom-stock-3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    border-radius: 10px;
+    margin: 8px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.symbol {
+    color: #ffffff;
+    font-size: 15px;
+    padding-bottom:25px;
+}
+
+.price {
+    color: #28a745;
+    font-size: 18px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+.pchange {
+    color: #a5a5a5;
+    font-size: 18px;
+}

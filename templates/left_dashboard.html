@@ -3,17 +3,21 @@
     <form action="/dashboard" method="POST" class="filter-container">
         <div>
             <input type="hidden" name="form_type" value="filter">
+            <div display="flex">
             <input type="text" class="greater-box" name="greater" placeholder="Greater than">
-            <input type="text" class="less-box" name="less" placeholder="Less than">
+            <input type="text" class="greater-box" name="less" placeholder="Less than">
+            </div>
             <select id="parameter" name="stock_parameter" required>
                 <option value="" disabled selected>Select Parameter to Compare</option>
                 {% for option in parameter_options %}
                 <option value="{{ option }}">{{ option }}</option>
                 {% endfor %}
             </select>
-            <button type="submit">Submit</button>
+            
             {%if form_posted %}
-            <a href="{{ url_for('reset_filter') }}" class="btn-primary">Reset Filter</a>
+            <a href="{{ url_for('reset_filter') }}" class="submit-button">Reset Filter</a>
+            {%else%}
+            <button type="submit" class="submit-button">Submit</button>
             {%endif%}
         </div>
         <div class="filter-error">{{filter_error }}</div>

@@ -102,7 +102,7 @@ def plot_index(
 
 
 def plot_and_compare_symbols(
-    symbol_name_1, symbol_name_2, symbol_name_3, parameter, height=400, width=600
+    symbol_name_1, symbol_name_2, symbol_name_3, parameter, height=400, width=500
 ):
     if symbol_name_1 not in nifty_50_stocks or symbol_name_2 not in nifty_50_stocks:
         return None
