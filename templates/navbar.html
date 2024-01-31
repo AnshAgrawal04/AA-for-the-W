@@ -1,0 +1,24 @@
+<ul>
+    <li><a class="{% if active_tab=='stonks' %}active-logo{%else%}logo{%endif%}" href="/stonks">Stonks</a></li>
+    <li {% if active_tab == 'dashboard' %} class="active"{% endif %}><a href="/dashboard">Home</a></li>
+    <li {% if active_tab == 'plot_compare' %} class="active"{% endif %}><a href="/plot_compare">Compare Stocks</a></li>
+    <li style="float:right">
+        <a class="user_tab" 
+           style="{% if login_display=='Logout' %}background-color: red;{% else %}background-color: purple;{% endif %}" 
+           href="{% if login_display=='Login' %}/login_page {% elif login_display=='Logout' %} /logout {% endif %}">
+           {{login_display}}
+        </a>
+    </li>
+    <li style="float:right">
+        <a class="navbar-message" 
+           style="{% if login_display=='Logout' %}background-color: none;{% else %}background-color: none;{% endif %}" 
+           {% if login_display=='Logout' %}>Welcome {{user}}{% else %}href="\register"> First Time? Register Here{% endif %}
+        </a>
+    </li>
+    <form  class="search-tool" method="POST">
+        <input type="hidden" name="form_type" value="search">
+        <input type="text" name="search" placeholder="Search..." class="search-bar">
+        <button type="submit" class="search-button">Submit</button>
+        <div class="search_error">{{ search_error }}</div>
+    </form>
+</ul>

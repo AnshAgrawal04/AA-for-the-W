@@ -1,0 +1,443 @@
+body {
+    font-size: 16px;
+    background-color: rgb(232, 232, 232);
+    font-family: system-ui;
+    margin: 0;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 10px;
+    background-color: blue;
+    color: white;
+    text-decoration: none;
+}
+
+.flex-container {
+    display: flex;
+    background-color: inherit;
+    height: 90vh;
+    flex-grow: inherit;
+    margin-top: 10px;
+    justify-content: space-evenly;
+}
+
+.flex-container>div {
+    font-size: 24px;
+}
+
+.container-1 {
+    width: 25%;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    padding: 0px;
+    margin: 0px;
+
+
+}
+
+.stock-table-header {
+    display: flex;
+
+    justify-content: center;
+
+    padding-top: 3%;
+    padding-bottom: 8%;
+    font-weight: 500;
+    margin-top: 0px;
+    background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+    color: #ffffff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 20px;
+    font-size: 26px;
+    ;
+}
+
+.search-wrapper {
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.user-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.card {
+    box-shadow: 3px 3px 1px rgb(234, 234, 234);
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 5px;
+    font-size: small;
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    margin-left: 15px;
+    padding: 20px;
+    background-color: #ebebeb;
+
+    transition: background-color 0.3s ease;
+    /* This will animate the color change */
+}
+
+.card:hover {
+
+    background-color: #b3b3b3;
+    /* This is a light green color */
+    border-color: #0b4426;
+}
+
+.card-container {
+
+    max-height: 75%;
+    /* Adjust this value based on the height of your cards */
+
+    overflow-y: hidden;
+}
+
+.card-container {
+    max-height: 70%;
+    /* Adjust this value based on the height of your cards */
+    overflow-y: auto;
+}
+
+/* Add these styles to make the scrollbar thinner */
+.card-container::-webkit-scrollbar {
+    width: 5px;
+    /* Adjust as needed */
+}
+
+.card-container::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    /* Adjust as needed */
+}
+
+.card-container::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+    /* Adjust as needed */
+}
+
+.spaced {
+    margin-left: 10px;
+}
+
+.card-link {
+
+    color: inherit;
+    /* This will make the link text the same color as the rest of the text */
+    text-decoration: none;
+    /* This will remove the underline from the link text */
+    display: block;
+    /* This will make the entire card clickable, not just the text */
+}
+
+.stock-info {
+    display: flex;
+
+    justify-content: space-between;
+
+
+}
+
+.header {
+    color: #525252;
+    margin-top: 6 px;
+    font-size: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.stock-open {
+    color: rgb(64, 64, 64);
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.stock-high {
+
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.stock-info div {
+    flex: 1 0 20%;
+    /* This will make the p elements take up 20% of the width of the .stock-info div and wrap to the next line if there's not enough space */
+    margin: 5px;
+}
+
+
+
+.container-2 {
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 41%;
+    background-color: inherit;
+}
+
+.container-2>div {
+    margin: 1px;
+    padding-left: 30px;
+}
+
+.container-2a {
+    height: 60%;
+    background-color: rgb(255, 255, 255);
+    justify-content: left;
+    border-radius: 10px;
+    border-color: rgb(11, 22, 22);
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+    margin: 0px;
+}
+
+.container-2b {
+    height: 40%;
+    background-color: inherit;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+
+.container-2b>div {
+    margin: 5px;
+    padding: 7px;
+}
+
+.container-2b-a {
+    width: 48%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+
+.red-bar {
+    height: 4%;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 0, 0));
+    border-radius: 5px;
+}
+
+.container-2b-ab {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    height: 98%;
+    justify-content: center;
+}
+
+.table1 {
+    border-radius: 10px;
+}
+
+.container-2b-b {
+    width: 48%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 3px 1px rgb(180, 187, 189);
+}
+
+.container-2b-ba {
+    width: 100%;
+    background: linear-gradient(to right, rgb(255, 255, 255), rgb(0, 136, 14));
+    justify-content: center;
+    height: 4%;
+    border-radius: 5px;
+
+}
+
+.container-2b-bb {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    justify-content: center;
+    height: 98%;
+
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    height: 250px;
+    font-size: 10px;
+
+}
+
+td {
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 8px;
+    height: 22px;
+    font-size: 12px;
+}
+
+th {
+    font-size: medium;
+    border: 1px solid #ffffff;
+    text-align: left;
+    padding: 8px;
+    background-color: #ffffff;
+    color: rgb(103, 100, 100);
+    font-size: 15px;
+
+}
+
+tr:nth-child(even) {
+    background-color: #eeeeee;
+
+}
+
+.loss {
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.gain {
+    font-size: 11px;
+    font-weight: bold;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
+.tables-container {
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+    align-items: left;
+}
+
+input {
+    padding: 10px;
+    width: 95%;
+    height: 50px;
+    margin-left: 2%;
+    color: #525252;
+    background-color: rgb(221, 221, 221);
+    /* font-weight: bold; */
+
+}
+
+
+.greater-box {
+
+    height: 10px;
+    
+    margin-top: 13px;
+    width: 40%;
+    margin-bottom: 0px;
+    border-radius: 10px;
+
+
+}
+
+select#parameter {
+    width: 65%;
+    margin-left: 0%;
+    margin-top: 1%;
+    margin-left: 2%;
+    margin-right: 5%;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1);
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+select#parameter:hover {
+    border-color: #888;
+}
+
+select#parameter:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+}
+
+select#parameter option {
+    padding: 10px;
+    color: #333;
+}
+
+.submit-button {
+    
+    align-items: center;
+    background-image: linear-gradient(144deg, #AF40FF, #5B42F3 50%, #00DDEB);
+    border: 0;
+    border-radius: 8px;
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: flex;
+    font-family: Phantomsans, sans-serif;
+    font-size: 5px;
+    justify-content: center;
+    line-height: 1em;
+    
+    margin-top: 1%;
+    padding: 12px 12px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease;
+}
+
+.submit-button:active,
+.submit-button:hover {
+    outline: 0;
+   
+    /* Black gradient on hover */
+}
+
+.submit-button:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 150%;
+    height: 100%;
+    background-image: linear-gradient(  #5B42F3 ,#AF40FF);
+    /* Black gradient on hover */
+    animation: slideIn .3s forwards;
+}
+
+/* Keyframes for the animation */
+@keyframes slideIn {
+    to {
+        left: 100%;
+    }
+}
+
+@media (min-width: 768px) {
+    .submit-button {
+        font-size: 20px;
+        
+    }
+}

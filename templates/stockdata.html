@@ -1,294 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
     <title>{{ stock_card_data['symbol']}} Details</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stock-page.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='news.css') }}">
+
     <style>
-        body {
-            font-size: 16px;
-            background-color: rgb(232, 232, 232);
-            font-family: system-ui;
-            margin: 0;
-            /* Remove default margin */
-        }
-
-        .green {
-            color: green;
-            background-color: rgb(196, 221, 193);
-            border-radius: 20px;
-            margin-left: 5px;
-            font-size: x-large;
-            font-weight: 600;
-            margin-top: 12px;
-            padding: 7px;
-            padding-left: 15px;
-            padding-right: 15px;
-
-        }
-
-        .red {
-            color: rgb(146, 16, 16);
-            background-color: #e1c7c7;
-            border-radius: 20px;
-            margin-left: 5px;
-            font-size: x-large;
-            font-weight: 600;
-            margin-top: 12px;
-            padding: 7px;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #211c1c;
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
-            /* Ensure the navbar appears above other elements */
-        }
-
-        li {
-            float: left;
-        }
-
-        li a {
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        li a:hover {
-            background-color: #111;
-        }
-
-        .logo {
-            
-            color: #f3f3f3;
-            width: 100px;
-        }
-
-        .active {
-            background-color: #4c53af;
-        }
-
-        .user_tab {
-            
-            width: 100px;
-            float: right;
-        }
-
-        h1 {
-            text-align: center;
-            color: #4c53af;
-            margin-top: 20px;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-top: 10px;
-        }
-
         p {
             width: 15%;
             margin: 10px auto;
             display: inline-block;
         }
-
-        .stock_attributes {
-            max-width: 80%;
-            margin-left: 6%;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 10px;
-            text-align: center;
-
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .graph {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 5px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .b {
-            width: 30%;
-            background-color: inherit;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-evenly;
-            flex-direction: column;
-            margin-right: 5px;
-        }
-
-
-
-        .container-3a {
-            height: 12%;
-            background: #B79BFF;
-            justify-content: center;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 3px 3px 1px rgb(180, 187, 189);
-        }
-
-        .container-3b {
-            height: 65%;
-            display: flex;
-            flex-direction: column;
-            background-color: rgb(252, 252, 252);
-            border-color: #111;
-            border-radius: 10px;
-            box-shadow: 3px 3px 1px rgb(0, 0, 0);
-            padding: 0px;
-
-        }
-
-        .article {
-
-            display: flex;
-            flex-direction: column;
-            background-color: inherit;
-            justify-content: flex-start;
-            margin-left: 10px;
-            border-bottom-right-radius: 10px;
-        }
-
-        .snippet:hover {
-            transform: scale(1.01);
-            background-color: #f5f5f5;
-
-        }
-
-        .headline {
-            margin-top: 2%;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .content {
-            margin-top: 10px;
-        }
-
-        .source-link {
-            font-size: 12px;
-            color: #343434;
-            text-decoration: none;
-            margin-left: 75%;
-            margin-top: 20px;
-
-        }
-
-        tr:hover {
-            background-color: #f5f5f5;
-            /* Set the background color on hover */
-        }
-
-        .up_triangle {
-            width: 0;
-            height: 0;
-            margin-top: 4px;
-            margin-left: 6px;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-bottom: 14px solid rgb(0, 255, 0);
-            /* Adjust color and size as needed */
-        }
-
-        .down_triangle {
-            width: 0;
-            height: 0;
-            margin-top: 4px;
-            color: red;
-            margin-left: 6px;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 16px solid rgb(255, 0, 0);
-            /* Adjust color and size as needed */
-        }
-
-        .add-button {
-                margin-top: 5%;
-                background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
-                border-radius: 8px;
-                border-style: none;
-                box-sizing: border-box;
-                color: #FFFFFF;
-                cursor: pointer;
-                flex-shrink: 0;
-                font-family: "Inter UI", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-                font-size: 35px;
-                font-weight: 100;
-                height: 4rem;
-                padding: 0 1.6rem;
-                text-align: center;
-                text-shadow: rgba(0, 0, 0, 0.25) 0 3px 8px;
-                transition: all .5s;
-                user-select: none;
-                -webkit-user-select: none;
-                touch-action: manipulation;
-                width:85%;
-                margin-left: 6%;
-                height:15%;
-            }
-
-            .add-button:hover {
-                box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
-                transition-duration: .1s;
-            }
-            .a1:hover {
-                box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
-                transition-duration: .1s;
-            }
-            .grid-item{
-                background-color: #EFE9FF;
-                color:#6425fe;
-
-                border-radius: 8px;
-            }
-        
     </style>
 </head>
 
 <body>
-    <ul>
-        <li><a class="logo" href="/stonks">Stonks</a></li>
-        <li><a href="/dashboard">Home</a></li>
 
-        <li><a href="/plot_compare">Plot Graph</a></li>
-        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
-    </ul>
-    <div class="flex-container"
-        style="display: flex;flex-direction: row;justify-content: space-evenly;margin-top: 20px;">
-        <div class="a" style="width:40%;display:flex;flex-direction: column;margin-left: 10px;">
-            <div class="a1"
-                style="background-color: #ffffff;border-radius: 10px;height:130px;display: flex;flex-direction: column;">
-                <div class="a11" style="height:20px;margin:10px;font-size: 24px;font-weight: 440;">{{
-                    stock_card_data['symbol'] }} </div>
-                <div style="height: 1px;background-color: #e6e6e6;margin-left: 5px;margin-right: 5px;margin-top: 10px;">
-                </div>
-                <div style="display: flex;flex-direction: row;">
-                    <div style="margin-top: 2px;margin-left: 25px; margin-right: 15px;font-size: xxx-large;">
+    {%with active_tab=active_tab, login_display=login_display, user=user, search_error=search_error%}
+    {% include 'navbar.html' %}
+    {% endwith %}
+
+    <div class="flex-container">
+        <div class="a">
+            <div class="a1">
+                <div class="a11">{{stock_card_data['symbol'] }} </div>
+                <div class="a12"></div>
+                <div class="a13">
+                    <div class="stock-price-data">
                         {{ stock_card_data['price']}}
                     </div>
                     <div
                         class="{% if stock_card_data['pchange'] > 0 %}green{% elif stock_card_data['pchange'] < 0 %}red{% endif %}">
-
                         {% if stock_card_data['pchange'] > 0 %}
                         &#8593; <!-- Upwards arrow -->
                         {% elif stock_card_data['pchange'] < 0 %} &#8595; <!-- Downwards arrow -->
@@ -302,103 +45,57 @@
                     {{ plot_div|safe}}
                 </div>
             </div>
-            <div class="a3"
-                style="height: 110px;display: flex;flex-direction: row;background-color:#ffffff;justify-content: space-evenly;border-radius: 12px;">
-                <div style="background: #96f8de;;width: 30%;border-radius: 10px;color:#111;margin: 10px;">Stock1, content bhar dena mein style kar doonga</div>
-                <div style="background: #B79BFF;;width: 30%;border-radius: 10px;color: azure;margin: 10px;">Stock2</div>
-                <div style="background: #FFE5A5;;width: 30%;border-radius: 10px;color:#050720;margin: 10px;">Stock3</div>
+            <div class="a3">
+                <div class="custom-stock-1">
+                    <span class="symbol">{{popular_stocks[0]['symbol']}}</span>
+                    <span class="price">{{popular_stocks[0]['price']}}</span>
+                    <span class="pchange">{{'%.2f' %popular_stocks[0]['pchange']}}%</span>
+                </div>
+                <div class="custom-stock-2">
+                    <span class="symbol" >{{popular_stocks[1]['symbol']}}</span>
+                    <span class="price">{{popular_stocks[1]['price']}}</span>
+                    <span class="pchange">{{'%.2f' %popular_stocks[1]['pchange']}}%</span>
+                </div>
+                <div class="custom-stock-3">
+                    <span class="symbol">{{popular_stocks[2]['symbol']}}</span>
+                    <span class="price" style="color: #4ada6c;">{{popular_stocks[2]['price']}}</span>
+                    <span class="pchange" style="color: #e4e4e4;">{{'%.2f' %popular_stocks[2]['pchange']}}%</span>
+                </div>
             </div>
-
-
         </div>
-        <div class="c" style="width: 30%;">
-            <div class="stock_attributes" style="height:540px;display: flex;flex-direction: column;">
+        <div class="c">
+            <div class="stock_attributes">
                 <div style="height: 10%;">
-                    <div style="background-color: #e6e6e6;height: 1px;margin-top: 40px;">
-                    </div>
+                    <div style="background-color: #e6e6e6;height: 1px;margin-top: 40px;"></div>
                 </div>
                 <div>
-                    <table style="width: 100%; font-size: 20px; border: #111;">
+                    <table class="stock_attributes_table">
                         {% for para,value in stock_detail_data.items() %}
                         <tr>
-                            <td
-                                style="text-align:left; padding-bottom: 8px; padding-top: 8px;border-bottom: 1px solid #e6e6e6;font-size: small;color:#898989">
+                            <td class="satat">
                                 {{ para|upper}}</td>
-                            <td
-                                style="text-align:right; padding-bottom: 8px; padding-top: 8px;border-bottom: 1px solid #e6e6e6;font-weight: 500; font-size: medium;">
+                            <td class="satat1">
                                 {{ value }}</td>
                         </tr>
                         {% endfor %}
                     </table>
                 </div>
-                
-
             </div>
-            <div class="add-button" role="button"> Add Stock to Watchlist</div>
+            {%if login_display=='Logout' %}
+            <form method="post" class="add-button">
+                <input type="hidden" name="form_type" value="add_to_watchlist">
+                <button class="add-button" type="submit" role="button"> Add Stock to Watchlist </button>
+            </form>
+            {%elif login_display=='Login'%}
+            <button class="add-button"> Login to access this feature </button>
+            {%endif%}
         </div>
 
+        {% with sensex_data=sensex_data, nifty50_data=nifty50_data, news_articles=news_articles,
+        watchlist=watchlist,user=user,login_display=login_display %}
+        {% include 'right_dashboard.html' %}
+        {% endwith %}
 
-
-
-        <div class="b">
-            <div class="container-3a"
-                style="display:flex;flex-direction: row;color:#ffffff;font-weight: 700;font-size: large;">
-                <div
-                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
-                    <div style="height: 50%;justify-content: center;align-items: center;">SENSEX</div>
-                    <div style="height: 50%;justify-content: center;align-items: left;">
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
-                            <div
-                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div
-                    style="width:50%; display: flex; justify-content: center; align-items: center;display: flex;flex-direction:column;">
-                    <div style="height: 50%;justify-content: center;align-items: center;">NIFTY 50</div>
-                    <div style="height: 50%;justify-content: center;align-items: left;">
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
-                            <div
-                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-container" style="height:25%;background-color: #ffffff;margin-top: 4%;margin-bottom: 4%;border-radius: 8px;display: grid;gap:5px;padding:5px;">
-                <div class="grid-item item1" style="grid-column: 1/ span 2; grid-row: 1;background-color: #fff;color:#343434;font-size: 20px;height: 10px;">Your Watchlist</div>
-                <div class="grid-item item2" >Stock1</div>
-                <div class="grid-item item3">Stock2</div>
-                <div class="grid-item item4">Stock3</div>
-                <div class="grid-item item4">Stock3</div>            
-
-
-            </div>
-            <div class="container-3b">
-                <div class="News-title"
-                    style="margin: 0%;width:100%;height: 15%; background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);border-top-left-radius: 10px;border-top-right-radius: 10px;display: flex;align-items: center;color:#dedede">
-                    <h3
-                        style="margin-left: 3%;margin-top: 5%;font-family:Helvetica; font-size: 25px;font-style: normal;font-weight: 100;">
-                        Stock News</h3>
-                </div>
-                <div class="article" style="background-color:white;color:#111;height: 80%;">
-                    {% for article in news_articles %}
-                    <div style="height: 30%;" class="snippet">
-
-                        <div class="headline">{{ article['title'] }}</div>
-                        <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
-                        <div style="height:1px;background-color: #dadada;margin-top: 10px;margin-right: 5px;"></div>
-                    </div>
-
-                    {% endfor %}
-                </div>
-
-            </div>
-        </div>
     </div>
 </body>
 

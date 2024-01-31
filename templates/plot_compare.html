@@ -1,86 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
 
 <head>
     <title>Plot and Compare Stocks</title>
-    <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='plot_compare.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='news.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='navbar.css') }}">
+
 </head>
 
 <body>
-    <ul>
-        <li><a class="logo" href="/stonks">Stonks</a></li>
-        <li><a href="/dashboard">Home</a></li>
-        <li><a class="active" href="/plot_compare">Plot Graph</a></li>
-        <li style="float:right"><a class="user_tab" href="#about">User</a></li>
-    </ul>
+    {%with active_tab=active_tab, login_display=login_display, user=user, search_error=search_error%}
+    {% include 'navbar.html' %}
+    {% endwith %}
+
     <div class="flex-container">
         <div class="container-1">
-
             <h1>Plot and Compare Stocks</h1>
-
-            <form action="/plot_compare" method="POST" class="form-container">
-                <div>
-                    <input type="text" class="input-box compulsory" name="stock1" placeholder="Stock 1" required>
-                    <input type="text" class="input-box" name="stock2" placeholder="Stock 2" required>
-                    <input type="text" class="input-box" name="stock3" placeholder="Stock 3 (optional)">
-
-                    <select id="stockParameter" name="stock_parameter" required>
-                        <option value="" disabled selected>Select Parameter to Compare</option>
-                        {% for option in parameter_options %}
-                        <option value="{{ option }}">{{ option }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="submit">Submit</button>
-                </div>
-                <div class="error">{{ error }}</div>
-                <div class="graph">{{ plot_div|safe}}</div>
-            </form>
-        </div>
-        <div class="b">
-            <div class="container-3a">
-                <div class="container-3a-a">
-                    <div>SENSEX</div>
+            <div class="search-form">
+                <form action="/plot_compare" method="POST" class="form-container">
                     <div>
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{sensex_data['currentValue']}} ({{sensex_data['pChange']}}%)</div>
-                            <div
-                                class="{% if sensex_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
+                        <input type="hidden" name="form_type" value="compare">
+                        <input type="text" class="input-box compulsory" name="stock1" placeholder="Stock 1" required>
+                        <input type="text" class="input-box" name="stock2" placeholder="Stock 2" required>
+                        <input type="text" class="input-box" name="stock3" placeholder="Stock 3 (optional)">
+                        <select id="stockParameter" name="stock_parameter" required>
+                            <option value="" disabled selected>Select Parameter to Compare</option>
+                            {% for option in parameter_options %}
+                            <option value="{{ option }}">{{ option }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="compare-submit-button">Submit</button>
                     </div>
-                </div>
-                <div class="container-3a-b">
-                    <div class="container-3a-aa">NIFTY 50</div>
-                    <div class="container-3a-ab">
-                        <div style="font-size: medium;display:flex;flex-direction: row;">
-                            <div>{{nifty50_data['lastPrice']}} ({{nifty50_data['pChange']}}%)</div>
-                            <div
-                                class="{% if nifty50_data['pChange'] > 0 %}up_triangle{% else %}down_triangle{% endif %}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="watchlist">
-            </div>
-            <div class="container-3b">
-                <div class="News-title">
-                    <h3 class="news-heading">
-                        Stock News</h3>
-                </div>
-                <div class="article">
-                    {% for article in news_articles %}
-                    <div class="snippet">
-                        <div class="headline">{{ article['title'] }}</div>
-                        <a class="source-link" href="{{ article['url'] }}" target="_blank">READ MORE</a>
-                        <div style="height:1px;background-color: #dadada;margin-top: 10px;margin-right: 5px;"></div>
-                    </div>
-                    {% endfor %}
-                </div>
+                    <div class="error">{{ error }}</div>
+                    <div class="graph">{{ plot_div|safe}}</div>
+                </form>
             </div>
         </div>
+        {% with sensex_data=sensex_data, nifty50_data=nifty50_data, news_articles=news_articles,
+        watchlist=watchlist,user=user,login_display=login_display %}
+        {% include 'right_dashboard.html' %}
+        {% endwith %}
     </div>
 </body>
 
