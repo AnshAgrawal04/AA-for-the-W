@@ -44,9 +44,9 @@ def plot_stock_prices(
     data_x = sd.get_stock_historic_data(symbol, x_parameter)
     data_y = sd.get_stock_historic_data(symbol, y_parameter)
 
-    dimensions = sr.get_screen_resolution()
-    height = int(dimensions[1] * 0.46)
-    width = int(dimensions[0] * 0.35)
+    # dimensions = sr.get_screen_resolution()
+    # height = int(dimensions[1] * 0.46)
+    # width = int(dimensions[0] * 0.35)
 
     fig = get_plot(
         data_x,
@@ -78,9 +78,9 @@ def plot_index(
     data_y = sd.get_index_data(index, y_parameter)
     data_x = sd.get_index_data(index, x_parameter)
 
-    dimensions = sr.get_screen_resolution()
-    height = int(dimensions[1] * 0.46)
-    width = int(dimensions[0] * 0.35)
+    # dimensions = sr.get_screen_resolution()
+    # height = int(dimensions[1] * 0.46)
+    # width = int(dimensions[0] * 0.35)
 
     fig = get_plot(
         data_x,

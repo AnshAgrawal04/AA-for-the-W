@@ -140,7 +140,7 @@ def dashboard():
     if user:
         watchlist = get_watchlist()
 
-    plot_div = sp.plot_index("NIFTY 50", width=750, height=460)
+    plot_div = sp.plot_index("NIFTY 50", width=540, height=430)
     stocks_data = sd.get_all_stock_cards()
     ascending_data = sorted(stocks_data, key=lambda x: x["pchange"])
     descending_data = ascending_data[::-1]
@@ -215,7 +215,7 @@ def stock(symbol):
     search_error = ""
     stock_card_data = sd.get_stock_card(symbol)
     stock_detail_data = sd.get_stock_page_data(symbol)
-    plot_div = sp.plot_stock_prices(symbol, height=400, width=500)
+    plot_div = sp.plot_stock_prices(symbol, height=400, width=550)
 
 
     if request.method == "POST":
