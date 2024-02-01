@@ -19,7 +19,7 @@ import stock_plots as sp
 import news as n
 
 nifty_50_stocks = list(pd.read_csv("ind_nifty50list.csv")["Symbol"])
-news_articles = n.get_news()["articles"][:4]
+news_articles = n.get_news()[:4]
 
 sensex_data = sd.get_live_index_data("SENSEX")
 nifty50_data = sd.get_live_index_data("NIFTY 50")
