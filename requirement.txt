@@ -9,6 +9,7 @@ SQLAlchemy==2.0.25
 typing_extensions==4.9.0
 Werkzeug==3.0.1
 pandas
-jugaad_data
+jugaad-data
 plotly
 bsedata
+newsapi-python
