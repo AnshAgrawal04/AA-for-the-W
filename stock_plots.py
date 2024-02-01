@@ -2,7 +2,6 @@ import plotly.graph_objects as go
 import pandas as pd
 from plotly.offline import plot
 import stock_data as sd
-import screen_reso as sr
 
 nifty_50_stocks = sd.get_nifty50()
 
@@ -44,9 +43,6 @@ def plot_stock_prices(
     data_x = sd.get_stock_historic_data(symbol, x_parameter)
     data_y = sd.get_stock_historic_data(symbol, y_parameter)
 
-    # dimensions = sr.get_screen_resolution()
-    # height = int(dimensions[1] * 0.46)
-    # width = int(dimensions[0] * 0.35)
 
     fig = get_plot(
         data_x,
@@ -78,10 +74,6 @@ def plot_index(
     data_y = sd.get_index_data(index, y_parameter)
     data_x = sd.get_index_data(index, x_parameter)
 
-    # dimensions = sr.get_screen_resolution()
-    # height = int(dimensions[1] * 0.46)
-    # width = int(dimensions[0] * 0.35)
-
     fig = get_plot(
         data_x,
         data_y,
@@ -106,11 +98,6 @@ def plot_and_compare_symbols(
 ):
     if symbol_name_1 not in nifty_50_stocks or symbol_name_2 not in nifty_50_stocks:
         return None
-
-    # dimensions = sr.get_screen_resolution()
-    # height = int(dimensions[1] * 0.64)
-    # width = int(dimensions[0] * 0.65)
-
     data_x = sd.get_stock_historic_data(symbol_name_1, "Date")
     data_y = sd.get_stock_historic_data(symbol_name_1, parameter)
 

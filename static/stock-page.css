@@ -1,5 +1,6 @@
 body {
     font-size: 16px;
+    height: 800px;
     background-color: rgb(232, 232, 232);
     font-family: system-ui;
     margin: 0;
@@ -10,6 +11,7 @@ body {
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 10px;
+    height:90vh;
 }
 input {
     padding: 10px;
@@ -18,16 +20,17 @@ input {
     width: 95%;
     height: 50px;
     color: #525252;
+    
     background-color: rgb(221, 221, 221);
     /* font-weight: bold; */
 
 }
 
 .a {
-    width: 40%;
+    width: 41%;
     display: flex;
     flex-direction: column;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 .a1 {
@@ -160,7 +163,7 @@ input {
 }
 
 .c {
-    width: 30%;
+    width: 25%;
 }
 
 .stock_attributes {
