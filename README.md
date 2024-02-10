@@ -1,5 +1,5 @@
 # Repo for A1-Subtask2
-<img src="https://img.shields.io/badge/any_text-you_like-blue"/>
+<img src="https://img.shields.io/badge/Backend-Python_Flask-green"/>
 
 <img src="https://img.shields.io/badge/Frontend-Jinja2"/>
 
