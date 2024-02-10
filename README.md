@@ -1,6 +1,6 @@
 # Repo for A1-Subtask2
 <img src="https://img.shields.io/badge/Backend-Python-Flask"/>
-<img src="https://img.shields.io/badge/Frontend-CSS"/>
+<img src="https://img.shields.io/badge/Frontend-CSS-Jinja2"/>
 # Members:
 - **Aditya Prakash**
 - **Ansh Agrawal**
