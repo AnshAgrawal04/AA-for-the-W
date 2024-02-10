@@ -1,6 +1,6 @@
 # Repo for A1-Subtask2
 <img src="https://img.shields.io/badge/Backend-Python-Flask"/>
-<img src="https://img.shields.io/badge/Frontend-CSS/Jinja2"/>
+<img src="https://img.shields.io/badge/Frontend-CSS"/>
 # Members:
 - **Aditya Prakash**
 - **Ansh Agrawal**
@@ -32,8 +32,4 @@ Follow these steps to set up and run the trading dashboard locally:
    make
 3. Launch the website from the terminal
    ```bash
-   http://127.0.0.1:5000/
-
-
-
-
+   http://127.0.0.1:5000
